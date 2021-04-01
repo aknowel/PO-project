@@ -1,3 +1,4 @@
 # PO-project
 Squad:
-    * Paweł Nowak
+* Paweł Nowak
+* Patryk Marszałek
