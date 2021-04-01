@@ -2,3 +2,5 @@
 Squad:
 * Paweł Nowak
 * Patryk Marszałek
+* Maciej Rut
+
