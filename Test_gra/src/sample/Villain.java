@@ -3,10 +3,9 @@ package sample;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.util.ArrayList;
 
 public class Villain extends ImageView {
-    protected int HP;
+    protected Double HP;
     protected int speed;
     Villain()
     {
@@ -20,11 +19,12 @@ public class Villain extends ImageView {
     {
         HP--;
     }
-    public static Villain getNewVillain(int i)
+    public static Villain getNewVillain(int i, Double mode)
     {
         return switch (i) {
-            case 0 -> new Skull();
-            case 1 -> new Predator();
+            case 0 -> new Skull(mode);
+            case 1 -> new Predator(mode);
+            case 2-> new Boss(mode);
             default -> new Villain();
         };
     }
@@ -38,20 +38,30 @@ public class Villain extends ImageView {
     }
 }
 class Skull extends Villain{
-    Skull()
+    Skull(Double mode)
         {
             super(new Image("https://icons.iconarchive.com/icons/icons8/halloween/32/skull-3-icon.png"));
-            this.HP=1;
+            this.HP= 1+mode;
             this.speed=-3;
         }
 }
 class Predator extends Villain{
-    Predator()
+    Predator(Double mode)
     {
         super(new Image("https://icons.iconarchive.com/icons/icons8/halloween/32/predator-icon.png"));
-        this.HP=2;
+        this.HP=2+mode;
         this.speed=-2;
     }
 }
+class Boss extends Villain
+{
+    Boss(Double mode)
+    {
+        super(new Image("https://icons.iconarchive.com/icons/icons8/halloween/64/predator-icon.png"));
+        this.HP=20*(mode+1);
+        this.speed=-2;
+    }
+}
+
 
 

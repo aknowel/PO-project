@@ -1,12 +1,12 @@
 package sample;
 
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -19,34 +19,28 @@ import java.util.Iterator;
 import java.util.Random;
 
 
-public class Game extends Application {
+public class Game  {
 
     private static final double W=1280, H=720;
-    private static final String HeroImageLoc="https://icons.iconarchive.com/icons/hopstarter/superhero-avatar/32/Avengers-Thor-icon.png";
-    private static final String HeroWeaponLoc="https://icons.iconarchive.com/icons/icons8/windows-8/16/Cultures-Thor-Hammer-icon.png";
 
 
     private static final Random randomizer=new Random();
 
-    private Image weaponImage;
-    private Node hero;
+    private Hero hero;
     private final ArrayList<Weapon> weapons= new ArrayList<>();
     private final ArrayList<Villain> villains= new ArrayList<>();
     private Group board;
     Text scoreText, livesText;
     private final int dWeapon=10;
     private int modifier=100, villainCounter=modifier-1, score=0, lives=10000;
-    boolean goNorth, goSouth, goEast, goWest, isBoss=false,t=false;
+    boolean goNorth, goSouth, goEast, goWest, isBoss=false;
     Boss boss=null;
 
-    @Override
-    public void start(Stage stage){
+
+    public void play(Stage stage,Double mode){
 
         board = new Group();
-        Image heroImage = new Image(HeroImageLoc);
-        weaponImage = new Image(HeroWeaponLoc);
-        hero = new ImageView(heroImage);
-
+        hero = new Hero();
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
         board.getChildren().addAll(hero, scoreText, livesText);
@@ -77,7 +71,7 @@ public class Game extends Application {
             });
             scene.setOnMouseClicked(event -> {
                 Weapon newWeapon;
-                newWeapon = new Weapon(weaponImage, event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
+                newWeapon = new Weapon( event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
                 newWeapon.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY());
                 weapons.add(newWeapon);
                 board.getChildren().add(newWeapon);
@@ -91,10 +85,10 @@ public class Game extends Application {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (score < 50) {
+                    if (score < 0d) {
                         villainCounter++;
                         if (villainCounter % modifier == 0) {
-                            Villain newVillain = Villain.getNewVillain(randomizer.nextInt(2));
+                            Villain newVillain = Villain.getNewVillain(randomizer.nextInt(2),mode);
                             int r = randomizer.nextInt(4);
                             switch (r) {
                                 case 0 -> {
@@ -111,18 +105,37 @@ public class Game extends Application {
                     } else if (villains.size() == 0) {
                         if (!isBoss) {
                             isBoss = true;
-                            Villain newVillain = Villain.getNewVillain(3);
+                            Villain newVillain = Villain.getNewVillain(2,mode);
                             boss = (Boss) newVillain;
                             boss.relocate(W, Math.random() * (H - newVillain.getBoundsInLocal().getHeight()));
                             villains.add(boss);
                             board.getChildren().add(boss);
                         } else {
                             if (!boss.isAlive()) {
-                                Text bossDeafeat = new Text(400, H / 2, "Boss Deafeated! Congratulation!");
+                                Text bossDeafeat = new Text(400, H / 2, "Boss Defeated! Congratulations!");
                                 bossDeafeat.setFill(Color.GREEN);
                                 bossDeafeat.setFont(Font.font("Verdana", 30));
                                 board.getChildren().add(bossDeafeat);
                                 this.stop();
+                                Button returnMenu = new Button("Return to the MENU");
+                                EventHandler<ActionEvent> MENU= event ->
+                                {
+                                    Menu menu=new Menu();
+                                    menu.start(stage);
+                                };
+                                returnMenu.setOnAction(MENU);
+                                returnMenu.setLayoutX(W/2-70);
+                                returnMenu.setLayoutY(H/2+50);
+                                Button restartGame = new Button("Restart Game");
+                                EventHandler<ActionEvent> restart= event ->
+                                {
+                                    Game game=new Game();
+                                    game.play(stage,mode);
+                                };
+                                restartGame.setOnAction(restart);
+                                restartGame.setLayoutX(W/2-50);
+                                restartGame.setLayoutY(H/2+25);
+                                board.getChildren().addAll(restartGame,returnMenu);
                             } else {
                                 lives = 0;
                             }
@@ -133,11 +146,30 @@ public class Game extends Application {
                     moveVillain();
                     checkHit();
                     if (lives == 0) {
-                        Text gameOver = new Text(W / 2 - 50, H / 2, "GAME OVER");
+                        Text gameOver = new Text(W / 2 - 100, H / 2, "GAME OVER");
                         gameOver.setFill(Color.RED);
                         gameOver.setFont(Font.font("Verdana", 30));
                         board.getChildren().add(gameOver);
                         this.stop();
+                        Button returnMenu = new Button("Return to the MENU");
+                        EventHandler<ActionEvent> MENU= event ->
+                        {
+                            Menu menu=new Menu();
+                            menu.start(stage);
+                        };
+                        returnMenu.setOnAction(MENU);
+                        returnMenu.setLayoutX(W/2-70);
+                        returnMenu.setLayoutY(H/2+50);
+                        Button restartGame = new Button("Restart Game");
+                        EventHandler<ActionEvent> restart= event ->
+                        {
+                            Game game=new Game();
+                            game.play(stage,mode);
+                        };
+                        restartGame.setOnAction(restart);
+                        restartGame.setLayoutX(W/2-50);
+                        restartGame.setLayoutY(H/2+25);
+                        board.getChildren().addAll(restartGame,returnMenu);
                     }
                 }
             };

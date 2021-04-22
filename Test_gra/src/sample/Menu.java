@@ -16,20 +16,26 @@ import javafx.stage.Stage;
 public class Menu extends Application {
     public final double W=1280;
     private final double H=720;
-    Button play,exit;
+    Button play,exit,options;
     @Override
     public  void start(Stage stage) {
         VBox board=new VBox();
         play = new Button("Play");
         exit = new Button("Exit");
+        options = new Button("Options");
         EventHandler<ActionEvent> playGame= event -> {
             Game main=new Game();
-            main.start(stage);
+            main.play(stage,0D);
         };
         EventHandler<ActionEvent> exitGame= event -> stage.close();
+        EventHandler<ActionEvent> selectoptions= event -> {
+            Options option = new Options();
+            option.start(stage);
+        };
         play.setOnAction(playGame);
         exit.setOnAction(exitGame);
-        board.getChildren().addAll(play,exit);
+        options.setOnAction(selectoptions);
+        board.getChildren().addAll(play,options,exit);
         board.setAlignment(Pos.CENTER);
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         stage.setScene(scene);
