@@ -7,8 +7,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -27,13 +25,16 @@ public class Game  {
     private static final Random randomizer=new Random();
 
     private Hero hero;
-    private final ArrayList<Weapon> weapons= new ArrayList<>();
+    private final ArrayList<Weapon> weaponsHero= new ArrayList<>();
+    private final ArrayList<Weapon> weaponsVillain= new ArrayList<>();
     private final ArrayList<Villain> villains= new ArrayList<>();
+    private final ArrayList<Villain> shootingVillains= new ArrayList<>();
     private Group board;
     Text scoreText, livesText;
     private final int dWeapon=10;
-    private int modifier=100, villainCounter=modifier-1, score=0, lives=10000;
+    private int modifier=150, villainCounter=modifier-1, score=0, lives=10000;
     boolean goNorth, goSouth, goEast, goWest, isBoss=false;
+    private static int time=0;
     Boss boss=null;
 
 
@@ -71,9 +72,9 @@ public class Game  {
             });
             scene.setOnMouseClicked(event -> {
                 Weapon newWeapon;
-                newWeapon = new Weapon( event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
+                newWeapon = new Hammer( event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
                 newWeapon.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY());
-                weapons.add(newWeapon);
+                weaponsHero.add(newWeapon);
                 board.getChildren().add(newWeapon);
             });
 
@@ -85,30 +86,37 @@ public class Game  {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (score < 0d) {
+                    if (score < 50) {
                         villainCounter++;
                         if (villainCounter % modifier == 0) {
-                            Villain newVillain = Villain.getNewVillain(randomizer.nextInt(2),mode);
+                            Villain newVillain = Villain.getNewVillain(randomizer.nextInt(7),mode);
                             int r = randomizer.nextInt(4);
                             switch (r) {
                                 case 0 -> {
-                                    newVillain.relocate(W, Math.random() * (H - newVillain.getBoundsInLocal().getHeight()));
+                                    newVillain.relocate(W-30d, Math.random() * (H - newVillain.getBoundsInLocal().getHeight()));
                                     modifier--;
                                 }
-                                case 1 -> newVillain.relocate(0, Math.random() * (H - newVillain.getBoundsInLocal().getHeight()));
-                                case 2 -> newVillain.relocate(Math.random() * (W - newVillain.getBoundsInLocal().getWidth()), H);
+                                case 1 -> {
+                                    newVillain.relocate(0, Math.random() * (H - newVillain.getBoundsInLocal().getHeight()));
+                                    modifier--;
+                                }
+                                case 2 -> newVillain.relocate(Math.random() * (W - newVillain.getBoundsInLocal().getWidth()), H-30);
                                 case 3 -> newVillain.relocate(Math.random() * (W - newVillain.getBoundsInLocal().getWidth()), 0);
                             }
                             villains.add(newVillain);
                             board.getChildren().add(newVillain);
+                            if(newVillain instanceof Predator)
+                            {
+                                shootingVillains.add(newVillain);
+                            }
                         }
                     } else if (villains.size() == 0) {
                         if (!isBoss) {
                             isBoss = true;
-                            Villain newVillain = Villain.getNewVillain(2,mode);
-                            boss = (Boss) newVillain;
-                            boss.relocate(W, Math.random() * (H - newVillain.getBoundsInLocal().getHeight()));
+                            boss = Villain.getNewBoss(mode);
+                            boss.relocate(W, Math.random() * (H - boss.getBoundsInLocal().getHeight()));
                             villains.add(boss);
+                            shootingVillains.add(boss);
                             board.getChildren().add(boss);
                         } else {
                             if (!boss.isAlive()) {
@@ -143,8 +151,17 @@ public class Game  {
                     }
                     moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
                     throwWeapon(dWeapon);
+                    enemyWeapon(5);
+                    if(time==32-8*mode) {
+                        newEnemyWeapon();
+                        time=0;
+                    }
+                    else {
+                        time++;
+                    }
                     moveVillain();
-                    checkHit();
+                    checkHitHero();
+                    checkHitVillain();
                     if (lives == 0) {
                         Text gameOver = new Text(W / 2 - 100, H / 2, "GAME OVER");
                         gameOver.setFill(Color.RED);
@@ -207,7 +224,7 @@ public class Game  {
         }
     }
     private void throwWeapon(double d){
-        Iterator<Weapon> z=weapons.iterator();
+        Iterator<Weapon> z=weaponsHero.iterator();
         while(z.hasNext()){
             Weapon x=z.next();
             if (x.getLayoutX()<W && x.getLayoutX()>0 && x.getLayoutY()<H && x.getLayoutY()>0){
@@ -220,8 +237,8 @@ public class Game  {
             }
         }
     }
-    private void checkHit(){
-        Iterator<Weapon> x=weapons.iterator();
+    private void checkHitVillain(){
+        Iterator<Weapon> x=weaponsHero.iterator();
         while(x.hasNext()){
             Node currentWeapon=x.next();
             Iterator<Villain> y=villains.iterator();
@@ -236,10 +253,54 @@ public class Game  {
                         y.remove();
                         score++;
                         scoreText.setText("Score: " + score);
+                        if(currentVillain instanceof Predator)
+                        {
+                            shootingVillains.remove(currentVillain);
+                        }
                     }
                 }
             }
         }
     }
-
+    public void enemyWeapon(double d)
+    {
+        Iterator<Weapon> z=weaponsVillain.iterator();
+        while(z.hasNext()){
+            Weapon x=z.next();
+            if (x.getLayoutX()<=W && x.getLayoutX()>=0 && x.getLayoutY()<=H && x.getLayoutY()>=0){
+                double dd=Math.sqrt(x.x*x.x+x.y*x.y);
+                x.relocate(x.getLayoutX() + d*x.x/dd, x.getLayoutY() + d * x.y / dd);
+            }
+            else {
+                z.remove();
+                board.getChildren().remove(x);
+            }
+        }
+    }
+    private void checkHitHero()
+    {
+        Iterator<Weapon> x=weaponsVillain.iterator();
+        while(x.hasNext()){
+            Node currentWeapon=x.next();
+                if (currentWeapon.getBoundsInParent().intersects(hero.getBoundsInParent())){
+                    lives--;
+                    livesText.setText("Lives: " + lives);
+                    board.getChildren().remove(currentWeapon);
+                    x.remove();
+            }
+        }
+    }
+    private void newEnemyWeapon()
+    {
+        for (Villain currentVillain : shootingVillains) {
+            double x = currentVillain.getLayoutX();
+            double y = currentVillain.getLayoutY();
+            double z = hero.getLayoutX();
+            double v = hero.getLayoutY();
+            Weapon newWeapon = new RedBall( z-x,v-y );
+            newWeapon.relocate(currentVillain.getLayoutX() , currentVillain.getLayoutY() );
+            weaponsVillain.add(newWeapon);
+            board.getChildren().add(newWeapon);
+        }
+    }
 }

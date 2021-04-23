@@ -5,6 +5,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -36,6 +38,7 @@ public class Options {
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         board.setAlignment(Pos.CENTER);
         stage.setScene(scene);
+        board.setBackground(new Background(new BackgroundFill(Color.CORNFLOWERBLUE, null, null)));
         stage.setTitle("Menu");
         stage.show();
     }
