@@ -29,11 +29,14 @@ public class Game  {
     private final ArrayList<Weapon> weaponsVillain= new ArrayList<>();
     private final ArrayList<Villain> villains= new ArrayList<>();
     private final ArrayList<Villain> shootingVillains= new ArrayList<>();
+    private final ArrayList<Box> boxes= new ArrayList<>();
     private Group board;
-    Text scoreText, livesText;
+    private AnimationTimer timer;
+    private Button resume=new Button("Resume");
+    Text scoreText, livesText,pauseText;
     private final int dWeapon=10;
-    private int modifier=150, villainCounter=modifier-1, score=0, lives=10000;
-    boolean goNorth, goSouth, goEast, goWest, isBoss=false;
+    private int modifier=150, villainCounter=modifier-1, score=0, lives=3;
+    boolean goNorth, goSouth, goEast, goWest, isBoss=false,upgrade=false,pause=false;
     private static int time=0;
     Boss boss=null;
 
@@ -44,6 +47,9 @@ public class Game  {
         hero = new Hero();
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
+        pauseText = new Text (W/2-50, H/2, "Pause");
+        pauseText.setFill(Color.DARKBLUE);
+        pauseText.setFont(Font.font("Verdana", 30));
         board.getChildren().addAll(hero, scoreText, livesText);
         moveHeroTo(20, H/2);
 
@@ -59,6 +65,29 @@ public class Game  {
                     case S -> goSouth = true;
                     case A -> goWest = true;
                     case D -> goEast = true;
+                    case P -> {
+                        if(!pause)
+                        {
+                            timer.stop();
+                            EventHandler<ActionEvent> resumeGame= event2 ->
+                            {
+                                board.getChildren().removeAll(pauseText,resume);
+                                pause=false;
+                                timer.start();
+                            };
+                            resume.setOnAction(resumeGame);
+                            resume.setLayoutX(W/2-35);
+                            resume.setLayoutY(H/2+25);
+                            board.getChildren().addAll(pauseText,resume);
+                            pause=true;
+                        }
+                        else
+                        {
+                            board.getChildren().removeAll(pauseText,resume);
+                            pause=false;
+                            timer.start();
+                        }
+                    }
                 }
             });
 
@@ -72,13 +101,19 @@ public class Game  {
             });
             scene.setOnMouseClicked(event -> {
                 Weapon newWeapon;
-                newWeapon = new Hammer( event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
+                if(!upgrade) {
+                    newWeapon = new Hammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
+                }
+                else
+                {
+                    newWeapon = new SuperHammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
+                }
                 newWeapon.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY());
                 weaponsHero.add(newWeapon);
                 board.getChildren().add(newWeapon);
             });
 
-            AnimationTimer timer = new AnimationTimer() {
+            timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
                     int dx = 0, dy = 0;
@@ -162,7 +197,8 @@ public class Game  {
                     moveVillain();
                     checkHitHero();
                     checkHitVillain();
-                    if (lives == 0) {
+                    checkBox();
+                    if (lives <= 0) {
                         Text gameOver = new Text(W / 2 - 100, H / 2, "GAME OVER");
                         gameOver.setFill(Color.RED);
                         gameOver.setFont(Font.font("Verdana", 30));
@@ -227,7 +263,7 @@ public class Game  {
         Iterator<Weapon> z=weaponsHero.iterator();
         while(z.hasNext()){
             Weapon x=z.next();
-            if (x.getLayoutX()<W && x.getLayoutX()>0 && x.getLayoutY()<H && x.getLayoutY()>0){
+            if (x.getLayoutX()<=W && x.getLayoutX()>=0 && x.getLayoutY()<=H && x.getLayoutY()>=0){
                 double dd=Math.sqrt(x.x*x.x+x.y*x.y);
                 x.relocate(x.getLayoutX() + d*x.x/dd, x.getLayoutY() + d * x.y / dd);
             }
@@ -249,6 +285,14 @@ public class Game  {
                     board.getChildren().remove(currentWeapon);
                     x.remove();
                     if(!currentVillain.isAlive()) {
+                        int i=randomizer.nextInt(20);
+                        if(i<2)
+                        {
+                            Box newBox=Box.getNewBox(i);
+                            newBox.relocate(currentVillain.getLayoutX(),currentVillain.getLayoutY());
+                            boxes.add(newBox);
+                            board.getChildren().add(newBox);
+                        }
                         board.getChildren().remove(currentVillain);
                         y.remove();
                         score++;
@@ -301,6 +345,21 @@ public class Game  {
             newWeapon.relocate(currentVillain.getLayoutX() , currentVillain.getLayoutY() );
             weaponsVillain.add(newWeapon);
             board.getChildren().add(newWeapon);
+        }
+    }
+    void checkBox()
+    {
+        Iterator<Box> x=boxes.iterator();
+        while(x.hasNext()){
+            Box currentBox=x.next();
+            if (currentBox.getBoundsInParent().intersects(hero.getBoundsInParent())){
+                if(currentBox.i==1)
+                {
+                    upgrade=true;
+                }
+                board.getChildren().remove(currentBox);
+                x.remove();
+            }
         }
     }
 }

@@ -20,6 +20,15 @@ class Hammer extends Weapon
         this.y=y;
     }
 }
+class SuperHammer extends Weapon
+{
+    SuperHammer(double x,double y)
+    {
+        super(new Image("https://icons.iconarchive.com/icons/icons8/windows-8/24/Cultures-Thor-Hammer-icon.png"));
+        this.x=x;
+        this.y=y;
+    }
+}
 class RedBall extends Weapon
 {
     RedBall(double x,double y)
