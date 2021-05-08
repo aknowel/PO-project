@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2f8bbc12-4651-49c5-80d7-ba9fdddb5b2d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/libraries/lib.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Gra.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Gra.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/module-info.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Boss.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Hammer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Hero.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Main$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Main$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Menu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Options.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Predator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/RedBall.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Skull.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Spider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Villain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/Weapon.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Gra/sample/sample.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/module-info.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Boss.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Controller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Game$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Game$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Game.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Menu.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Predator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Skull.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Villain.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/Weapon.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../out/production/Test_gra/sample/sample.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Options.java" beforeDir="false" afterPath="$PROJECT_DIR$/Options.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample.fxml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1sFiWileFFA4yyKSIBdiWJZB5y8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2f8bbc12-4651-49c5-80d7-ba9fdddb5b2d" name="Default Changelist" comment="" />
+      <created>1620474772018</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1620474772018</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
