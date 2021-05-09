@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.OptionsController">
+   <children>
+      <ImageView fitHeight="721.0" fitWidth="1280.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="@../other/image.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="589.0" layoutY="275.0" mnemonicParsing="false" onAction="#easyMode" stylesheets="@../css/menu.css" text="Easy" />
+      <Button layoutX="589.0" layoutY="338.0" mnemonicParsing="false" onAction="#hardMode" stylesheets="@../css/menu.css" text="Hard" />
+      <Button layoutX="582.0" layoutY="464.0" mnemonicParsing="false" onAction="#returnMenu" prefHeight="63.0" prefWidth="117.0" stylesheets="@../css/menu.css" text="MENU" />
+      <Label layoutX="521.0" layoutY="170.0" prefHeight="93.0" prefWidth="267.0" text="Options" textFill="#4f8c9c">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
+      <Button layoutX="542.0" layoutY="401.0" mnemonicParsing="false" onAction="#keyBindings" stylesheets="@../css/menu.css" text="Key Bindings" />
+   </children>
+</AnchorPane>
