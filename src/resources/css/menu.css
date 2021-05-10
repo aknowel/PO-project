@@ -39,3 +39,9 @@
         -fx-text-fill: red;
         -fx-opacity: 1;
 }
+.title2
+{
+        -fx-font-family: "Segoe Print";
+        -fx-text-fill: green;
+        -fx-opacity: 1;
+}

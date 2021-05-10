@@ -1,7 +1,10 @@
 package sample;
 
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.Iterator;
 
 
 public abstract class Villain extends ImageView {
@@ -34,6 +37,65 @@ public abstract class Villain extends ImageView {
     int getSpeed()
     {
         return speed;
+    }
+    static void checkHitVillain(Game game){
+        Iterator<Weapon> x=game.weaponsHero.iterator();
+        while(x.hasNext()){
+            Node currentWeapon=x.next();
+            Iterator<Villain> y=game.villains.iterator();
+            while(y.hasNext()){
+                Villain currentVillain=y.next();
+                if (currentWeapon.getBoundsInParent().intersects(currentVillain.getBoundsInParent())){
+                    currentVillain.hp();
+                    Game.board.getChildren().remove(currentWeapon);
+                    x.remove();
+                    if(!currentVillain.isAlive()) {
+                        int i= Game.randomizer.nextInt(20);
+                        if(i<2)
+                        {
+                            Box newBox=Box.getNewBox(i);
+                            newBox.relocate(currentVillain.getLayoutX(),currentVillain.getLayoutY());
+                            game.boxes.add(newBox);
+                            Game.board.getChildren().add(newBox);
+                        }
+                        Game.board.getChildren().remove(currentVillain);
+                        y.remove();
+
+                       game.score++;
+                        game.scoreText.setText("Score: " + game.score);
+                        if(currentVillain instanceof Predator)
+                        {
+                            game.shootingVillains.remove(currentVillain);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public static void newVillain(Game game)
+    {
+        if (game.villainCounter % game.modifier == 0) {
+            Villain newVillain = Villain.getNewVillain(Game.randomizer.nextInt(7),Game.mode);
+            int r = Game.randomizer.nextInt(4);
+            switch (r) {
+                case 0 -> {
+                    newVillain.relocate(Game.W -30d, Math.random() * (Game.H - newVillain.getBoundsInLocal().getHeight()));
+                    game.modifier--;
+                }
+                case 1 -> {
+                    newVillain.relocate(0, Math.random() * (Game.H - newVillain.getBoundsInLocal().getHeight()));
+                    game.modifier--;
+                }
+                case 2 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), Game.H -30);
+                case 3 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), 0);
+            }
+            game.villains.add(newVillain);
+            Game.board.getChildren().add(newVillain);
+            if(newVillain instanceof Predator)
+            {
+                game.shootingVillains.add(newVillain);
+            }
+        }
     }
 }
 class Skull extends Villain{

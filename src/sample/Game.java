@@ -1,57 +1,55 @@
 package sample;
 
 import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 
 public class Game  {
 
-    private static final double W=1280, H=720;
+    static final double W=1280, H=720;
 
 
-    private static final Random randomizer=new Random();
+    static final Random randomizer=new Random();
 
-    private Hero hero;
-    private final ArrayList<Weapon> weaponsHero= new ArrayList<>();
-    private final ArrayList<Weapon> weaponsVillain= new ArrayList<>();
-    private final ArrayList<Villain> villains= new ArrayList<>();
-    private final ArrayList<Villain> shootingVillains= new ArrayList<>();
-    private final ArrayList<Box> boxes= new ArrayList<>();
-    private Group board;
-    private AnimationTimer timer;
-    private final Button resume=new Button("Resume");
-    Text scoreText, livesText,pauseText;
-    private final int dWeapon=10;
-    private int modifier=150, villainCounter=modifier-1, score=0, lives=3;
-    boolean goNorth, goSouth, goEast, goWest, isBoss=false,upgrade=false,pause=false;
-    private static int time=0;
+    Hero hero;
+    final ArrayList<Weapon> weaponsHero= new ArrayList<>();
+    final ArrayList<Weapon> weaponsVillain= new ArrayList<>();
+    final ArrayList<Villain> villains= new ArrayList<>();
+    final ArrayList<Villain> shootingVillains= new ArrayList<>();
+    final ArrayList<Box> boxes= new ArrayList<>();
+    public static Group board;
+    public static AnimationTimer timer;
+    Text scoreText, livesText;
+    final int dWeapon=10;
+    int modifier=150, villainCounter=modifier-1, score=0, lives=3;
+    boolean goNorth, goSouth, goEast, goWest, isBoss=false,upgrade=false,stop=false;
+    public static boolean pause=false;
+    static int time=0;
+    public static Double mode;
+    AnchorPane root;
     Boss boss=null;
+    Game game;
 
 
     public void play(Stage stage,Double mode){
-
+        Game.mode =mode;
+        game=this;
+        Movement.game=game;
         board = new Group();
         hero = new Hero();
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
-        pauseText = new Text (W/2-50, H/2, "Pause");
-        pauseText.setFill(Color.DARKBLUE);
-        pauseText.setFont(Font.font("Verdana", 30));
         board.getChildren().addAll(hero, scoreText, livesText);
-        moveHeroTo(20, H/2);
+        Movement.moveHeroTo(20, H/2);
 
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         stage.setScene(scene);
@@ -65,24 +63,15 @@ public class Game  {
                     else if(event.getCode().equals(KeyBinds.A)) goWest = true;
                     else if(event.getCode().equals(KeyBinds.D)) goEast = true;
                     else if(event.getCode().equals(KeyBinds.P)) {
-                        if(!pause)
+                        if(!pause & !stop)
                         {
                             timer.stop();
-                            EventHandler<ActionEvent> resumeGame= event2 ->
-                            {
-                                board.getChildren().removeAll(pauseText,resume);
-                                pause=false;
-                                timer.start();
-                            };
-                            resume.setOnAction(resumeGame);
-                            resume.setLayoutX(W/2-35);
-                            resume.setLayoutY(H/2+25);
-                            board.getChildren().addAll(pauseText,resume);
+                            pause();
                             pause=true;
                         }
-                        else
+                        else if(!stop)
                         {
-                            board.getChildren().removeAll(pauseText,resume);
+                            board.getChildren().remove(root);
                             pause=false;
                             timer.start();
                         }
@@ -117,30 +106,9 @@ public class Game  {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (score < 50) {
+                    if (score < 0) {
                         villainCounter++;
-                        if (villainCounter % modifier == 0) {
-                            Villain newVillain = Villain.getNewVillain(randomizer.nextInt(7),mode);
-                            int r = randomizer.nextInt(4);
-                            switch (r) {
-                                case 0 -> {
-                                    newVillain.relocate(W-30d, Math.random() * (H - newVillain.getBoundsInLocal().getHeight()));
-                                    modifier--;
-                                }
-                                case 1 -> {
-                                    newVillain.relocate(0, Math.random() * (H - newVillain.getBoundsInLocal().getHeight()));
-                                    modifier--;
-                                }
-                                case 2 -> newVillain.relocate(Math.random() * (W - newVillain.getBoundsInLocal().getWidth()), H-30);
-                                case 3 -> newVillain.relocate(Math.random() * (W - newVillain.getBoundsInLocal().getWidth()), 0);
-                            }
-                            villains.add(newVillain);
-                            board.getChildren().add(newVillain);
-                            if(newVillain instanceof Predator)
-                            {
-                                shootingVillains.add(newVillain);
-                            }
-                        }
+                        Villain.newVillain(game);
                     } else if (villains.size() == 0) {
                         if (!isBoss) {
                             isBoss = true;
@@ -150,212 +118,81 @@ public class Game  {
                             shootingVillains.add(boss);
                             board.getChildren().add(boss);
                         } else {
-                            if (!boss.isAlive()) {
-                                Text bossDeafeat = new Text(400, H / 2, "Boss Defeated! Congratulations!");
-                                bossDeafeat.setFill(Color.GREEN);
-                                bossDeafeat.setFont(Font.font("Verdana", 30));
-                                board.getChildren().add(bossDeafeat);
-                                this.stop();
-                                Button returnMenu = new Button("Return to the MENU");
-                                EventHandler<ActionEvent> MENU= event ->
-                                {
-                                    Menu menu=new Menu();
-                                    menu.start(stage);
-                                };
-                                returnMenu.setOnAction(MENU);
-                                returnMenu.setLayoutX(W/2-70);
-                                returnMenu.setLayoutY(H/2+50);
-                                Button restartGame = new Button("Restart Game");
-                                EventHandler<ActionEvent> restart= event ->
-                                {
-                                    Game game=new Game();
-                                    game.play(stage,mode);
-                                };
-                                restartGame.setOnAction(restart);
-                                restartGame.setLayoutX(W/2-50);
-                                restartGame.setLayoutY(H/2+25);
-                                board.getChildren().addAll(restartGame,returnMenu);
-                            } else {
-                                lives = 0;
-                            }
+                            isBossDefeat(timer);
                         }
                     }
-                    moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
-                    throwWeapon(dWeapon);
-                    enemyWeapon(5);
+                    Movement.moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
+                    Movement.throwWeapon(dWeapon);
+                    Movement.enemyWeapon(5);
                     if(time==32-8*mode) {
-                        newEnemyWeapon();
+                        Weapon.newEnemyWeapon(game);
                         time=0;
                     }
                     else {
                         time++;
                     }
-                    moveVillain();
-                    checkHitHero();
-                    checkHitVillain();
-                    checkBox();
-                    if (lives <= 0) {
-                        Text gameOver = new Text(W / 2 - 100, H / 2, "GAME OVER");
-                        gameOver.setFill(Color.RED);
-                        gameOver.setFont(Font.font("Verdana", 30));
-                        board.getChildren().add(gameOver);
-                        this.stop();
-                        Button returnMenu = new Button("Return to the MENU");
-                        EventHandler<ActionEvent> MENU= event ->
-                        {
-                            Menu menu=new Menu();
-                            menu.start(stage);
-                        };
-                        returnMenu.setOnAction(MENU);
-                        returnMenu.setLayoutX(W/2-70);
-                        returnMenu.setLayoutY(H/2+50);
-                        Button restartGame = new Button("Restart Game");
-                        EventHandler<ActionEvent> restart= event ->
-                        {
-                            Game game=new Game();
-                            game.play(stage,mode);
-                        };
-                        restartGame.setOnAction(restart);
-                        restartGame.setLayoutX(W/2-50);
-                        restartGame.setLayoutY(H/2+25);
-                        board.getChildren().addAll(restartGame,returnMenu);
-                    }
+                    Movement.moveVillain();
+                    Hero.checkHitHero(game);
+                    Villain.checkHitVillain(game);
+                    Box.checkBox(game);
+                    gameOver(this);
                 }
             };
             timer.start();
     }
-
-    private void moveHeroTo (double x, double y){
-        if (x>=0 && x<=W-hero.getBoundsInLocal().getWidth() && y>=0 && y<=H-hero.getBoundsInLocal().getHeight())
-            hero.relocate(x, y);
-        else if (x>=0 && x<=W-hero.getBoundsInLocal().getWidth())
-            hero.relocate(x, hero.getLayoutY());
-        else if (y>=0 && y<=H-hero.getBoundsInLocal().getHeight())
-            hero.relocate(hero.getLayoutX(), y);
-    }
-
-    private void moveVillain (){
-        double d;
-        Iterator<Villain> it=villains.iterator();
-        while(it.hasNext()){
-            Villain currentvillain=it.next();
-            d=currentvillain.getSpeed();
-            if(hero.getBoundsInParent().intersects(currentvillain.getBoundsInParent())) {
-                lives--;
-                livesText.setText("Lives: " + lives);
-                it.remove();
-                board.getChildren().remove(currentvillain);
-                continue;
-            }
-            double x=currentvillain.getLayoutX();
-            double y=currentvillain.getLayoutY();
-            double z=hero.getLayoutX();
-            double v=hero.getLayoutY();
-            double dd=Math.sqrt((x-z)*(x-z)+(y-v)*(y-v));
-            currentvillain.relocate(currentvillain.getLayoutX() +d*(x-z)/dd, currentvillain.getLayoutY()+d*(y-v)/dd);
-        }
-    }
-    private void throwWeapon(double d){
-        Iterator<Weapon> z=weaponsHero.iterator();
-        while(z.hasNext()){
-            Weapon x=z.next();
-            if (x.getLayoutX()<=W && x.getLayoutX()>=0 && x.getLayoutY()<=H && x.getLayoutY()>=0){
-                double dd=Math.sqrt(x.x*x.x+x.y*x.y);
-                x.relocate(x.getLayoutX() + d*x.x/dd, x.getLayoutY() + d * x.y / dd);
-            }
-            else {
-                z.remove();
-                board.getChildren().remove(x);
-            }
-        }
-    }
-    private void checkHitVillain(){
-        Iterator<Weapon> x=weaponsHero.iterator();
-        while(x.hasNext()){
-            Node currentWeapon=x.next();
-            Iterator<Villain> y=villains.iterator();
-            while(y.hasNext()){
-                Villain currentVillain=y.next();
-                if (currentWeapon.getBoundsInParent().intersects(currentVillain.getBoundsInParent())){
-                    currentVillain.hp();
-                    board.getChildren().remove(currentWeapon);
-                    x.remove();
-                    if(!currentVillain.isAlive()) {
-                        int i=randomizer.nextInt(20);
-                        if(i<2)
-                        {
-                            Box newBox=Box.getNewBox(i);
-                            newBox.relocate(currentVillain.getLayoutX(),currentVillain.getLayoutY());
-                            boxes.add(newBox);
-                            board.getChildren().add(newBox);
-                        }
-                        board.getChildren().remove(currentVillain);
-                        y.remove();
-                        score++;
-                        scoreText.setText("Score: " + score);
-                        if(currentVillain instanceof Predator)
-                        {
-                            shootingVillains.remove(currentVillain);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    public void enemyWeapon(double d)
+    void gameOver(AnimationTimer timer)
     {
-        Iterator<Weapon> z=weaponsVillain.iterator();
-        while(z.hasNext()){
-            Weapon x=z.next();
-            if (x.getLayoutX()<=W && x.getLayoutX()>=0 && x.getLayoutY()<=H && x.getLayoutY()>=0){
-                double dd=Math.sqrt(x.x*x.x+x.y*x.y);
-                x.relocate(x.getLayoutX() + d*x.x/dd, x.getLayoutY() + d * x.y / dd);
+        if (lives <= 0) {
+            timer.stop();
+            stop=true;
+            FXMLLoader fxmlLoader=new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOver.fxml"));
+            try {
+                root = fxmlLoader.load();
+                root.setLayoutX(445);
+                root.setLayoutY(193);
+                board.getChildren().add(root);
             }
-            else {
-                z.remove();
-                board.getChildren().remove(x);
-            }
-        }
-    }
-    private void checkHitHero()
-    {
-        Iterator<Weapon> x=weaponsVillain.iterator();
-        while(x.hasNext()){
-            Node currentWeapon=x.next();
-                if (currentWeapon.getBoundsInParent().intersects(hero.getBoundsInParent())){
-                    lives--;
-                    livesText.setText("Lives: " + lives);
-                    board.getChildren().remove(currentWeapon);
-                    x.remove();
+            catch (Exception e)
+            {
+                e.printStackTrace();
             }
         }
     }
-    private void newEnemyWeapon()
+    private void pause()
     {
-        for (Villain currentVillain : shootingVillains) {
-            double x = currentVillain.getLayoutX();
-            double y = currentVillain.getLayoutY();
-            double z = hero.getLayoutX();
-            double v = hero.getLayoutY();
-            Weapon newWeapon = new RedBall( z-x,v-y );
-            newWeapon.relocate(currentVillain.getLayoutX() , currentVillain.getLayoutY() );
-            weaponsVillain.add(newWeapon);
-            board.getChildren().add(newWeapon);
+        FXMLLoader fxmlLoader=new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/pause.fxml"));
+        try {
+            root = fxmlLoader.load();
+            root.setLayoutX(445);
+            root.setLayoutY(193);
+            board.getChildren().add(root);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
-    void checkBox()
+    private void isBossDefeat(AnimationTimer timer)
     {
-        Iterator<Box> x=boxes.iterator();
-        while(x.hasNext()){
-            Box currentBox=x.next();
-            if (currentBox.getBoundsInParent().intersects(hero.getBoundsInParent())){
-                if(currentBox.i==1)
-                {
-                    upgrade=true;
-                }
-                board.getChildren().remove(currentBox);
-                x.remove();
+        if (!boss.isAlive()) {
+            timer.stop();
+            stop=true;
+            FXMLLoader fxmlLoader=new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/resources/fxml/bossDefeat.fxml"));
+            try {
+                root = fxmlLoader.load();
+                root.setLayoutX(340);
+                root.setLayoutY(160);
+                board.getChildren().add(root);
             }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        } else {
+            lives = 0;
         }
     }
 }

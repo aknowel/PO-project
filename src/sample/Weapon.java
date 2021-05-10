@@ -1,7 +1,10 @@
 package sample;
 
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.Iterator;
 
 public abstract class Weapon extends ImageView {
     protected double x;
@@ -9,7 +12,19 @@ public abstract class Weapon extends ImageView {
     Weapon(Image img){
         super(img);
     }
-
+    static void newEnemyWeapon(Game game)
+    {
+        for (Villain currentVillain : game.shootingVillains) {
+            double x = currentVillain.getLayoutX();
+            double y = currentVillain.getLayoutY();
+            double z = game.hero.getLayoutX();
+            double v = game.hero.getLayoutY();
+            Weapon newWeapon = new RedBall( z-x,v-y );
+            newWeapon.relocate(currentVillain.getLayoutX() , currentVillain.getLayoutY() );
+            game.weaponsVillain.add(newWeapon);
+            game.board.getChildren().add(newWeapon);
+        }
+    }
 }
 class Hammer extends Weapon
 {
