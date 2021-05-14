@@ -39,22 +39,24 @@ public class Game  {
     public Boss boss=null;
     public static Game game;
 
-    public Game(Pane board)
+    public Game(Pane board,Double mode)
     {
+        this.mode=mode;
         this.board=board;
         game=this;
         hero = new Hero();
         Movement.moveHeroTo(20, H/2);
     }
-    public Game(double x,double y,Pane board)
+    public Game(double x,double y,Pane board,Double mode)
     {
+        this.mode=mode;
         this.board=board;
         game=this;
         hero = new Hero();
         Movement.moveHeroTo(x,y);
     }
 
-    public void play(Stage stage,Double mode){
+    public void play(Stage stage){
         Game.game.mode =mode;
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);

@@ -135,7 +135,7 @@ public class LoadController {
         double x,y;
         x=Double.parseDouble(scanner.next());
         y=Double.parseDouble(scanner.next());
-        game=new Game(x,y,board);
+        game=new Game(x,y,board,mode);
         Weapon weapon;
         int length=Integer.parseInt(scanner.next());
         for(int i=0;i<length;i++)
@@ -222,7 +222,7 @@ public class LoadController {
         game.isBoss=Boolean.parseBoolean(scanner.next());
         game.upgrade=Boolean.parseBoolean(scanner.next());
         game.time=Integer.parseInt(scanner.next());
-        game.play(stage,mode);
+        game.play(stage);
         System.out.println("nie");
     }
     private void setLabel(Label text, Color color, double y)

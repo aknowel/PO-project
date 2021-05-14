@@ -17,8 +17,8 @@ public class GameEndController {
     {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Pane board=new Pane();
-        Game game=new Game(board);
-        game.play(stage,Game.game.mode);
+        Game game=new Game(board,Game.game.mode);
+        game.play(stage);
     }
     public void returnMenu(ActionEvent event)
     {

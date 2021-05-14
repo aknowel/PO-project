@@ -20,9 +20,9 @@ public class MenuController {
     public void playGame(ActionEvent event)
     {
         Pane board=new Pane();
-        Game main=new Game(board);
+        Game main=new Game(board,mode);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        main.play(stage,mode);
+        main.play(stage);
     }
     public void loadGame(ActionEvent event)
     {
