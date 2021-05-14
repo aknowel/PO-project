@@ -2,9 +2,9 @@ package sample;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -26,7 +26,7 @@ public class Game  {
     public final ArrayList<Villain> villains= new ArrayList<>();
     public final ArrayList<Villain> shootingVillains= new ArrayList<>();
     public final ArrayList<Box> boxes= new ArrayList<>();
-    public  Group board;
+    public Pane board;
     public AnimationTimer timer;
     public Text scoreText, livesText;
     public final int dWeapon=10;
@@ -39,14 +39,14 @@ public class Game  {
     public Boss boss=null;
     public static Game game;
 
-    public Game(Group board)
+    public Game(Pane board)
     {
         this.board=board;
         game=this;
         hero = new Hero();
         Movement.moveHeroTo(20, H/2);
     }
-    public Game(double x,double y,Group board)
+    public Game(double x,double y,Pane board)
     {
         this.board=board;
         game=this;
@@ -61,6 +61,9 @@ public class Game  {
         board.getChildren().addAll(hero, scoreText, livesText);
 
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
+        BackgroundImage myBI= new BackgroundImage(new Image("resources/other/marble.jpg",W,H,false,true),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
+        board.setBackground(new Background(myBI));
         stage.setScene(scene);
 
         stage.setTitle("Ragnarok");

@@ -3,12 +3,12 @@ package sample.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -19,8 +19,6 @@ import sample.Weapon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.Scanner;
 
 
@@ -40,7 +38,7 @@ public class LoadController {
     File dates;
     Scanner scanner;
     Game game;
-    Group board;
+    Pane board;
     Label label=new Label("Save does not exist!");
     @FXML
     public void initialize() throws FileNotFoundException {
@@ -132,7 +130,7 @@ public class LoadController {
     }
     private void load(Stage stage)
     {
-        board=new Group();
+        board=new Pane();
         double mode=Double.parseDouble(scanner.next());
         double x,y;
         x=Double.parseDouble(scanner.next());

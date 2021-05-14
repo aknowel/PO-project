@@ -3,10 +3,10 @@ package sample.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sample.Game;
 
@@ -19,7 +19,7 @@ public class MenuController {
     public static double mode=0D;
     public void playGame(ActionEvent event)
     {
-        Group board=new Group();
+        Pane board=new Pane();
         Game main=new Game(board);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         main.play(stage,mode);
