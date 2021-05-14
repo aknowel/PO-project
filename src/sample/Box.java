@@ -28,10 +28,22 @@ public abstract class Box extends ImageView {
                 {
                     game.upgrade=true;
                 }
-                Game.board.getChildren().remove(currentBox);
+                Game.game.board.getChildren().remove(currentBox);
                 x.remove();
             }
         }
+    }
+    public static EmptyBox newEmptyBox()
+    {
+        return new EmptyBox();
+    }
+    public static UpgradeBox newUpgradeBox()
+    {
+        return new UpgradeBox();
+    }
+    public String toString()
+    {
+        return this.i + " " + this.getLayoutX()+ " " + this.getLayoutY();
     }
 }
 class EmptyBox extends Box

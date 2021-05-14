@@ -12,7 +12,7 @@
       <AnchorPane layoutX="-340.0" layoutY="-160.0" prefHeight="720.0" prefWidth="1280.0" />
       <ImageView fitHeight="392.0" fitWidth="592.0" layoutX="4.0" layoutY="4.0" pickOnBounds="true">
          <image>
-            <Image url="@../other/backgroundpause.jpg" />
+            <Image url="@../other/background.jpg" />
          </image>
       </ImageView>
       <Label layoutX="10.0" layoutY="14.0" prefHeight="120.0" prefWidth="581.0" styleClass="title2" stylesheets="@../css/menu.css" text="Boss defeated! Congratulations!">

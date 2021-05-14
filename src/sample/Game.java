@@ -20,36 +20,45 @@ public class Game  {
 
     static final Random randomizer=new Random();
 
-    Hero hero;
-    final ArrayList<Weapon> weaponsHero= new ArrayList<>();
-    final ArrayList<Weapon> weaponsVillain= new ArrayList<>();
-    final ArrayList<Villain> villains= new ArrayList<>();
-    final ArrayList<Villain> shootingVillains= new ArrayList<>();
-    final ArrayList<Box> boxes= new ArrayList<>();
-    public static Group board;
-    public static AnimationTimer timer;
-    Text scoreText, livesText;
-    final int dWeapon=10;
-    int modifier=150, villainCounter=modifier-1, score=0, lives=3;
-    boolean goNorth, goSouth, goEast, goWest, isBoss=false,upgrade=false,stop=false;
-    public static boolean pause=false;
-    static int time=0;
-    public static Double mode;
+    public Hero hero;
+    public final ArrayList<Weapon> weaponsHero= new ArrayList<>();
+    public final ArrayList<Weapon> weaponsVillain= new ArrayList<>();
+    public final ArrayList<Villain> villains= new ArrayList<>();
+    public final ArrayList<Villain> shootingVillains= new ArrayList<>();
+    public final ArrayList<Box> boxes= new ArrayList<>();
+    public  Group board;
+    public AnimationTimer timer;
+    public Text scoreText, livesText;
+    public final int dWeapon=10;
+    public int modifier=150, villainCounter=modifier-1, score=0, lives=3;
+    public boolean goNorth, goSouth, goEast, goWest, isBoss=false,upgrade=false;
+    public boolean pause=false,stop=false;
+    public int time=0;
+    public  Double mode;
     AnchorPane root;
-    Boss boss=null;
-    Game game;
+    public Boss boss=null;
+    public static Game game;
 
+    public Game(Group board)
+    {
+        this.board=board;
+        game=this;
+        hero = new Hero();
+        Movement.moveHeroTo(20, H/2);
+    }
+    public Game(double x,double y,Group board)
+    {
+        this.board=board;
+        game=this;
+        hero = new Hero();
+        Movement.moveHeroTo(x,y);
+    }
 
     public void play(Stage stage,Double mode){
-        Game.mode =mode;
-        game=this;
-        Movement.game=game;
-        board = new Group();
-        hero = new Hero();
+        Game.game.mode =mode;
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
         board.getChildren().addAll(hero, scoreText, livesText);
-        Movement.moveHeroTo(20, H/2);
 
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         stage.setScene(scene);
@@ -85,17 +94,17 @@ public class Game  {
                 else if(event.getCode().equals(KeyBinds.D)) goEast = false;
             });
             scene.setOnMouseClicked(event -> {
-                Weapon newWeapon;
-                if(!upgrade) {
-                    newWeapon = new Hammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
+                if(!pause) {
+                    Weapon newWeapon;
+                    if (!upgrade) {
+                        newWeapon = new Hammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
+                    } else {
+                        newWeapon = new SuperHammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
+                    }
+                    newWeapon.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY());
+                    weaponsHero.add(newWeapon);
+                    board.getChildren().add(newWeapon);
                 }
-                else
-                {
-                    newWeapon = new SuperHammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
-                }
-                newWeapon.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY());
-                weaponsHero.add(newWeapon);
-                board.getChildren().add(newWeapon);
             });
 
             timer = new AnimationTimer() {
@@ -106,7 +115,7 @@ public class Game  {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (score < 0) {
+                    if (score < 50) {
                         villainCounter++;
                         Villain.newVillain(game);
                     } else if (villains.size() == 0) {

@@ -2,6 +2,7 @@ package sample.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -15,8 +16,9 @@ public class GameEndController {
     public void restartGame(ActionEvent event)
     {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Game game=new Game();
-        game.play(stage,Game.mode);
+        Group board=new Group();
+        Game game=new Game(board);
+        game.play(stage,Game.game.mode);
     }
     public void returnMenu(ActionEvent event)
     {

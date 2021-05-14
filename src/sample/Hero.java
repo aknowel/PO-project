@@ -18,9 +18,13 @@ public class Hero extends ImageView {
             if (currentWeapon.getBoundsInParent().intersects(game.hero.getBoundsInParent())){
                 game.lives--;
                 game.livesText.setText("Lives: " + game.lives);
-                Game.board.getChildren().remove(currentWeapon);
+                Game.game.board.getChildren().remove(currentWeapon);
                 x.remove();
             }
         }
+    }
+    public String toString()
+    {
+        return this.getLayoutX()+ " " + this.getLayoutY();
     }
 }

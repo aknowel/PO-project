@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="423.0" styleClass="image" stylesheets="@../css/border.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.PauseConroller">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="423.0" styleClass="image" stylesheets="@../css/border.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.PauseController">
    <children>
       <ImageView fitHeight="310.0" fitWidth="415.0" layoutX="4.0" layoutY="4.0" pickOnBounds="true">
          <image>
-            <Image url="@../other/backgroundpause.jpg" />
+            <Image url="@../other/background.jpg" />
          </image>
       </ImageView>
       <Button layoutX="155.0" layoutY="116.0" mnemonicParsing="false" onAction="#resumeGame" stylesheets="@../css/menu.css" text="Resume" />

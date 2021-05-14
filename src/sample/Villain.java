@@ -10,6 +10,7 @@ import java.util.Iterator;
 public abstract class Villain extends ImageView {
     protected Double HP;
     protected int speed;
+    protected int id;
     Villain(Image img)
     {
         super(img);
@@ -47,7 +48,7 @@ public abstract class Villain extends ImageView {
                 Villain currentVillain=y.next();
                 if (currentWeapon.getBoundsInParent().intersects(currentVillain.getBoundsInParent())){
                     currentVillain.hp();
-                    Game.board.getChildren().remove(currentWeapon);
+                    Game.game.board.getChildren().remove(currentWeapon);
                     x.remove();
                     if(!currentVillain.isAlive()) {
                         int i= Game.randomizer.nextInt(20);
@@ -56,9 +57,9 @@ public abstract class Villain extends ImageView {
                             Box newBox=Box.getNewBox(i);
                             newBox.relocate(currentVillain.getLayoutX(),currentVillain.getLayoutY());
                             game.boxes.add(newBox);
-                            Game.board.getChildren().add(newBox);
+                            Game.game.board.getChildren().add(newBox);
                         }
-                        Game.board.getChildren().remove(currentVillain);
+                        Game.game.board.getChildren().remove(currentVillain);
                         y.remove();
 
                        game.score++;
@@ -75,7 +76,7 @@ public abstract class Villain extends ImageView {
     public static void newVillain(Game game)
     {
         if (game.villainCounter % game.modifier == 0) {
-            Villain newVillain = Villain.getNewVillain(Game.randomizer.nextInt(7),Game.mode);
+            Villain newVillain = Villain.getNewVillain(Game.randomizer.nextInt(7),Game.game.mode);
             int r = Game.randomizer.nextInt(4);
             switch (r) {
                 case 0 -> {
@@ -90,12 +91,32 @@ public abstract class Villain extends ImageView {
                 case 3 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), 0);
             }
             game.villains.add(newVillain);
-            Game.board.getChildren().add(newVillain);
+            Game.game.board.getChildren().add(newVillain);
             if(newVillain instanceof Predator)
             {
                 game.shootingVillains.add(newVillain);
             }
         }
+    }
+    public void setHP(double HP)
+    {
+        this.HP=HP;
+    }
+    public static Skull newSkull(double mode)
+    {
+        return new Skull(mode);
+    }
+    public static Predator newPredator(double mode)
+    {
+        return new Predator(mode);
+    }
+    public static Spider newSpider(double mode)
+    {
+        return new Spider(mode);
+    }
+    public String toString()
+    {
+        return this.id + " "  + this.HP+ " "+ this.getLayoutX()+ " " + this.getLayoutY();
     }
 }
 class Skull extends Villain{
@@ -104,6 +125,7 @@ class Skull extends Villain{
             super(new Image("https://icons.iconarchive.com/icons/icons8/halloween/32/skull-3-icon.png"));
             this.HP= 2+mode;
             this.speed=-1;
+            this.id=0;
         }
 }
 class Predator extends Villain{
@@ -112,6 +134,7 @@ class Predator extends Villain{
         super(new Image("https://icons.iconarchive.com/icons/icons8/halloween/32/predator-icon.png"));
         this.HP=3+mode;
         this.speed=0;
+        this.id=1;
     }
 }
 class Spider extends Villain
@@ -121,6 +144,7 @@ class Spider extends Villain
         super(new Image("https://icons.iconarchive.com/icons/iconsmind/outline/32/Spider-icon.png"));
         this.HP=1+mode;
         this.speed=-2;
+        this.id=2;
     }
 }
 class Boss extends Villain
@@ -130,6 +154,7 @@ class Boss extends Villain
         super(new Image("https://icons.iconarchive.com/icons/icons8/halloween/64/predator-icon.png"));
         this.HP=20*(mode+1);
         this.speed=-3;
+        this.id=3;
     }
 }
 

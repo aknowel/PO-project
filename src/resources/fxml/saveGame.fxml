@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="423.0" styleClass="image" stylesheets="@../css/border.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.SaveGameController">
+   <children>
+      <ImageView fitHeight="308.0" fitWidth="413.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true">
+         <image>
+            <Image url="@../other/background.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="save1" layoutX="264.0" layoutY="38.0" mnemonicParsing="false" onAction="#setSave1" stylesheets="@../css/menu.css" text="Save 1" />
+      <Button fx:id="save2" layoutX="264.0" layoutY="111.0" mnemonicParsing="false" onAction="#setSave2" stylesheets="@../css/menu.css" text="Save 2" />
+      <Button fx:id="save3" layoutX="264.0" layoutY="183.0" mnemonicParsing="false" onAction="#setSave3" stylesheets="@../css/menu.css" text="Save 3" />
+      <Label fx:id="date1" layoutX="26.0" layoutY="58.0" prefHeight="23.0" prefWidth="208.0" styleClass="text" stylesheets="@../css/bindings.css" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="date2" layoutX="26.0" layoutY="131.0" prefHeight="23.0" prefWidth="208.0" styleClass="text" stylesheets="@../css/bindings.css" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="date3" layoutX="26.0" layoutY="203.0" prefHeight="23.0" prefWidth="208.0" styleClass="text" stylesheets="@../css/bindings.css" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="156.0" layoutY="246.0" mnemonicParsing="false" onAction="#back" stylesheets="@../css/menu.css" text="BACK" />
+   </children>
+</AnchorPane>
