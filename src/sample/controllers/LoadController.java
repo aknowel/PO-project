@@ -6,8 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import sample.Box;
 import sample.Game;
@@ -29,6 +32,8 @@ public class LoadController {
     @FXML
     TextField save3;
     Stage stage;
+    @FXML
+    AnchorPane anchorPane;
     AnchorPane root;
     Scene scene;
     File save;
@@ -36,7 +41,7 @@ public class LoadController {
     Scanner scanner;
     Game game;
     Group board;
-
+    Label label=new Label("Save does not exist!");
     @FXML
     public void initialize() throws FileNotFoundException {
         dates=new File("src/resources/other/dates.txt");
@@ -86,20 +91,44 @@ public class LoadController {
     public void loadSave1(ActionEvent event) throws FileNotFoundException {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         save=new File("src/resources/other/save1.txt");
-        scanner=new Scanner(save);
-        load(stage);
+        if(save.exists()) {
+            scanner = new Scanner(save);
+            load(stage);
+        }
+        else
+        {
+            anchorPane.getChildren().remove(label);
+            setLabel(label,Color.RED,261);
+            anchorPane.getChildren().add(label);
+        }
     }
     public void loadSave2(ActionEvent event) throws FileNotFoundException {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         save=new File("src/resources/other/save2.txt");
-        scanner=new Scanner(save);
-        load(stage);
+        if(save.exists()) {
+            scanner = new Scanner(save);
+            load(stage);
+        }
+        else
+        {
+            anchorPane.getChildren().remove(label);
+            setLabel(label,Color.RED,334);
+            anchorPane.getChildren().add(label);
+        }
     }
     public void loadSave3(ActionEvent event) throws FileNotFoundException {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         save=new File("src/resources/other/save3.txt");
-        scanner=new Scanner(save);
-        load(stage);
+        if(save.exists()) {
+            scanner = new Scanner(save);
+            load(stage);
+        }
+        else
+        {
+            anchorPane.getChildren().remove(label);
+            setLabel(label,Color.RED,405);
+            anchorPane.getChildren().add(label);
+        }
     }
     private void load(Stage stage)
     {
@@ -197,5 +226,12 @@ public class LoadController {
         game.time=Integer.parseInt(scanner.next());
         game.play(stage,mode);
         System.out.println("nie");
+    }
+    private void setLabel(Label text, Color color, double y)
+    {
+        text.setFont(Font.font("Verdana",16));
+        text.setTextFill(color);
+        text.setStyle("-fx-background-color: lightblue;");
+        text.relocate(873, y);
     }
 }
