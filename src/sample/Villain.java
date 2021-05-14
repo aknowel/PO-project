@@ -122,7 +122,7 @@ public abstract class Villain extends ImageView {
 class Skull extends Villain{
     Skull(Double mode)
         {
-            super(new Image("https://icons.iconarchive.com/icons/icons8/halloween/32/skull-3-icon.png"));
+            super(new Image("resources/Images/Skull.png"));
             this.HP= 2+mode;
             this.speed=-1;
             this.id=0;
@@ -131,7 +131,7 @@ class Skull extends Villain{
 class Predator extends Villain{
     Predator(Double mode)
     {
-        super(new Image("https://icons.iconarchive.com/icons/icons8/halloween/32/predator-icon.png"));
+        super(new Image("/resources/Images/Predator.png"));
         this.HP=3+mode;
         this.speed=0;
         this.id=1;
@@ -141,7 +141,7 @@ class Spider extends Villain
 {
     Spider(Double mode)
     {
-        super(new Image("https://icons.iconarchive.com/icons/iconsmind/outline/32/Spider-icon.png"));
+        super(new Image("/resources/Images/Spider.png"));
         this.HP=1+mode;
         this.speed=-2;
         this.id=2;
@@ -151,7 +151,7 @@ class Boss extends Villain
 {
     Boss(Double mode)
     {
-        super(new Image("https://icons.iconarchive.com/icons/icons8/halloween/64/predator-icon.png"));
+        super(new Image("/resources/Images/PredatorBoss.png"));
         this.HP=20*(mode+1);
         this.speed=-3;
         this.id=3;

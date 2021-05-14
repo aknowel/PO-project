@@ -45,7 +45,7 @@ class Hammer extends Weapon
 {
     Hammer(double x,double y)
     {
-        super(new Image("https://icons.iconarchive.com/icons/icons8/windows-8/16/Cultures-Thor-Hammer-icon.png"));
+        super(new Image("resources/Images/Hammer.png"));
         this.x=x;
         this.y=y;
         this.id=1;
@@ -55,7 +55,7 @@ class SuperHammer extends Weapon
 {
     SuperHammer(double x,double y)
     {
-        super(new Image("https://icons.iconarchive.com/icons/icons8/windows-8/24/Cultures-Thor-Hammer-icon.png"));
+        super(new Image("resources/Images/SuperHammer.png"));
         this.x=x;
         this.y=y;
         this.id=2;
@@ -65,7 +65,7 @@ class RedBall extends Weapon
 {
     RedBall(double x,double y)
     {
-        super(new Image("https://icons.iconarchive.com/icons/sekkyumu/developpers/16/Red-Ball-icon.png"));
+        super(new Image("resources/Images/PredatorBullet.png"));
         this.x=x;
         this.y=y;
         this.id=3;

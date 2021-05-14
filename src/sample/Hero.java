@@ -8,7 +8,7 @@ import java.util.Iterator;
 public class Hero extends ImageView {
     Hero()
     {
-        super("https://icons.iconarchive.com/icons/hopstarter/superhero-avatar/32/Avengers-Thor-icon.png");
+        super("resources/Images/Thor.png");
     }
     static void checkHitHero(Game game)
     {

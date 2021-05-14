@@ -223,7 +223,6 @@ public class LoadController {
         game.upgrade=Boolean.parseBoolean(scanner.next());
         game.time=Integer.parseInt(scanner.next());
         game.play(stage);
-        System.out.println("nie");
     }
     private void setLabel(Label text, Color color, double y)
     {
