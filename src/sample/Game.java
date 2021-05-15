@@ -30,7 +30,7 @@ public class Game  {
     public AnimationTimer timer;
     public Text scoreText, livesText;
     public final int dWeapon=10;
-    public int modifier=150, villainCounter=modifier-1, score=0, lives=3;
+    public int modifier=150, villainCounter=modifier-1, score=0, lives=10,livesMax=10;
     public boolean goNorth, goSouth, goEast, goWest, isBoss=false,upgrade=false;
     public boolean pause=false,stop=false;
     public int time=0;
@@ -57,6 +57,8 @@ public class Game  {
     }
 
     public void play(Stage stage){
+        Counter.games();
+        Counter.thorGames();
         Game.game.mode =mode;
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
@@ -109,6 +111,7 @@ public class Game  {
                     newWeapon.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY());
                     weaponsHero.add(newWeapon);
                     board.getChildren().add(newWeapon);
+                    Counter.thrownWeapon();
                 }
             });
 
@@ -120,7 +123,7 @@ public class Game  {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (score < 0) {
+                    if (score < 50) {
                         villainCounter++;
                         Villain.newVillain(game);
                     } else if (villains.size() == 0) {
@@ -193,6 +196,12 @@ public class Game  {
         if (!boss.isAlive()) {
             timer.stop();
             stop=true;
+            Counter.victories();
+            Counter.killedBoss();
+            if(lives==livesMax)
+            {
+                Counter.deathless();
+            }
             FXMLLoader fxmlLoader=new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/resources/fxml/bossDefeat.fxml"));
             try {

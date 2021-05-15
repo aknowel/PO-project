@@ -60,8 +60,8 @@ public abstract class Villain extends ImageView {
                             Game.game.board.getChildren().add(newBox);
                         }
                         Game.game.board.getChildren().remove(currentVillain);
+                        check(currentVillain.id);
                         y.remove();
-
                        game.score++;
                         game.scoreText.setText("Score: " + game.score);
                         if(currentVillain instanceof Predator)
@@ -113,6 +113,19 @@ public abstract class Villain extends ImageView {
     public static Spider newSpider(double mode)
     {
         return new Spider(mode);
+    }
+    public static boolean isShooting(Villain villain)
+    {
+        return villain.id==1;
+    }
+    public static void check(int id)
+    {
+        switch(id)
+        {
+            case 0 -> Counter.killedSkull();
+            case 1 -> Counter.killedPredator();
+            case 2 -> Counter.killedSpider();
+        }
     }
     public String toString()
     {

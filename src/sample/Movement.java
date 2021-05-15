@@ -21,6 +21,10 @@ public abstract class Movement {
             if(Game.game.hero.getBoundsInParent().intersects(currentvillain.getBoundsInParent())) {
                 Game.game.lives--;
                 Game.game.livesText.setText("Lives: " + Game.game.lives);
+                if(Villain.isShooting(currentvillain))
+                {
+                    Game.game.shootingVillains.remove(currentvillain);
+                }
                 it.remove();
                 Game.game.board.getChildren().remove(currentvillain);
                 continue;
