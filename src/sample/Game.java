@@ -120,7 +120,7 @@ public class Game  {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (score < 50) {
+                    if (score < 0) {
                         villainCounter++;
                         Villain.newVillain(game);
                     } else if (villains.size() == 0) {

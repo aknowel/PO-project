@@ -61,6 +61,19 @@ public class MenuController {
     public void selectAchievements(ActionEvent event)
     {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader=new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/achievement.fxml"));
+        try {
+            root = fxmlLoader.load();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Achievement");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        stage.show();
     }
     public void exitGame(ActionEvent event)
     {
