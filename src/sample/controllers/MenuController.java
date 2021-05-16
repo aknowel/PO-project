@@ -11,9 +11,8 @@ import javafx.stage.Stage;
 import sample.Counter;
 import sample.Game;
 
-import java.awt.*;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -103,6 +102,7 @@ public class MenuController {
             while (scanner.hasNext()) {
                 list.add(scanner.next());
             }
+            scanner.close();
             file.delete();
             file.createNewFile();
             writer=new PrintWriter(file);

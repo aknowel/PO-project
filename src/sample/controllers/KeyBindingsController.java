@@ -65,12 +65,14 @@ public class KeyBindingsController {
                 }
                 else
                 {
+                    textW.setText(KeyBinds.W.getName());
                     text = new Label("Error! This key has been already bound!");
                     setLabel(text, Color.RED, 277);
                 }
             }
             else
             {
+                textW.setText(KeyBinds.W.getName());
                 text = new Label("Error! Please enter only letters!");
                 setLabel(text,Color.RED, 277);
             }
@@ -96,12 +98,14 @@ public class KeyBindingsController {
                     setLabel(text, Color.GREEN, 307);
                 }
                 else{
+                    textA.setText(KeyBinds.A.getName());
                     text = new Label("Error! This key has been already bound!");
                     setLabel(text, Color.RED, 307);
                 }
         }
         else
             {
+                textA.setText(KeyBinds.A.getName());
                 text = new Label("Error! Please enter only letters!");
                 setLabel(text, Color.RED, 307);
             }
@@ -128,12 +132,14 @@ public class KeyBindingsController {
                 }
                 else
                 {
+                    textS.setText(KeyBinds.S.getName());
                     text = new Label("Error! This key has been already bound!");
                     setLabel(text, Color.RED, 335);
                 }
             }
             else
             {
+                textS.setText(KeyBinds.S.getName());
                 text = new Label("Error! Please enter only letters!");
                 setLabel(text, Color.RED, 335);
             }
@@ -160,12 +166,14 @@ public class KeyBindingsController {
                 }
                 else
                 {
+                    textD.setText(KeyBinds.D.getName());
                     text = new Label("Error! This key has been already bound!");
                     setLabel(text, Color.RED, 362);
                 }
             }
             else
             {
+                textD.setText(KeyBinds.D.getName());
                 text = new Label("Error! Please enter only letters!");
                 setLabel(text, Color.RED, 362);
             }
@@ -192,12 +200,14 @@ public class KeyBindingsController {
                 }
                 else
                 {
+                    textP.setText(KeyBinds.P.getName());
                     text = new Label("Error! This key has been already bound!");
                     setLabel(text, Color.RED, 413);
                 }
             }
             else
             {
+                textP.setText(KeyBinds.P.getName());
                 text = new Label("Error! Please enter only letters!");
                 setLabel(text, Color.RED, 413);
             }

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -32,6 +33,12 @@ public class LoadController {
     Stage stage;
     @FXML
     AnchorPane anchorPane;
+    @FXML
+    Button delete1;
+    @FXML
+    Button delete2;
+    @FXML
+    Button delete3;
     AnchorPane root;
     Scene scene;
     File save;
@@ -39,9 +46,14 @@ public class LoadController {
     Scanner scanner;
     Game game;
     Pane board;
-    Label label=new Label("Save does not exist!");
+    static Label label=new Label("Save does not exist!");
+    Label label2=new Label("Save is corrupted!");
+    static Label label3=new Label("Deleted successfully!");
+    static int i=0;
+    static AnchorPane pane;
     @FXML
     public void initialize() throws FileNotFoundException {
+        LoadController.pane=anchorPane;
         dates=new File("src/resources/other/dates.txt");
         String text1="",text2="",text3="";
         int id;
@@ -67,6 +79,7 @@ public class LoadController {
             if (!text3.equals("") && file.exists()) {
                 save3.setText(text3.substring(0, 19).replace('T', ' '));
             }
+            scanner.close();
         }
     }
     public void returnMenu(ActionEvent event)
@@ -91,11 +104,13 @@ public class LoadController {
         save=new File("src/resources/other/save1.txt");
         if(save.exists()) {
             scanner = new Scanner(save);
-            load(stage);
+            load(stage,261);
         }
         else
         {
             anchorPane.getChildren().remove(label);
+            anchorPane.getChildren().remove(label2);
+            anchorPane.getChildren().remove(label3);
             setLabel(label,Color.RED,261);
             anchorPane.getChildren().add(label);
         }
@@ -105,11 +120,13 @@ public class LoadController {
         save=new File("src/resources/other/save2.txt");
         if(save.exists()) {
             scanner = new Scanner(save);
-            load(stage);
+            load(stage,334);
         }
         else
         {
             anchorPane.getChildren().remove(label);
+            anchorPane.getChildren().remove(label2);
+            anchorPane.getChildren().remove(label3);
             setLabel(label,Color.RED,334);
             anchorPane.getChildren().add(label);
         }
@@ -119,112 +136,162 @@ public class LoadController {
         save=new File("src/resources/other/save3.txt");
         if(save.exists()) {
             scanner = new Scanner(save);
-            load(stage);
+            load(stage,405);
         }
         else
         {
             anchorPane.getChildren().remove(label);
+            anchorPane.getChildren().remove(label2);
+            anchorPane.getChildren().remove(label3);
             setLabel(label,Color.RED,405);
             anchorPane.getChildren().add(label);
         }
     }
-    private void load(Stage stage)
+    public void deleteSave1(ActionEvent event)
     {
-        board=new Pane();
-        double mode=Double.parseDouble(scanner.next());
-        double x,y;
-        x=Double.parseDouble(scanner.next());
-        y=Double.parseDouble(scanner.next());
-        game=new Game(x,y,board,mode);
-        Weapon weapon;
-        int length=Integer.parseInt(scanner.next());
-        for(int i=0;i<length;i++)
-        {
-            int id=Integer.parseInt(scanner.next());
-            if(id==1)
-            {
-                weapon= Weapon.newHammer(Double.parseDouble(scanner.next()),Double.parseDouble(scanner.next()));
-                weapon.relocate(Double.parseDouble(scanner.next()),Double.parseDouble(scanner.next()));
-            }
-            else
-            {
-                weapon= Weapon.newSuperHammer(Double.parseDouble(scanner.next()),Double.parseDouble(scanner.next()));
-                weapon.relocate(Double.parseDouble(scanner.next()),Double.parseDouble(scanner.next()));
-            }
-            game.weaponsHero.add(weapon);
-            board.getChildren().add(weapon);
-        }
-        length=Integer.parseInt(scanner.next());
-        for(int i=0;i<length;i++)
-        {
-            int id=Integer.parseInt(scanner.next());
-            weapon= Weapon.newRedBall(Double.parseDouble(scanner.next()),Double.parseDouble(scanner.next()));
-            weapon.relocate(Double.parseDouble(scanner.next()),Double.parseDouble(scanner.next()));
-            game.weaponsVillain.add(weapon);
-            board.getChildren().add(weapon);
-        }
-        Villain villain=null;
-        length=Integer.parseInt(scanner.next());
-        for(int i=0;i<length;i++)
-        {
-            int id=Integer.parseInt(scanner.next());
-            double hp=Double.parseDouble(scanner.next());
-            switch (id) {
-                case 0 -> {
-                    villain = Villain.newSkull(mode);
-                    villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                    villain.setHP(hp);
-                }
-                 case 1 ->
-                {
-                    villain = Villain.newPredator(mode);
-                    villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                    villain.setHP(hp);
-                    game.shootingVillains.add(villain);
-                }
-                case 2 -> {
-                            villain = Villain.newSpider(mode);
-                            villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                            villain.setHP(hp);
-                        }
-                        case 3->
-                {
-                    villain = Villain.getNewBoss(mode);
-                    villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                    villain.setHP(hp);
-                }
-            }
-            game.villains.add(villain);
-            board.getChildren().add(villain);
-        }
-        Box box;
-        length=Integer.parseInt(scanner.next());
-        for(int i=0;i<length;i++)
-        {
-            int id=Integer.parseInt(scanner.next());
-            if(id==0)
-            {
-                box=Box.newEmptyBox();
-                box.relocate(Double.parseDouble(scanner.next()),Double.parseDouble(scanner.next()));
-            }
-            else
-            {
-                box=Box.newUpgradeBox();
-                box.relocate(Double.parseDouble(scanner.next()),Double.parseDouble(scanner.next()));
-            }
-            game.boxes.add(box);
-            board.getChildren().add(box);
-        }
-        game.modifier=Integer.parseInt(scanner.next());
-        game.villainCounter=Integer.parseInt(scanner.next());
-        game.score=Integer.parseInt(scanner.next());
-        game.lives=Integer.parseInt(scanner.next());
-        game.isBoss=Boolean.parseBoolean(scanner.next());
-        game.upgrade=Boolean.parseBoolean(scanner.next());
-        game.time=Integer.parseInt(scanner.next());
-        game.play(stage);
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        delete(1);
+        dateEmpty(1);
     }
-    private void setLabel(Label text, Color color, double y)
+    public void deleteSave2(ActionEvent event)
+    {
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        delete(2);
+        dateEmpty(2);
+    }
+    public void deleteSave3(ActionEvent event)
+    {
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        delete(3);
+        dateEmpty(3);
+    }
+    private void delete(int i)
+    {
+        anchorPane.getChildren().remove(label);
+        anchorPane.getChildren().remove(label2);
+        anchorPane.getChildren().remove(label3);
+        LoadController.i =i;
+        FXMLLoader fxmlLoader=new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/delete.fxml"));
+        try {
+            root = fxmlLoader.load();
+            root.setLayoutX(237);
+            root.setLayoutY(133);
+            anchorPane.getChildren().add(root);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        stage.show();
+    }
+    private void dateEmpty(int i)
+    {
+        switch (i)
+        {
+            case 1: save1.setText(""); break;
+            case 2: save2.setText(""); break;
+            case 3: save3.setText(""); break;
+        }
+    }
+    private void load(Stage stage,double z)
+    {
+        try {
+            board = new Pane();
+            double mode = Double.parseDouble(scanner.next());
+            double x, y;
+            x = Double.parseDouble(scanner.next());
+            y = Double.parseDouble(scanner.next());
+            game = new Game(x, y, board, mode);
+            Weapon weapon;
+            int length = Integer.parseInt(scanner.next());
+            for (int i = 0; i < length; i++) {
+                int id = Integer.parseInt(scanner.next());
+                if (id == 1) {
+                    weapon = Weapon.newHammer(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                    weapon.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                } else {
+                    weapon = Weapon.newSuperHammer(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                    weapon.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                }
+                game.weaponsHero.add(weapon);
+                board.getChildren().add(weapon);
+            }
+            length = Integer.parseInt(scanner.next());
+            for (int i = 0; i < length; i++) {
+                int id = Integer.parseInt(scanner.next());
+                weapon = Weapon.newRedBall(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                weapon.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                game.weaponsVillain.add(weapon);
+                board.getChildren().add(weapon);
+            }
+            Villain villain = null;
+            length = Integer.parseInt(scanner.next());
+            for (int i = 0; i < length; i++) {
+                int id = Integer.parseInt(scanner.next());
+                double hp = Double.parseDouble(scanner.next());
+                switch (id) {
+                    case 0 -> {
+                        villain = Villain.newSkull(mode);
+                        villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                        villain.setHP(hp);
+                    }
+                    case 1 -> {
+                        villain = Villain.newPredator(mode);
+                        villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                        villain.setHP(hp);
+                        game.shootingVillains.add(villain);
+                    }
+                    case 2 -> {
+                        villain = Villain.newSpider(mode);
+                        villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                        villain.setHP(hp);
+                    }
+                    case 3 -> {
+                        villain = Villain.getNewBoss(mode);
+                        villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                        villain.setHP(hp);
+                    }
+                }
+                game.villains.add(villain);
+                board.getChildren().add(villain);
+            }
+            Box box;
+            length = Integer.parseInt(scanner.next());
+            for (int i = 0; i < length; i++) {
+                int id = Integer.parseInt(scanner.next());
+                if (id == 0) {
+                    box = Box.newEmptyBox();
+                    box.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                } else {
+                    box = Box.newUpgradeBox();
+                    box.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                }
+                game.boxes.add(box);
+                board.getChildren().add(box);
+            }
+            game.modifier = Integer.parseInt(scanner.next());
+            game.villainCounter = Integer.parseInt(scanner.next());
+            game.score = Integer.parseInt(scanner.next());
+            game.lives = Integer.parseInt(scanner.next());
+            game.isBoss = Boolean.parseBoolean(scanner.next());
+            game.upgrade = Boolean.parseBoolean(scanner.next());
+            game.time = Integer.parseInt(scanner.next());
+            game.play(stage);
+        }
+        catch (Exception e)
+        {
+            anchorPane.getChildren().remove(label);
+            anchorPane.getChildren().remove(label2);
+            anchorPane.getChildren().remove(label3);
+            setLabel(label2,Color.RED,z);
+            anchorPane.getChildren().add(label2);
+        }
+        finally {
+            scanner.close();
+        }
+    }
+    public static void setLabel(Label text, Color color, double y)
     {
         text.setFont(Font.font("Verdana",16));
         text.setTextFill(color);

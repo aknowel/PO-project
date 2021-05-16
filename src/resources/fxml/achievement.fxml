@@ -141,5 +141,6 @@
          <Font size="72.0" />
       </font>
    </Label>
-   <Button layoutX="572.0" layoutY="552.0" mnemonicParsing="false" onAction="#returnMenu" stylesheets="@../css/menu.css" text="MENU" />
+   <Button layoutX="572.0" layoutY="600.0" mnemonicParsing="false" onAction="#returnMenu" stylesheets="@../css/menu.css" text="MENU" />
+   <Button layoutX="579.0" layoutY="537.0" mnemonicParsing="false" onAction="#resetAchievements" stylesheets="@../css/menu.css" text="Reset" />
 </AnchorPane>
