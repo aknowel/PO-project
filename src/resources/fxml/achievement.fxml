@@ -11,9 +11,9 @@
    <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true">
       <Image url="@../other/image.jpg" />
    </ImageView>
-   <ScrollPane layoutX="420.0" layoutY="205.0" prefHeight="310.0" prefWidth="421.0">
+   <ScrollPane layoutX="355.0" layoutY="205.0" prefHeight="310.0" prefWidth="552.0" vvalue="1.0">
       <AnchorPane prefHeight="603.0" prefWidth="405.0" style="-fx-background-color: yellow;">
-         <Label fx:id="l1" alignment="CENTER" layoutX="71.0" prefHeight="73.0" prefWidth="334.0" text="Killed ">
+         <Label fx:id="l1" alignment="CENTER" layoutX="71.0" prefHeight="73.0" prefWidth="334.0" text=" You have splashed . spiders">
 
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
@@ -30,7 +30,7 @@
          <ImageView fitHeight="69.0" fitWidth="73.0" pickOnBounds="true">
             <Image url="@../Images/Spider.png" />
          </ImageView>
-         <Label fx:id="l2" alignment="CENTER" layoutX="71.0" layoutY="67.0" prefHeight="70.0" prefWidth="331.0" text="Killed" textAlignment="CENTER">
+         <Label fx:id="l2" alignment="CENTER" layoutX="71.0" layoutY="67.0" prefHeight="70.0" prefWidth="331.0" text="You have taken down . predators" textAlignment="CENTER">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -43,7 +43,7 @@
          <ImageView fitHeight="69.0" fitWidth="73.0" layoutY="67.0" pickOnBounds="true">
             <Image url="@../Images/Predator.png" />
          </ImageView>
-         <Label fx:id="l3" alignment="CENTER" layoutX="71.0" layoutY="133.0" text="Killed">
+         <Label fx:id="l3" alignment="CENTER" layoutX="71.0" layoutY="133.0" text="You have crushed . skulls">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -53,7 +53,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l4" alignment="CENTER" layoutX="71.0" layoutY="200.0" text="Killed">
+         <Label fx:id="l4" alignment="CENTER" layoutX="71.0" layoutY="200.0" text="You have defeated . bosses">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -63,7 +63,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l5" alignment="CENTER" layoutX="71.0" layoutY="265.0" text="Thrown ">
+         <Label fx:id="l5" alignment="CENTER" layoutX="71.0" layoutY="265.0" prefHeight="74.0" prefWidth="355.0" text="You have thrown . hammers">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -73,7 +73,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l6" alignment="CENTER" layoutX="71.0" layoutY="331.0" text="Deathless ">
+         <Label fx:id="l6" alignment="CENTER" layoutX="71.0" layoutY="331.0" prefHeight="74.0" prefWidth="463.0" text="You have played . perfect games">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -83,7 +83,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l7" alignment="CENTER" layoutX="71.0" layoutY="396.0" text="Thor games ">
+         <Label fx:id="l7" alignment="CENTER" layoutX="71.0" layoutY="395.0" prefHeight="74.0" prefWidth="465.0" text="You have chosen Thor . times">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -93,7 +93,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l8" alignment="CENTER" layoutX="71.0" layoutY="463.0" text="Games ">
+         <Label fx:id="l8" alignment="CENTER" layoutX="71.0" layoutY="463.0" prefHeight="74.0" prefWidth="463.0" text="You have played our game . times">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -103,7 +103,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l9" alignment="CENTER" layoutX="71.0" layoutY="530.0" text="Victories ">
+         <Label fx:id="l9" alignment="CENTER" layoutX="71.0" layoutY="530.0" text="Nice! You have won . times">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />

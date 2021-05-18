@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="image" stylesheets="@../css/border.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.GameEndController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="image" stylesheets="@../css/border.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.GameEndController">
    <children>
       <AnchorPane layoutX="-340.0" layoutY="-160.0" prefHeight="720.0" prefWidth="1280.0" />
       <ImageView fitHeight="392.0" fitWidth="592.0" layoutX="4.0" layoutY="4.0" pickOnBounds="true">
@@ -15,12 +13,18 @@
             <Image url="@../other/background.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="10.0" layoutY="14.0" prefHeight="120.0" prefWidth="581.0" styleClass="title2" stylesheets="@../css/menu.css" text="Boss defeated! Congratulations!">
+      <Label layoutX="18.0" layoutY="14.0" prefHeight="120.0" prefWidth="581.0" styleClass="title2" stylesheets="@../css/menu.css" text="Boss defeated! Congratulations!">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Button layoutX="246.0" layoutY="180.0" mnemonicParsing="false" onAction="#restartGame" stylesheets="@../css/menu.css" text="Restart" />
-      <Button layoutX="252.0" layoutY="243.0" mnemonicParsing="false" onAction="#returnMenu" stylesheets="@../css/menu.css" text="MENU" />
+      <Button layoutX="236.0" layoutY="239.0" mnemonicParsing="false" onAction="#restartGame" stylesheets="@../css/menu.css" text="Restart" />
+      <Button layoutX="242.0" layoutY="303.0" mnemonicParsing="false" onAction="#returnMenu" stylesheets="@../css/menu.css" text="MENU" />
+      <Label layoutX="230.0" layoutY="100.0" prefHeight="23.0" prefWidth="129.0" styleClass="title" stylesheets="@../css/menu.css" text="The cake is not a lie!" />
+      <ImageView fitHeight="107.0" fitWidth="129.0" layoutX="236.0" layoutY="124.0" pickOnBounds="true">
+         <image>
+            <Image url="@../Images/cake.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
