@@ -65,7 +65,7 @@ public class Game  {
         board.getChildren().addAll(hero, scoreText, livesText);
 
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
-        BackgroundImage myBI= new BackgroundImage(new Image("resources/other/marble.jpg",W,H,false,true),
+        BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Tlo.jpg",W,H,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
         board.setBackground(new Background(myBI));
         stage.setScene(scene);
@@ -123,7 +123,7 @@ public class Game  {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (score < 5) {
+                    if (score < 50) {
                         villainCounter++;
                         Villain.newVillain(game);
                     } else if (villains.size() == 0) {
