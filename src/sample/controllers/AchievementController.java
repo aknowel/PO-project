@@ -61,7 +61,7 @@ public class AchievementController {
         if(file.exists() && slist.size()==9) {
             for (int i = 0; i < list.size(); i++) {
                 String text = list.get(i).getText();
-                list.get(i).setText(text + slist.get(i));
+                list.get(i).setText(text.replace(".",slist.get(i)));
                 limit(list,i,slist);
 
             }
@@ -70,7 +70,7 @@ public class AchievementController {
         {
             for (int i = 0; i < list.size(); i++) {
                 String text = list.get(i).getText();
-                list.get(i).setText(text + 0);
+                list.get(i).setText(text.replace(".","0"));
             }
         }
     }

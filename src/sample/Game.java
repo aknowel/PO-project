@@ -8,8 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 
@@ -21,16 +20,17 @@ public class Game  {
     static final Random randomizer=new Random();
 
     public Hero hero;
-    public final ArrayList<Weapon> weaponsHero= new ArrayList<>();
-    public final ArrayList<Weapon> weaponsVillain= new ArrayList<>();
-    public final ArrayList<Villain> villains= new ArrayList<>();
-    public final ArrayList<Villain> shootingVillains= new ArrayList<>();
-    public final ArrayList<Box> boxes= new ArrayList<>();
+    public final LinkedList<Weapon> weaponsHero= new LinkedList<>();
+    public final LinkedList<Weapon> weaponsVillain= new LinkedList<>();
+    public final LinkedList<Villain> villains= new LinkedList<>();
+    public final LinkedList<Villain> shootingVillains= new LinkedList<>();
+    public final LinkedList<Backgorund> backgorundsObjects=new LinkedList<>();
+    public final LinkedList<Box> boxes= new LinkedList<>();
     public Pane board;
     public AnimationTimer timer;
     public Text scoreText, livesText;
     public final int dWeapon=10;
-    public int modifier=150, villainCounter=modifier-1, score=0, lives=10,livesMax=10;
+    public int modifier=150, villainCounter=modifier-1, score=0, lives=100000,livesMax=10;
     public boolean goNorth, goSouth, goEast, goWest, isBoss=false,upgrade=false;
     public boolean pause=false,stop=false;
     public int time=0;
@@ -39,30 +39,39 @@ public class Game  {
     public Boss boss=null;
     public static Game game;
 
-    public Game(Pane board,Double mode)
-    {
+    public Game(Pane board,Double mode) {
         this.mode=mode;
         this.board=board;
         game=this;
         hero = new Hero();
-        Movement.moveHeroTo(20, H/2);
+        try {
+            MovementTest.moveHeroTo(20, H/2);
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
-    public Game(double x,double y,Pane board,Double mode)
-    {
+    public Game(double x,double y,Pane board,Double mode) {
         this.mode=mode;
         this.board=board;
         game=this;
         hero = new Hero();
-        Movement.moveHeroTo(x,y);
+        try {
+            MovementTest.moveHeroTo(x,y);
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public void play(Stage stage){
         Counter.games();
         Counter.thorGames();
         Game.game.mode =mode;
+        Cactus cactus=new Cactus();
+        cactus.relocate(W/2,H/2);
+        backgorundsObjects.add(cactus);
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
-        board.getChildren().addAll(hero, scoreText, livesText);
+        board.getChildren().addAll(hero, scoreText, livesText,cactus);
 
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Tlo.jpg",W,H,false,true),
@@ -138,9 +147,14 @@ public class Game  {
                             isBossDefeat(timer);
                         }
                     }
-                    Movement.moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
-                    Movement.throwWeapon(dWeapon);
-                    Movement.enemyWeapon(5);
+                    try {
+                        MovementTest.moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
+                        MovementTest.throwWeapon(dWeapon);
+                        MovementTest.enemyWeapon(5);
+                        MovementTest.moveVillain();
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                     if(time==32-8*mode) {
                         Weapon.newEnemyWeapon(game);
                         time=0;
@@ -148,7 +162,6 @@ public class Game  {
                     else {
                         time++;
                     }
-                    Movement.moveVillain();
                     Hero.checkHitHero(game);
                     Villain.checkHitVillain(game);
                     Box.checkBox(game);

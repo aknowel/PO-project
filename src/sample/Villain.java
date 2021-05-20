@@ -133,6 +133,10 @@ public abstract class Villain extends ImageView {
     }
 }
 class Skull extends Villain{
+    Skull()
+    {
+        super(new Image("resources/Images/Skull.png"));
+    }
     Skull(Double mode)
         {
             super(new Image("resources/Images/Skull.png"));
@@ -142,6 +146,10 @@ class Skull extends Villain{
         }
 }
 class Predator extends Villain{
+    Predator()
+    {
+        super(new Image("/resources/Images/Predator.png"));
+    }
     Predator(Double mode)
     {
         super(new Image("/resources/Images/Predator.png"));
@@ -152,6 +160,10 @@ class Predator extends Villain{
 }
 class Spider extends Villain
 {
+    Spider()
+    {
+        super(new Image("/resources/Images/Spider.png"));
+    }
     Spider(Double mode)
     {
         super(new Image("/resources/Images/Spider.png"));

@@ -43,6 +43,10 @@ public abstract class Weapon extends ImageView {
 }
 class Hammer extends Weapon
 {
+    Hammer()
+    {
+        super(new Image("resources/Images/Hammer.png"));
+    }
     Hammer(double x,double y)
     {
         super(new Image("resources/Images/Hammer.png"));
@@ -53,6 +57,10 @@ class Hammer extends Weapon
 }
 class SuperHammer extends Weapon
 {
+    SuperHammer()
+    {
+        super(new Image("resources/Images/SuperHammer.png"));
+    }
     SuperHammer(double x,double y)
     {
         super(new Image("resources/Images/SuperHammer.png"));
@@ -63,6 +71,10 @@ class SuperHammer extends Weapon
 }
 class RedBall extends Weapon
 {
+    RedBall()
+    {
+        super(new Image("resources/Images/PredatorBullet.png"));
+    }
     RedBall(double x,double y)
     {
         super(new Image("resources/Images/PredatorBullet.png"));
