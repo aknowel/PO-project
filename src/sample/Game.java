@@ -24,7 +24,7 @@ public class Game  {
     public final LinkedList<Weapon> weaponsVillain= new LinkedList<>();
     public final LinkedList<Villain> villains= new LinkedList<>();
     public final LinkedList<Villain> shootingVillains= new LinkedList<>();
-    public final LinkedList<Backgorund> backgorundsObjects=new LinkedList<>();
+    public final LinkedList<Background> backgroundObjects =new LinkedList<>();
     public final LinkedList<Box> boxes= new LinkedList<>();
     public Pane board;
     public AnimationTimer timer;
@@ -70,8 +70,8 @@ public class Game  {
         cactus.relocate(W/2,H/2);
         Barrel barrel=new Barrel();
         barrel.relocate(W/2+200,H/2);
-        backgorundsObjects.add(cactus);
-        backgorundsObjects.add(barrel);
+        backgroundObjects.add(cactus);
+        backgroundObjects.add(barrel);
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
         board.getChildren().addAll(hero, scoreText, livesText,cactus,barrel);
@@ -79,7 +79,7 @@ public class Game  {
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Tlo.jpg",W,H,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
-        board.setBackground(new Background(myBI));
+        board.setBackground(new javafx.scene.layout.Background(myBI));
         stage.setScene(scene);
 
         stage.setTitle("Ragnarok");

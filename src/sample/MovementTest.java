@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import java.util.Iterator;
 
 public abstract class MovementTest {
-    static Backgorund curr=null;
+    static Background curr=null;
     static void moveHeroTo (double x, double y) throws InstantiationException, IllegalAccessException {
         if (x >= 0 && x <= Game.W - Game.game.hero.getBoundsInLocal().getWidth() && y >= 0 && y <= Game.H - Game.game.hero.getBoundsInLocal().getHeight() && backgroundCheck(x,y,Game.game.hero)) {
                Game.game.hero.relocate(x, y);
@@ -114,12 +114,12 @@ public abstract class MovementTest {
         }
     }
     private static boolean backgroundCheck(double x, double y, ImageView object) throws IllegalAccessException, InstantiationException {
-        Iterator<Backgorund> it=Game.game.backgorundsObjects.iterator();
+        Iterator<Background> it=Game.game.backgroundObjects.iterator();
         ImageView test=object.getClass().newInstance();
         test.relocate(x,y);
         while(it.hasNext())
         {
-            Backgorund current=it.next();
+            Background current=it.next();
             if(current.getBoundsInParent().intersects(test.getBoundsInParent()))
             {
                 return false;
@@ -128,7 +128,7 @@ public abstract class MovementTest {
         return true;
     }
     private static boolean villainBgCheck(Villain object) {
-        for (Backgorund current : Game.game.backgorundsObjects) {
+        for (Background current : Game.game.backgroundObjects) {
             double dd = Math.sqrt((object.getLayoutX() - current.getLayoutX() - current.getBoundsInLocal().getWidth() / 2) * (object.getLayoutX() - current.getLayoutX() - current.getBoundsInLocal().getWidth() / 2) + (object.getLayoutY() - current.getLayoutY() - current.getBoundsInLocal().getHeight() / 2) * (object.getLayoutY() - current.getLayoutY() - current.getBoundsInLocal().getHeight() / 2));
             if (dd <= 60) {
                 curr = current;
