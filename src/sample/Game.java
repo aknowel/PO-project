@@ -68,10 +68,13 @@ public class Game  {
         Game.game.mode =mode;
         Cactus cactus=new Cactus();
         cactus.relocate(W/2,H/2);
+        Barrel barrel=new Barrel();
+        barrel.relocate(W/2+200,H/2);
         backgorundsObjects.add(cactus);
+        backgorundsObjects.add(barrel);
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
-        board.getChildren().addAll(hero, scoreText, livesText,cactus);
+        board.getChildren().addAll(hero, scoreText, livesText,cactus,barrel);
 
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Tlo.jpg",W,H,false,true),

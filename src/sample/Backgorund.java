@@ -16,3 +16,10 @@ class Cactus extends Backgorund
         super(new Image("/resources/Images/Cacti.png"));
     }
 }
+class Barrel extends Backgorund
+{
+    Barrel()
+    {
+        super(new Image("/resources/Images/Barrel.png"));
+    }
+}
