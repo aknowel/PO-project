@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="310.0" fitWidth="415.0" layoutX="4.0" layoutY="4.0" pickOnBounds="true">
          <image>
-            <Image url="@../other/background.jpg" />
+            <Image url="@../Images/Background/background.jpg" />
          </image>
       </ImageView>
       <Button layoutX="155.0" layoutY="116.0" mnemonicParsing="false" onAction="#resumeGame" stylesheets="@../css/menu.css" text="Resume" />

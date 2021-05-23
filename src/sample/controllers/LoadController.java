@@ -51,6 +51,7 @@ public class LoadController {
     static Label label3=new Label("Deleted successfully!");
     static int i=0;
     static AnchorPane pane;
+    static boolean deleted=false;
     @FXML
     public void initialize() throws FileNotFoundException {
         LoadController.pane=anchorPane;
@@ -151,19 +152,25 @@ public class LoadController {
     {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         delete(1);
-        dateEmpty(1);
+        if(deleted) {
+            dateEmpty(1);
+        }
     }
     public void deleteSave2(ActionEvent event)
     {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         delete(2);
-        dateEmpty(2);
+        if(deleted) {
+            dateEmpty(2);
+        }
     }
     public void deleteSave3(ActionEvent event)
     {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         delete(3);
-        dateEmpty(3);
+        if(deleted) {
+            dateEmpty(3);
+        }
     }
     private void delete(int i)
     {
@@ -193,6 +200,7 @@ public class LoadController {
             case 2: save2.setText(""); break;
             case 3: save3.setText(""); break;
         }
+        deleted=false;
     }
     private void load(Stage stage,double z)
     {
@@ -248,7 +256,7 @@ public class LoadController {
                         villain.setHP(hp);
                     }
                     case 3 -> {
-                        villain = Villain.getNewBoss(mode);
+                        villain = Villain.getNewPredatorBoss(mode);
                         villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
                         villain.setHP(hp);
                     }

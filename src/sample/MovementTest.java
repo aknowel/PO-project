@@ -128,11 +128,21 @@ public abstract class MovementTest {
         return true;
     }
     private static boolean villainBgCheck(Villain object) {
+        boolean isBoss=object.isBoss();
         for (Background current : Game.game.backgroundObjects) {
             double dd = Math.sqrt((object.getLayoutX() - current.getLayoutX() - current.getBoundsInLocal().getWidth() / 2) * (object.getLayoutX() - current.getLayoutX() - current.getBoundsInLocal().getWidth() / 2) + (object.getLayoutY() - current.getLayoutY() - current.getBoundsInLocal().getHeight() / 2) * (object.getLayoutY() - current.getLayoutY() - current.getBoundsInLocal().getHeight() / 2));
-            if (dd <= 60) {
-                curr = current;
-                return false;
+            if(!isBoss) {
+                if (dd <= 60) {
+                    curr = current;
+                    return false;
+                }
+            }
+            else
+            {
+                if(dd<30)
+                {
+                    Game.game.board.getChildren().remove(current);
+                }
             }
         }
         return true;

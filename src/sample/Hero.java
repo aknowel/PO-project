@@ -23,6 +23,11 @@ public class Hero extends ImageView {
             }
         }
     }
+    public void shout()
+    {
+        Sounds sounds=new Sounds();
+        sounds.playHuh();
+    }
     public String toString()
     {
         return this.getLayoutX()+ " " + this.getLayoutY();

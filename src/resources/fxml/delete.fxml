@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="417.0" fitWidth="602.0" layoutX="5.0" layoutY="4.0" pickOnBounds="true">
          <image>
-            <Image url="@../other/background.jpg" />
+            <Image url="@../Images/Background/background.jpg" />
          </image>
       </ImageView>
       <Label layoutX="62.0" layoutY="25.0" styleClass="title2" stylesheets="@../css/menu.css" text="Are you sure?">

@@ -8,6 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -38,6 +39,7 @@ public class Game  {
     AnchorPane root;
     public Boss boss=null;
     public static Game game;
+    static Random randomize=new Random();
 
     public Game(Pane board,Double mode) {
         this.mode=mode;
@@ -77,7 +79,7 @@ public class Game  {
         board.getChildren().addAll(hero, scoreText, livesText,cactus,barrel);
 
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
-        BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Tlo.jpg",W,H,false,true),
+        BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Background/Tlo.jpg",W,H,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
         board.setBackground(new javafx.scene.layout.Background(myBI));
         stage.setScene(scene);
@@ -124,6 +126,10 @@ public class Game  {
                     weaponsHero.add(newWeapon);
                     board.getChildren().add(newWeapon);
                     Counter.thrownWeapon();
+                    if(randomize.nextInt(5)==1)
+                    {
+                        hero.shout();
+                    }
                 }
             });
 
@@ -141,7 +147,8 @@ public class Game  {
                     } else if (villains.size() == 0) {
                         if (!isBoss) {
                             isBoss = true;
-                            boss = Villain.getNewBoss(mode);
+                            boss = Villain.getNewPredatorBoss(mode);
+                            boss.shout();
                             boss.relocate(W, Math.random() * (H - boss.getBoundsInLocal().getHeight()));
                             villains.add(boss);
                             shootingVillains.add(boss);
@@ -178,6 +185,8 @@ public class Game  {
         if (lives <= 0) {
             timer.stop();
             stop=true;
+            Sounds sounds=new Sounds();
+            sounds.playGameOver();
             FXMLLoader fxmlLoader=new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOver.fxml"));
             try {
@@ -214,6 +223,8 @@ public class Game  {
             stop=true;
             Counter.victories();
             Counter.killedBoss();
+            Sounds sounds=new Sounds();
+            sounds.playWonGame();
             if(lives==livesMax)
             {
                 Counter.deathless();

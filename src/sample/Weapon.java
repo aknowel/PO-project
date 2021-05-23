@@ -45,11 +45,11 @@ class Hammer extends Weapon
 {
     Hammer()
     {
-        super(new Image("resources/Images/Hammer.png"));
+        super(new Image("resources/Images/Weapons/Hammer.png"));
     }
     Hammer(double x,double y)
     {
-        super(new Image("resources/Images/Hammer.png"));
+        super(new Image("resources/Images/Weapons/Hammer.png"));
         this.x=x;
         this.y=y;
         this.id=1;
@@ -59,11 +59,11 @@ class SuperHammer extends Weapon
 {
     SuperHammer()
     {
-        super(new Image("resources/Images/SuperHammer.png"));
+        super(new Image("resources/Images/Weapons/SuperHammer.png"));
     }
     SuperHammer(double x,double y)
     {
-        super(new Image("resources/Images/SuperHammer.png"));
+        super(new Image("resources/Images/Weapons/SuperHammer.png"));
         this.x=x;
         this.y=y;
         this.id=2;
@@ -73,11 +73,11 @@ class RedBall extends Weapon
 {
     RedBall()
     {
-        super(new Image("resources/Images/PredatorBullet.png"));
+        super(new Image("resources/Images/Weapons/PredatorBullet.png"));
     }
     RedBall(double x,double y)
     {
-        super(new Image("resources/Images/PredatorBullet.png"));
+        super(new Image("resources/Images/Weapons/PredatorBullet.png"));
         this.x=x;
         this.y=y;
         this.id=3;

@@ -13,27 +13,27 @@ class Cactus extends Background
 {
     Cactus()
     {
-        super(new Image("/resources/Images/Cacti.png"));
+        super(new Image("/resources/Images/Background/Cacti.png"));
     }
 }
 class Barrel extends Background
 {
     Barrel()
     {
-        super(new Image("/resources/Images/Barrel.png"));
+        super(new Image("/resources/Images/Background/Barrel.png"));
     }
 }
 class Stone extends Background
 {
     Stone()
     {
-        super(new Image("/resources/Images/Stone.png"));
+        super(new Image("/resources/Images/Background/Stone.png"));
     }
 }
 class Crystal extends Background
 {
     Crystal()
     {
-        super(new Image("/resources/Images/Crystal.png"));
+        super(new Image("/resources/Images/Background/Crystal.png"));
     }
 }

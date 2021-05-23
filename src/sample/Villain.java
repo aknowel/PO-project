@@ -5,9 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.Iterator;
+import java.util.Random;
 
 
 public abstract class Villain extends ImageView {
+    static Random randomize=new Random();
     protected Double HP;
     protected int speed;
     protected int id;
@@ -27,9 +29,21 @@ public abstract class Villain extends ImageView {
             default -> new Predator(mode);
         };
     }
-    public static Boss getNewBoss(Double mode)
+    public static Boss getNewPredatorBoss(Double mode)
     {
-        return new Boss(mode);
+        return new PredatorBoss(mode);
+    }
+    public static Boss getNewSpiderBoss(Double mode)
+    {
+        return new SpiderBoss(mode);
+    }
+    public static Boss Loki(Double mode)
+    {
+        return new Loki(mode);
+    }
+    public static Boss getNewVampireBoss(Double mode)
+    {
+        return new VampireBoss(mode);
     }
     public boolean isAlive()
     {
@@ -64,9 +78,14 @@ public abstract class Villain extends ImageView {
                         y.remove();
                        game.score++;
                         game.scoreText.setText("Score: " + game.score);
-                        if(currentVillain instanceof Predator)
+                        if(isShooting(currentVillain))
                         {
                             game.shootingVillains.remove(currentVillain);
+                            currentVillain.shout();
+                            if(randomize.nextInt(2)==1)
+                            {
+                                currentVillain.shout();
+                            }
                         }
                     }
                 }
@@ -114,9 +133,41 @@ public abstract class Villain extends ImageView {
     {
         return new Spider(mode);
     }
+    public static Bat newBat(double mode)
+    {
+        return new Bat(mode);
+    }
+    public static Mummy newMummy(double mode)
+    {
+        return new Mummy(mode);
+    }
+    public static Ogre newOgre(double mode)
+    {
+        return new Ogre(mode);
+    }
+    public static Orc newOrc(double mode)
+    {
+        return new Orc(mode);
+    }
+    public static Vampire newVampire(double mode)
+    {
+        return new Vampire(mode);
+    }
+    public static Wizard newWizard(double mode)
+    {
+        return new Wizard(mode);
+    }
+    public static Zombie newZombie(double mode)
+    {
+        return new Zombie(mode);
+    }
     public static boolean isShooting(Villain villain)
     {
         return villain.id==1;
+    }
+    public boolean isBoss()
+    {
+        return this.id==3;
     }
     public static void check(int id)
     {
@@ -127,6 +178,11 @@ public abstract class Villain extends ImageView {
             case 2 -> Counter.killedSpider();
         }
     }
+    public void shout()
+    {
+        Sounds sounds=new Sounds();
+        sounds.playCritic();
+    }
     public String toString()
     {
         return this.id + " "  + this.HP+ " "+ this.getLayoutX()+ " " + this.getLayoutY();
@@ -135,11 +191,11 @@ public abstract class Villain extends ImageView {
 class Skull extends Villain{
     Skull()
     {
-        super(new Image("resources/Images/Skull.png"));
+        super(new Image("resources/Images/Villains/Skull.png"));
     }
     Skull(Double mode)
         {
-            super(new Image("resources/Images/Skull.png"));
+            super(new Image("resources/Images/Villains/Skull.png"));
             this.HP= 2+mode;
             this.speed=-1;
             this.id=0;
@@ -148,11 +204,11 @@ class Skull extends Villain{
 class Predator extends Villain{
     Predator()
     {
-        super(new Image("/resources/Images/Predator.png"));
+        super(new Image("/resources/Images/Villains/Predator.png"));
     }
     Predator(Double mode)
     {
-        super(new Image("/resources/Images/Predator.png"));
+        super(new Image("/resources/Images/Villains/Predator.png"));
         this.HP=3+mode;
         this.speed=0;
         this.id=1;
@@ -162,26 +218,172 @@ class Spider extends Villain
 {
     Spider()
     {
-        super(new Image("/resources/Images/Spider.png"));
+        super(new Image("/resources/Images/Villains/Spider.png"));
     }
     Spider(Double mode)
     {
-        super(new Image("/resources/Images/Spider.png"));
+        super(new Image("/resources/Images/Villains/Spider.png"));
         this.HP=1+mode;
         this.speed=-2;
         this.id=2;
     }
 }
-class Boss extends Villain
+class Zombie extends Villain
 {
-    Boss(Double mode)
+    Zombie()
     {
-        super(new Image("/resources/Images/PredatorBoss.png"));
+        super(new Image("/resources/Images/Villains/Zombie.png"));
+    }
+    Zombie(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/Zombie.png"));
+        this.HP=4+mode;
+        this.speed=-1;
+        this.id=4;
+    }
+}
+class Wizard extends Villain
+{
+    Wizard()
+    {
+        super(new Image("/resources/Images/Villains/wizard.png"));
+    }
+    Wizard(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/wizard.png"));
+        this.HP=1+mode;
+        this.speed=-1;
+        this.id=5;
+    }
+}
+class Vampire extends Villain
+{
+    Vampire()
+    {
+        super(new Image("/resources/Images/Villains/vampireMini.png"));
+    }
+    Vampire(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/vampireMini.png"));
+        this.HP=2+mode;
+        this.speed=-2;
+        this.id=6;
+    }
+}
+class Orc extends Villain
+{
+    Orc()
+    {
+        super(new Image("/resources/Images/Villains/orc.png"));
+    }
+    Orc(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/orc.png"));
+        this.HP=5+mode;
+        this.speed=-1;
+        this.id=7;
+    }
+}
+class Ogre extends Villain
+{
+    Ogre()
+    {
+        super(new Image("/resources/Images/Villains/ogre.png"));
+    }
+    Ogre(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/ogre.png"));
+        this.HP=4+mode;
+        this.speed=-1;
+        this.id=8;
+    }
+}
+class Mummy extends Villain
+{
+    Mummy()
+    {
+        super(new Image("/resources/Images/Villains/Mummy.png"));
+    }
+    Mummy(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/Mummy.png"));
+        this.HP=4+mode;
+        this.speed=-1;
+        this.id=8;
+    }
+}
+class Bat extends Villain
+{
+    Bat()
+    {
+        super(new Image("/resources/Images/Villains/Bat.png"));
+    }
+    Bat(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/Bat.png"));
+        this.HP=4+mode;
+        this.speed=-1;
+        this.id=8;
+    }
+}
+abstract class Boss extends Villain
+{
+    Boss(Image img)
+    {
+        super(img);
+    }
+    @Override
+    public void shout()
+    {
+        Sounds sounds=new Sounds();
+        if(randomize.nextInt(2)==1) {
+            sounds.playBossIntro();
+        }
+        else
+        {
+            sounds.playBossLaugh();
+        }
+    }
+}
+class PredatorBoss extends Boss
+{
+    PredatorBoss(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/PredatorBoss.png"));
         this.HP=20*(mode+1);
         this.speed=-3;
         this.id=3;
     }
 }
-
+class SpiderBoss extends Boss
+{
+    SpiderBoss(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/SpiderBoss.png"));
+        this.HP=40*(mode+1);
+        this.speed=-2;
+        this.id=9;
+    }
+}
+class VampireBoss extends Boss
+{
+    VampireBoss(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/VampireBig.png"));
+        this.HP=30*(mode+1);
+        this.speed=-4;
+        this.id=10;
+    }
+}
+class Loki extends Boss
+{
+    Loki(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/Loki.png"));
+        this.HP=30*(mode+1);
+        this.speed=-4;
+        this.id=10;
+    }
+}
 
 

@@ -59,6 +59,7 @@ public class deleteController {
                     }
         }
         LoadController.pane.getChildren().remove(root);
+        LoadController.deleted=true;
     }
     public void no()
     {
