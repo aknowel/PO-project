@@ -1,7 +1,9 @@
 package sample.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import sample.Box;
@@ -14,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Scanner;
 
 
@@ -35,6 +38,8 @@ public class SaveGameController {
     File save;
     File dates;
     Scanner scanner;
+    Alert alert;
+    Optional<ButtonType> result;
     public void initialize() throws FileNotFoundException {
         dates=new File("src/resources/other/dates.txt");
         String text1="",text2="",text3="";
@@ -69,26 +74,48 @@ public class SaveGameController {
         Game.game.board.getChildren().remove(root);
     }
     public void setSave1() throws IOException {
-        save=new File("src/resources/other/save1.txt");
-        date(0);
-        save.delete();
-        save.createNewFile();
-        getSource(save);
-        System.out.println("tak");
+        result=createAlert(1);
+        if(result.orElse(null).equals(ButtonType.YES)) {
+            save = new File("src/resources/other/save1.txt");
+            date(0);
+            save.delete();
+            save.createNewFile();
+            getSource(save);
+        }
     }
     public void setSave2() throws IOException {
-        save=new File("src/resources/other/save2.txt");
-        date(1);
-        save.delete();
-        save.createNewFile();
-        getSource(save);
+        result=createAlert(2);
+        if(result.orElse(null).equals(ButtonType.YES)) {
+            save = new File("src/resources/other/save2.txt");
+            date(1);
+            save.delete();
+            save.createNewFile();
+            getSource(save);
+        }
     }
     public void setSave3() throws IOException {
-        save=new File("src/resources/other/save3.txt");
-        date(2);
-        save.delete();
-        save.createNewFile();
-        getSource(save);
+        result=createAlert(3);
+        if(result.orElse(null).equals(ButtonType.YES)) {
+            save = new File("src/resources/other/save3.txt");
+            date(2);
+            save.delete();
+            save.createNewFile();
+            getSource(save);
+        }
+    }
+    private Optional<ButtonType> createAlert(int i)
+    {
+        alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure ?", ButtonType.YES,ButtonType.CANCEL);
+        alert.setTitle("Save");
+        switch (i)
+        {
+            case 1: alert.setHeaderText("Save game to first slot ?"); break;
+            case 2: alert.setHeaderText("Save game to second slot ?"); break;
+            case 3: alert.setHeaderText("Save game to third slot ?"); break;
+        }
+        alert.setX(750);
+        alert.setY(350);
+        return alert.showAndWait();
     }
     private void getSource(File save)
     {

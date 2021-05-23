@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -14,10 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class AchievementController {
     Stage stage;
@@ -46,6 +45,7 @@ public class AchievementController {
     Label l9;
     File file;
     Scanner scanner;
+    Alert alert;
     @FXML
     public void initialize() throws FileNotFoundException {
         file=new File("src/resources/other/achievement.txt");
@@ -104,28 +104,36 @@ public class AchievementController {
         }
     }
     public void resetAchievements(ActionEvent event) throws IOException {
-        file=new File("src/resources/other/achievement.txt");
-        if(file.exists())
+        alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure ?", ButtonType.YES,ButtonType.CANCEL);
+        alert.setTitle("Reset");
+        alert.setHeaderText("Reset achievements ?");
+        alert.setX(750);
+        alert.setY(350);
+        Optional<ButtonType> result=alert.showAndWait();
+        if(result.orElse(null).equals(ButtonType.YES))
         {
+            reset(event);
+        }
+    }
+    private void reset(ActionEvent event) throws IOException {
+        file=new File("src/resources/other/achievement.txt");
+        if(file.exists()) {
             file.delete();
             file.createNewFile();
-            writer=new PrintWriter(file);
-            for(int i=0;i<9;i++)
-            {
+            writer = new PrintWriter(file);
+            for (int i = 0; i < 9; i++) {
                 writer.println(0);
             }
             writer.close();
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            FXMLLoader fxmlLoader=new FXMLLoader();
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/resources/fxml/achievement.fxml"));
             try {
                 root = fxmlLoader.load();
                 scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setTitle("Achievement");
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             stage.show();

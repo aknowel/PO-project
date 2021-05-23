@@ -5,14 +5,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import sample.Box;
 import sample.Game;
 import sample.Villain;
@@ -20,6 +19,7 @@ import sample.Weapon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Optional;
 import java.util.Scanner;
 
 
@@ -46,12 +46,14 @@ public class LoadController {
     Scanner scanner;
     Game game;
     Pane board;
-    static Label label=new Label("Save does not exist!");
+    Label label=new Label("Save does not exist!");
     Label label2=new Label("Save is corrupted!");
-    static Label label3=new Label("Deleted successfully!");
+    Label label3=new Label("Deleted successfully!");
     static int i=0;
     static AnchorPane pane;
-    static boolean deleted=false;
+    boolean deleted=false;
+    File file;
+    Alert alert;
     @FXML
     public void initialize() throws FileNotFoundException {
         LoadController.pane=anchorPane;
@@ -177,20 +179,17 @@ public class LoadController {
         anchorPane.getChildren().remove(label);
         anchorPane.getChildren().remove(label2);
         anchorPane.getChildren().remove(label3);
+        alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure ?",ButtonType.YES,ButtonType.CANCEL);
+        alert.setTitle("Delete");
+        alert.setHeaderText("Delete save" + i + " ?");
+        alert.setX(750);
+        alert.setY(350);
+        Optional<ButtonType> result=alert.showAndWait();
         LoadController.i =i;
-        FXMLLoader fxmlLoader=new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/delete.fxml"));
-        try {
-            root = fxmlLoader.load();
-            root.setLayoutX(237);
-            root.setLayoutY(133);
-            anchorPane.getChildren().add(root);
-        }
-        catch (Exception e)
+        if(result.orElse(null).equals(ButtonType.YES))
         {
-            e.printStackTrace();
+            yes();
         }
-        stage.show();
     }
     private void dateEmpty(int i)
     {
@@ -299,11 +298,62 @@ public class LoadController {
             scanner.close();
         }
     }
-    public static void setLabel(Label text, Color color, double y)
+    private static void setLabel(Label text, Color color, double y)
     {
         text.setFont(Font.font("Verdana",16));
         text.setTextFill(color);
         text.setStyle("-fx-background-color: lightblue;");
         text.relocate(873, y);
+    }
+    private void yes()
+    {
+        switch (LoadController.i)
+        {
+            case 1->
+                    {
+                        file=new File("src/resources/other/save1.txt");
+                        if(file.exists())
+                        {
+                            file.delete();
+                            LoadController.setLabel(label3,Color.GREEN,261);
+                            LoadController.pane.getChildren().add(label3);
+                        }
+                        else
+                        {
+                            LoadController.setLabel(label,Color.RED,261);
+                            LoadController.pane.getChildren().add(label);
+                        }
+                    }
+            case 2-> {
+                file = new File("src/resources/other/save2.txt");
+                if (file.exists()) {
+                    file.delete();
+                    LoadController.setLabel(label3,Color.GREEN,334);
+                    LoadController.pane.getChildren().add(label3);
+                }
+                else
+                {
+                    LoadController.setLabel(label,Color.RED,334);
+                    LoadController.pane.getChildren().add(label);
+                }
+            }
+            case 3->
+                    {
+                        file=new File("src/resources/other/save3.txt");
+                        if(file.exists())
+                        {
+                            file.delete();
+                            LoadController.setLabel(label3,Color.GREEN,405);
+                            LoadController.pane.getChildren().add(label3);
+                        }
+                        else
+                        {
+                            LoadController.setLabel(label,Color.RED,405);
+                            LoadController.pane.getChildren().add(label);
+                        }
+                    }
+        }
+        LoadController.pane.getChildren().remove(root);
+        deleted=true;
     }
 }
