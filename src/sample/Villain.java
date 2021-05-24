@@ -11,7 +11,7 @@ import java.util.Random;
 public abstract class Villain extends ImageView {
     static Random randomize=new Random();
     protected Double HP;
-    protected int speed;
+    protected Double speed;
     protected int id;
     Villain(Image img)
     {
@@ -37,7 +37,7 @@ public abstract class Villain extends ImageView {
     {
         return new SpiderBoss(mode);
     }
-    public static Boss Loki(Double mode)
+    public static Boss getNewLoki(Double mode)
     {
         return new Loki(mode);
     }
@@ -49,7 +49,7 @@ public abstract class Villain extends ImageView {
     {
         return HP!=0;
     }
-    int getSpeed()
+    Double getSpeed()
     {
         return speed;
     }
@@ -196,8 +196,8 @@ class Skull extends Villain{
     Skull(Double mode)
         {
             super(new Image("resources/Images/Villains/Skull.png"));
-            this.HP= 2+mode;
-            this.speed=-1;
+            this.HP= 3+mode;
+            this.speed=-1D;
             this.id=0;
         }
 }
@@ -210,7 +210,7 @@ class Predator extends Villain{
     {
         super(new Image("/resources/Images/Villains/Predator.png"));
         this.HP=3+mode;
-        this.speed=0;
+        this.speed=0D;
         this.id=1;
     }
 }
@@ -224,7 +224,7 @@ class Spider extends Villain
     {
         super(new Image("/resources/Images/Villains/Spider.png"));
         this.HP=1+mode;
-        this.speed=-2;
+        this.speed=-2D;
         this.id=2;
     }
 }
@@ -238,7 +238,7 @@ class Zombie extends Villain
     {
         super(new Image("/resources/Images/Villains/Zombie.png"));
         this.HP=4+mode;
-        this.speed=-1;
+        this.speed=-0.5;
         this.id=4;
     }
 }
@@ -252,7 +252,7 @@ class Wizard extends Villain
     {
         super(new Image("/resources/Images/Villains/wizard.png"));
         this.HP=1+mode;
-        this.speed=-1;
+        this.speed=-1D;
         this.id=5;
     }
 }
@@ -266,7 +266,7 @@ class Vampire extends Villain
     {
         super(new Image("/resources/Images/Villains/vampireMini.png"));
         this.HP=2+mode;
-        this.speed=-2;
+        this.speed=-3D;
         this.id=6;
     }
 }
@@ -280,7 +280,7 @@ class Orc extends Villain
     {
         super(new Image("/resources/Images/Villains/orc.png"));
         this.HP=5+mode;
-        this.speed=-1;
+        this.speed=-0.3D;
         this.id=7;
     }
 }
@@ -294,7 +294,7 @@ class Ogre extends Villain
     {
         super(new Image("/resources/Images/Villains/ogre.png"));
         this.HP=4+mode;
-        this.speed=-1;
+        this.speed=-1D;
         this.id=8;
     }
 }
@@ -308,8 +308,8 @@ class Mummy extends Villain
     {
         super(new Image("/resources/Images/Villains/Mummy.png"));
         this.HP=4+mode;
-        this.speed=-1;
-        this.id=8;
+        this.speed=-1D;
+        this.id=9;
     }
 }
 class Bat extends Villain
@@ -322,8 +322,8 @@ class Bat extends Villain
     {
         super(new Image("/resources/Images/Villains/Bat.png"));
         this.HP=4+mode;
-        this.speed=-1;
-        this.id=8;
+        this.speed=-1D;
+        this.id=10;
     }
 }
 abstract class Boss extends Villain
@@ -351,7 +351,7 @@ class PredatorBoss extends Boss
     {
         super(new Image("/resources/Images/Villains/PredatorBoss.png"));
         this.HP=20*(mode+1);
-        this.speed=-3;
+        this.speed=-3D;
         this.id=3;
     }
 }
@@ -361,8 +361,8 @@ class SpiderBoss extends Boss
     {
         super(new Image("/resources/Images/Villains/SpiderBoss.png"));
         this.HP=40*(mode+1);
-        this.speed=-2;
-        this.id=9;
+        this.speed=-2D;
+        this.id=11;
     }
 }
 class VampireBoss extends Boss
@@ -371,8 +371,8 @@ class VampireBoss extends Boss
     {
         super(new Image("/resources/Images/Villains/VampireBig.png"));
         this.HP=30*(mode+1);
-        this.speed=-4;
-        this.id=10;
+        this.speed=-4D;
+        this.id=12;
     }
 }
 class Loki extends Boss
@@ -380,9 +380,9 @@ class Loki extends Boss
     Loki(Double mode)
     {
         super(new Image("/resources/Images/Villains/Loki.png"));
-        this.HP=30*(mode+1);
-        this.speed=-4;
-        this.id=10;
+        this.HP=60*(mode+1);
+        this.speed=-2D;
+        this.id=13;
     }
 }
 

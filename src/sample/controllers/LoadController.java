@@ -11,11 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import sample.Box;
-import sample.Game;
-import sample.Villain;
-import sample.Weapon;
+import sample.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -216,11 +212,10 @@ public class LoadController {
                 int id = Integer.parseInt(scanner.next());
                 if (id == 1) {
                     weapon = Weapon.newHammer(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                    weapon.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
                 } else {
                     weapon = Weapon.newSuperHammer(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                    weapon.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
                 }
+                weapon.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
                 game.weaponsHero.add(weapon);
                 board.getChildren().add(weapon);
             }
@@ -232,34 +227,36 @@ public class LoadController {
                 game.weaponsVillain.add(weapon);
                 board.getChildren().add(weapon);
             }
-            Villain villain = null;
+            Villain villain;
             length = Integer.parseInt(scanner.next());
             for (int i = 0; i < length; i++) {
                 int id = Integer.parseInt(scanner.next());
                 double hp = Double.parseDouble(scanner.next());
                 switch (id) {
-                    case 0 -> {
-                        villain = Villain.newSkull(mode);
-                        villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                        villain.setHP(hp);
-                    }
+                    case 0 -> villain = Villain.newSkull(mode);
                     case 1 -> {
                         villain = Villain.newPredator(mode);
-                        villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                        villain.setHP(hp);
                         game.shootingVillains.add(villain);
                     }
-                    case 2 -> {
-                        villain = Villain.newSpider(mode);
-                        villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                        villain.setHP(hp);
-                    }
+                    case 2 -> villain = Villain.newSpider(mode);
                     case 3 -> {
                         villain = Villain.getNewPredatorBoss(mode);
-                        villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                        villain.setHP(hp);
+                        game.boss= Villain.getNewPredatorBoss(mode);
                     }
+                    case 4 -> villain = Villain.newZombie(mode);
+                    case 5 -> villain = Villain.newWizard(mode);
+                    case 6 -> villain = Villain.newVampire(mode);
+                    case 7 -> villain = Villain.newOrc(mode);
+                    case 8 -> villain = Villain.newOgre(mode);
+                    case 9 -> villain = Villain.newMummy(mode);
+                    case 10 -> villain = Villain.newBat(mode);
+                    case 11 -> villain = Villain.getNewSpiderBoss(mode);
+                    case 12 -> villain = Villain.getNewVampireBoss(mode);
+                    case 13 -> villain = Villain.getNewLoki(mode);
+                    default -> throw new IllegalStateException("Unexpected value: " + id);
                 }
+                villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                villain.setHP(hp);
                 game.villains.add(villain);
                 board.getChildren().add(villain);
             }
@@ -267,15 +264,30 @@ public class LoadController {
             length = Integer.parseInt(scanner.next());
             for (int i = 0; i < length; i++) {
                 int id = Integer.parseInt(scanner.next());
-                if (id == 0) {
-                    box = Box.newEmptyBox();
-                    box.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                } else {
-                    box = Box.newUpgradeBox();
-                    box.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                switch(id) {
+                    case 0 -> box = Box.newEmptyBox();
+                    case 1 -> box = Box.newUpgradeBox();
+                    case 2 -> box = Box.newHeartBox();
+                    default -> throw new IllegalStateException("Unexpected value: " + id);
                 }
+                box.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
                 game.boxes.add(box);
                 board.getChildren().add(box);
+            }
+            Background backgroundObj;
+            length = Integer.parseInt(scanner.next());
+            for (int i = 0; i < length; i++) {
+                int id = Integer.parseInt(scanner.next());
+                switch(id) {
+                    case 1 -> backgroundObj = Background.newCactus();
+                    case 2 -> backgroundObj = Background.newBarrel();
+                    case 3 -> backgroundObj = Background.newStone();
+                    case 4 -> backgroundObj = Background.newCrystal();
+                    default -> throw new IllegalStateException("Unexpected value: " + id);
+                }
+                backgroundObj.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                game.backgroundObjects.add(backgroundObj);
+                board.getChildren().add(backgroundObj);
             }
             game.modifier = Integer.parseInt(scanner.next());
             game.villainCounter = Integer.parseInt(scanner.next());

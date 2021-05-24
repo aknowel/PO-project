@@ -82,6 +82,6 @@ class HeartBox extends Box
     HeartBox()
     {
         super(new Image("/resources/Images/heart.png"));
-        i=1;
+        i=2;
     }
 }

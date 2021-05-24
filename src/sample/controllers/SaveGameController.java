@@ -6,10 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import sample.Box;
-import sample.Game;
-import sample.Villain;
-import sample.Weapon;
+import sample.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -139,6 +136,11 @@ public class SaveGameController {
             writer.println(Game.game.boxes.size());
             for(Box b:Game.game.boxes) {
                 writer.println(b);
+            }
+            writer.println(Game.game.backgroundObjects.size());
+            for(Background obj:Game.game.backgroundObjects)
+            {
+                writer.println(obj);
             }
             writer.println(Game.game.modifier);
             writer.println(Game.game.villainCounter);

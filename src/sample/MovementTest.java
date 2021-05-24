@@ -40,48 +40,51 @@ public abstract class MovementTest {
             double v=Game.game.hero.getLayoutY();
             double dd=Math.sqrt((x-z)*(x-z)+(y-v)*(y-v));
             boolean tt=villainBgCheck(currentVillain);
-            if(tt) {
-                currentVillain.relocate(currentVillain.getLayoutX() + d * (x - z) / dd, currentVillain.getLayoutY() + d * (y - v) / dd);
-            }
-            else {
-                double xx=curr.getLayoutX()+curr.getBoundsInLocal().getWidth()/2;
-                double yy=curr.getLayoutY()+curr.getBoundsInLocal().getHeight()/2;
-                double b=yy-y;
-                double s=Math.signum(-Game.game.hero.getLayoutY()+currentVillain.getLayoutY());
-                if (b == 0) {
-                    if(!(Game.game.hero.getLayoutY()>=curr.getLayoutY()-Game.game.hero.getBoundsInLocal().getHeight() && Game.game.hero.getLayoutY()<=curr.getLayoutY()+curr.getBoundsInLocal().getHeight()+20)) {
-                        if (xx < currentVillain.getLayoutX()) {
-                            currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() - s * d);
-                        } else {
-                            currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() + s * d);
-                        }
-                    }
-                    else
-                    {
-                        if (xx < currentVillain.getLayoutX()) {
-                            currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() - d);
-                        } else {
-                            currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() + d);
-                        }
-                    }
+            boolean isBoss=currentVillain.isBoss();
+            if(!isBoss) {
+                if (tt) {
+                    currentVillain.relocate(currentVillain.getLayoutX() + d * (x - z) / dd, currentVillain.getLayoutY() + d * (y - v) / dd);
                 } else {
-                    double a = Math.atan(-(x - xx) / (y - yy));
-                    if(!(Game.game.hero.getLayoutY()>=curr.getLayoutY()-Game.game.hero.getBoundsInLocal().getHeight() && Game.game.hero.getLayoutY()<=curr.getLayoutY()+curr.getBoundsInLocal().getHeight()+20)) {
-                        if (yy < currentVillain.getLayoutY()) {
-                            currentVillain.relocate(currentVillain.getLayoutX() + s * d * Math.cos(a), currentVillain.getLayoutY() + s * d * Math.sin(a));
+                    double xx = curr.getLayoutX() + curr.getBoundsInLocal().getWidth() / 2;
+                    double yy = curr.getLayoutY() + curr.getBoundsInLocal().getHeight() / 2;
+                    double b = yy - y;
+                    double s = Math.signum(-Game.game.hero.getLayoutY() + currentVillain.getLayoutY());
+                    if (b == 0) {
+                        if (!(Game.game.hero.getLayoutY() >= curr.getLayoutY() - Game.game.hero.getBoundsInLocal().getHeight() && Game.game.hero.getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 30)) {
+                            if (xx < currentVillain.getLayoutX()) {
+                                currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() - s * d);
+                            } else {
+                                currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() + s * d);
+                            }
                         } else {
-                            currentVillain.relocate(currentVillain.getLayoutX() - s * d * Math.cos(a), currentVillain.getLayoutY() - s * d * Math.sin(a));
+                            if (xx < currentVillain.getLayoutX()) {
+                                currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() - d);
+                            } else {
+                                currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() + d);
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (yy < currentVillain.getLayoutY()) {
-                            currentVillain.relocate(currentVillain.getLayoutX() + d * Math.cos(a), currentVillain.getLayoutY() + d * Math.sin(a));
+                    } else {
+                        double a = Math.atan(-(x - xx) / (y - yy));
+                        if (!(Game.game.hero.getLayoutY() >= curr.getLayoutY() - Game.game.hero.getBoundsInLocal().getHeight() && Game.game.hero.getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 30)) {
+                            if (yy < currentVillain.getLayoutY()) {
+                                currentVillain.relocate(currentVillain.getLayoutX() + s * d * Math.cos(a), currentVillain.getLayoutY() + s * d * Math.sin(a));
+                            } else {
+                                currentVillain.relocate(currentVillain.getLayoutX() - s * d * Math.cos(a), currentVillain.getLayoutY() - s * d * Math.sin(a));
+                            }
                         } else {
-                            currentVillain.relocate(currentVillain.getLayoutX() - d * Math.cos(a), currentVillain.getLayoutY() - d * Math.sin(a));
+                            if (yy < currentVillain.getLayoutY()) {
+                                currentVillain.relocate(currentVillain.getLayoutX() + d * Math.cos(a), currentVillain.getLayoutY() + d * Math.sin(a));
+                            } else {
+                                currentVillain.relocate(currentVillain.getLayoutX() - d * Math.cos(a), currentVillain.getLayoutY() - d * Math.sin(a));
+                            }
                         }
                     }
                 }
+            }
+            else
+            {
+                bossBgCheck(currentVillain);
+                currentVillain.relocate(currentVillain.getLayoutX() + d * (x - z) / dd, currentVillain.getLayoutY() + d * (y - v) / dd);
             }
         }
     }
@@ -128,23 +131,22 @@ public abstract class MovementTest {
         return true;
     }
     private static boolean villainBgCheck(Villain object) {
-        boolean isBoss=object.isBoss();
         for (Background current : Game.game.backgroundObjects) {
             double dd = Math.sqrt((object.getLayoutX() - current.getLayoutX() - current.getBoundsInLocal().getWidth() / 2) * (object.getLayoutX() - current.getLayoutX() - current.getBoundsInLocal().getWidth() / 2) + (object.getLayoutY() - current.getLayoutY() - current.getBoundsInLocal().getHeight() / 2) * (object.getLayoutY() - current.getLayoutY() - current.getBoundsInLocal().getHeight() / 2));
-            if(!isBoss) {
                 if (dd <= 60) {
                     curr = current;
                     return false;
                 }
-            }
-            else
-            {
-                if(dd<30)
-                {
-                    Game.game.board.getChildren().remove(current);
-                }
-            }
         }
         return true;
+    }
+    private static void bossBgCheck(Villain boss)
+    {
+        for (Background current : Game.game.backgroundObjects) {
+            if(boss.getBoundsInParent().intersects(current.getBoundsInParent()))
+            {
+                Game.game.board.getChildren().remove(current);
+            }
+        }
     }
 }
