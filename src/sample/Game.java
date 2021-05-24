@@ -3,7 +3,6 @@ package sample;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -69,18 +68,22 @@ public class Game  {
         Counter.games();
         Counter.thorGames();
         Game.game.mode =mode;
-        Cactus cactus=new Cactus();
-        cactus.relocate(W/2,H/2);
-        Barrel barrel=new Barrel();
-        barrel.relocate(W/2+200,H/2);
-        backgroundObjects.add(cactus);
-        backgroundObjects.add(barrel);
+        for (int j=0; j<2; j++)
+            for(int i=0; i<3; i++)
+            {
+                Background b=((i+j)%2==0) ? new Cactus() : new Barrel();
+                double x=(i+1)*W/5+W*randomize.nextDouble()/5;
+                double y=(2*j+1)*H/6+H*randomize.nextDouble()/3;
+                b.relocate(x, y);
+                backgroundObjects.add(b);
+                board.getChildren().add(b);
+            }
         scoreText= new Text(110, 10, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
-        board.getChildren().addAll(hero, scoreText, livesText,cactus,barrel);
+        board.getChildren().addAll(hero, scoreText, livesText);
 
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
-        BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Background/Tlo.jpg",W,H,false,true),
+        BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Background/sand_background.png",W,H,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
         board.setBackground(new javafx.scene.layout.Background(myBI));
         stage.setScene(scene);
