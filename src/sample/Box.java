@@ -28,7 +28,7 @@ public abstract class Box extends ImageView {
             if (currentBox.getBoundsInParent().intersects(game.hero.getBoundsInParent())){
                 if(currentBox.i==1)
                 {
-                    game.upgrade=true;
+                    game.upgrade=50;
                 }
                 if(randomize.nextInt(3)==1)
                 {

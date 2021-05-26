@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -32,9 +33,9 @@ public class Game  {
     public Text scoreText, livesText;
     public final int dWeapon=10;
     public int modifier=150, villainCounter=modifier-1, score=0, lives=100000,livesMax=10;
-    public boolean goNorth, goSouth, goEast, goWest, isBoss=false,upgrade=false;
+    public boolean goNorth, goSouth, goEast, goWest, isBoss=false;
     public boolean pause=false,stop=false;
-    public int time=0;
+    public int time=0, upgrade=0;
     public  Double mode;
     AnchorPane root;
     public Boss boss=null;
@@ -47,27 +48,10 @@ public class Game  {
         game=this;
         hero = new Hero();
         try {
-            MovementTest.moveHeroTo(20, H/2);
+            Movement.moveHeroTo(20, H/2);
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
-    }
-    public Game(double x,double y,Pane board,Double mode) {
-        this.mode=mode;
-        this.board=board;
-        game=this;
-        hero = new Hero();
-        try {
-            MovementTest.moveHeroTo(x,y);
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void play(Stage stage){
-        Counter.games();
-        Counter.thorGames();
-        Game.game.mode =mode;
         for (int j=0; j<2; j++)
             for(int i=0; i<3; i++)
             {
@@ -78,16 +62,36 @@ public class Game  {
                 backgroundObjects.add(b);
                 board.getChildren().add(b);
             }
-        scoreText= new Text(110, 10, "Score: " + score);
+    }
+    public Game(double x,double y,Pane board,Double mode) {
+        this.mode=mode;
+        this.board=board;
+        game=this;
+        hero = new Hero();
+        try {
+            Movement.moveHeroTo(x,y);
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void play(Stage stage){
+        Counter.games();
+        Counter.thorGames();
+        Game.game.mode =mode;
+        scoreText= new Text(W/2, 30, "Score: " + score);
         livesText = new Text (170, 10, "Lives: " + lives);
         board.getChildren().addAll(hero, scoreText, livesText);
-
+        scoreText.setFont(new Font(30));
+        livesText.setFont(new Font(30));
+        livesText.setFill(Color.RED);
+        scoreText.relocate(W/2-scoreText.getBoundsInLocal().getWidth()/2, 0);
+        livesText.relocate(10, -3);
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Background/sand_background.png",W,H,false,true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
         board.setBackground(new javafx.scene.layout.Background(myBI));
         stage.setScene(scene);
-
         stage.setTitle("Ragnarok");
         stage.show();
 
@@ -121,10 +125,11 @@ public class Game  {
             scene.setOnMouseClicked(event -> {
                 if(!pause) {
                     Weapon newWeapon;
-                    if (!upgrade) {
+                    if (upgrade<=0) {
                         newWeapon = new Hammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
                     } else {
                         newWeapon = new SuperHammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
+                        upgrade--;
                     }
                     newWeapon.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY());
                     weaponsHero.add(newWeapon);
@@ -145,7 +150,7 @@ public class Game  {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (score < 0) {
+                    if (score < 50) {
                         villainCounter++;
                         Villain.newVillain(game);
                     } else if (villains.size() == 0) {
@@ -162,10 +167,10 @@ public class Game  {
                         }
                     }
                     try {
-                        MovementTest.moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
-                        MovementTest.throwWeapon(dWeapon);
-                        MovementTest.enemyWeapon(5);
-                        MovementTest.moveVillain();
+                        Movement.moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
+                        Movement.throwWeapon(dWeapon);
+                        Movement.enemyWeapon(5);
+                        Movement.moveVillain();
                     } catch (InstantiationException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
@@ -247,6 +252,7 @@ public class Game  {
             }
         } else {
             lives = 0;
+            livesText.setText("Lives: " + lives);
         }
     }
 }
