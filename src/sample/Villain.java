@@ -21,14 +21,6 @@ public abstract class Villain extends ImageView {
     {
         HP--;
     }
-    public static Villain getNewVillain(int i, Double mode)
-    {
-        return switch (i) {
-            case 0, 1, 2 -> new Skull(mode);
-            case 3, 4, 5 -> new Spider(mode);
-            default -> new Predator(mode);
-        };
-    }
     public static Boss getNewPredatorBoss(Double mode)
     {
         return new PredatorBoss(mode);
@@ -66,7 +58,7 @@ public abstract class Villain extends ImageView {
                     x.remove();
                     if(!currentVillain.isAlive()) {
                         int i= Game.randomizer.nextInt(20);
-                        if(i<2)
+                        if(i<3)
                         {
                             Box newBox=Box.getNewBox(i);
                             newBox.relocate(currentVillain.getLayoutX(),currentVillain.getLayoutY());
@@ -95,7 +87,7 @@ public abstract class Villain extends ImageView {
     public static void newVillain(Game game)
     {
         if (game.villainCounter % game.modifier == 0) {
-            Villain newVillain = Villain.getNewVillain(Game.randomizer.nextInt(7),Game.game.mode);
+            Villain newVillain = game.villainFactory.produce(Game.randomizer.nextInt(7),Game.game.mode);
             int r = Game.randomizer.nextInt(4);
             switch (r) {
                 case 0 -> {

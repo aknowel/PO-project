@@ -202,10 +202,11 @@ public class LoadController {
         try {
             board = new Pane();
             double mode = Double.parseDouble(scanner.next());
+            int round = Integer.parseInt(scanner.next());
             double x, y;
             x = Double.parseDouble(scanner.next());
             y = Double.parseDouble(scanner.next());
-            game = new Game(x, y, board, mode);
+            game = new Game(x, y, board, mode, round);
             Weapon weapon;
             int length = Integer.parseInt(scanner.next());
             for (int i = 0; i < length; i++) {

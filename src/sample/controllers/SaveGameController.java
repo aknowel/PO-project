@@ -120,6 +120,7 @@ public class SaveGameController {
             PrintWriter writer;
             writer = new PrintWriter(save);
             writer.println(Game.game.mode);
+            writer.println(Game.game.round);
             writer.println(Game.game.hero);
             writer.println(Game.game.weaponsHero.size());
             for(Weapon weapon:Game.game.weaponsHero) {

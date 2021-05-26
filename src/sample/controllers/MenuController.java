@@ -34,7 +34,7 @@ public class MenuController {
     public void playGame(ActionEvent event)
     {
         Pane board=new Pane();
-        Game main=new Game(board,mode);
+        Game main=new Game(board,mode, 1);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         main.play(stage);
     }

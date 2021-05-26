@@ -3,7 +3,6 @@ package sample;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -32,42 +31,42 @@ public class Game  {
     public AnimationTimer timer;
     public Text scoreText, livesText;
     public final int dWeapon=10;
-    public int modifier=150, villainCounter=modifier-1, score=0, lives=100000,livesMax=10;
+    public int modifier=150, villainCounter=modifier-1, score=0, lives=10,livesMax=10;
     public boolean goNorth, goSouth, goEast, goWest, isBoss=false;
     public boolean pause=false,stop=false;
     public int time=0, upgrade=0;
+    public final int round;
     public  Double mode;
     AnchorPane root;
     public Boss boss=null;
     public static Game game;
     static Random randomize=new Random();
+    public VillainFactory villainFactory;
 
-    public Game(Pane board,Double mode) {
+    public Game(Pane board,Double mode, int round) {
         this.mode=mode;
         this.board=board;
+        this.round=round;
         game=this;
         hero = new Hero();
+        BackgroundSetter.setBackgroundObjects(round);
+        BackgroundSetter.setBackground(round);
+        villainFactory=VillainFactory.getVillainFactory(round);
         try {
             Movement.moveHeroTo(20, H/2);
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
-        for (int j=0; j<2; j++)
-            for(int i=0; i<3; i++)
-            {
-                Background b=((i+j)%2==0) ? new Cactus() : new Barrel();
-                double x=(i+1)*W/5+W*randomize.nextDouble()/5;
-                double y=(2*j+1)*H/6+H*randomize.nextDouble()/3;
-                b.relocate(x, y);
-                backgroundObjects.add(b);
-                board.getChildren().add(b);
-            }
+
     }
-    public Game(double x,double y,Pane board,Double mode) {
+    public Game(double x,double y,Pane board,Double mode, int round) {
         this.mode=mode;
         this.board=board;
+        this.round=round;
         game=this;
         hero = new Hero();
+        BackgroundSetter.setBackground(round);
+        villainFactory=VillainFactory.getVillainFactory(round);
         try {
             Movement.moveHeroTo(x,y);
         } catch (InstantiationException | IllegalAccessException e) {
@@ -88,9 +87,6 @@ public class Game  {
         scoreText.relocate(W/2-scoreText.getBoundsInLocal().getWidth()/2, 0);
         livesText.relocate(10, -3);
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
-        BackgroundImage myBI= new BackgroundImage(new Image("resources/Images/Background/sand_background.png",W,H,false,true),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
-        board.setBackground(new javafx.scene.layout.Background(myBI));
         stage.setScene(scene);
         stage.setTitle("Ragnarok");
         stage.show();

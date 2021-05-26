@@ -17,7 +17,8 @@ public abstract class Box extends ImageView {
     {
         return switch(i) {
             case 0 -> new EmptyBox();
-            default -> new UpgradeBox();
+            case 1 -> new UpgradeBox();
+            default -> new HeartBox();
         };
     }
     static void checkBox(Game game)
@@ -26,9 +27,10 @@ public abstract class Box extends ImageView {
         while(x.hasNext()){
             Box currentBox=x.next();
             if (currentBox.getBoundsInParent().intersects(game.hero.getBoundsInParent())){
-                if(currentBox.i==1)
+                switch(currentBox.i)
                 {
-                    game.upgrade=50;
+                    case 1->game.upgrade=50;
+                    case 2->game.lives=(game.lives<game.livesMax) ? game.lives+1 : game.lives;
                 }
                 if(randomize.nextInt(3)==1)
                 {
