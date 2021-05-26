@@ -69,6 +69,7 @@ public abstract class Villain extends ImageView {
                         check(currentVillain.id);
                         y.remove();
                        game.score++;
+                       game.counter++;
                         game.scoreText.setText("Score: " + game.score);
                         if(isShooting(currentVillain))
                         {
@@ -103,7 +104,7 @@ public abstract class Villain extends ImageView {
             }
             game.villains.add(newVillain);
             Game.game.board.getChildren().add(newVillain);
-            if(newVillain instanceof Predator)
+            if(newVillain instanceof ShootingVillains)
             {
                 game.shootingVillains.add(newVillain);
             }
@@ -155,7 +156,11 @@ public abstract class Villain extends ImageView {
     }
     public static boolean isShooting(Villain villain)
     {
-        return villain.id==1;
+        return villain.id==1||villain.id==5;
+    }
+    public int getVillainId()
+    {
+        return id;
     }
     public boolean isBoss()
     {
@@ -193,7 +198,7 @@ class Skull extends Villain{
             this.id=0;
         }
 }
-class Predator extends Villain{
+class Predator extends ShootingVillains{
     Predator()
     {
         super(new Image("/resources/Images/Villains/Predator.png"));
@@ -234,7 +239,7 @@ class Zombie extends Villain
         this.id=4;
     }
 }
-class Wizard extends Villain
+class Wizard extends ShootingVillains
 {
     Wizard()
     {
@@ -313,8 +318,8 @@ class Bat extends Villain
     Bat(Double mode)
     {
         super(new Image("/resources/Images/Villains/Bat.png"));
-        this.HP=4+mode;
-        this.speed=-1D;
+        this.HP=2+mode;
+        this.speed=-3D;
         this.id=10;
     }
 }
@@ -335,6 +340,13 @@ abstract class Boss extends Villain
         {
             sounds.playBossLaugh();
         }
+    }
+}
+abstract class ShootingVillains extends Villain
+{
+    ShootingVillains(Image img)
+    {
+        super(img);
     }
 }
 class PredatorBoss extends Boss

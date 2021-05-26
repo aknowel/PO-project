@@ -42,6 +42,7 @@ public class Game  {
     public static Game game;
     static Random randomize=new Random();
     public VillainFactory villainFactory;
+    public int counter=0;
 
     public Game(Pane board,Double mode, int round) {
         this.mode=mode;
@@ -146,7 +147,7 @@ public class Game  {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (score < 50) {
+                    if (counter < 5) {
                         villainCounter++;
                         Villain.newVillain(game);
                     } else if (villains.size() == 0) {
@@ -235,7 +236,13 @@ public class Game  {
                 Counter.deathless();
             }
             FXMLLoader fxmlLoader=new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/resources/fxml/bossDefeat.fxml"));
+            if(round<5) {
+                fxmlLoader.setLocation(getClass().getResource("/resources/fxml/bossDefeat.fxml"));
+            }
+            else
+            {
+                fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameEnd.fxml"));
+            }
             try {
                 root = fxmlLoader.load();
                 root.setLayoutX(340);

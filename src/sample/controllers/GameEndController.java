@@ -37,4 +37,15 @@ public class GameEndController {
         }
         stage.show();
     }
+    public void continues(ActionEvent event)
+    {
+        int lives=Game.game.lives;
+        int score=Game.game.score;
+        Pane board=new Pane();
+        Game main=new Game(board,Game.game.mode, Game.game.round+1);
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Game.game.lives=lives;
+        Game.game.score=score;
+        main.play(stage);
+    }
 }

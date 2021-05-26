@@ -18,7 +18,13 @@ public abstract class Weapon extends ImageView {
             double y = currentVillain.getLayoutY();
             double z = game.hero.getLayoutX();
             double v = game.hero.getLayoutY();
-            Weapon newWeapon = new RedBall( z-x,v-y );
+            Weapon newWeapon;
+            if (currentVillain.getVillainId() == 1||currentVillain.getVillainId() == 3) {
+                newWeapon = new RedBall(z - x, v - y);
+            } else
+            {
+                newWeapon = new Star(z - x, v - y);
+            }
             newWeapon.relocate(currentVillain.getLayoutX() , currentVillain.getLayoutY() );
             game.weaponsVillain.add(newWeapon);
             game.board.getChildren().add(newWeapon);
@@ -81,5 +87,19 @@ class RedBall extends Weapon
         this.x=x;
         this.y=y;
         this.id=3;
+    }
+}
+class Star extends Weapon
+{
+    Star()
+    {
+        super(new Image("resources/Images/Weapons/Star.png"));
+    }
+    Star(double x,double y)
+    {
+        super(new Image("resources/Images/Weapons/Star.png"));
+        this.x=x;
+        this.y=y;
+        this.id=4;
     }
 }

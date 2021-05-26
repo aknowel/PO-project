@@ -18,7 +18,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Button layoutX="236.0" layoutY="239.0" mnemonicParsing="false" onAction="#restartGame" stylesheets="@../css/menu.css" text="Restart" />
+      <Button layoutX="226.0" layoutY="240.0" mnemonicParsing="false" onAction="#continues" stylesheets="@../css/menu.css" text="Continue" />
       <Button layoutX="242.0" layoutY="303.0" mnemonicParsing="false" onAction="#returnMenu" stylesheets="@../css/menu.css" text="MENU" />
       <Label layoutX="230.0" layoutY="100.0" prefHeight="23.0" prefWidth="129.0" styleClass="title" stylesheets="@../css/menu.css" text="The cake is not a lie!" />
       <ImageView fitHeight="107.0" fitWidth="129.0" layoutX="236.0" layoutY="124.0" pickOnBounds="true">

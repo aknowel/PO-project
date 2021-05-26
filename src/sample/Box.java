@@ -30,7 +30,10 @@ public abstract class Box extends ImageView {
                 switch(currentBox.i)
                 {
                     case 1->game.upgrade=50;
-                    case 2->game.lives=(game.lives<game.livesMax) ? game.lives+1 : game.lives;
+                    case 2-> {
+                        game.lives = (game.lives < game.livesMax) ? game.lives + 1 : game.lives;
+                        game.livesText.setText("Lives: "+game.lives);
+                    }
                 }
                 if(randomize.nextInt(3)==1)
                 {
