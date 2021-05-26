@@ -13,7 +13,7 @@
                 <Image url="@../Images/Background/background.jpg" />
             </image>
         </ImageView>
-        <Label layoutX="18.0" layoutY="14.0" prefHeight="120.0" prefWidth="581.0" styleClass="title2" stylesheets="@../css/menu.css" text="Boss defeated! Congratulations!">
+        <Label layoutX="210.0" layoutY="14.0" prefHeight="120.0" prefWidth="581.0" styleClass="title2" stylesheets="@../css/menu.css" text="You Won!" textFill="#bfbf2e">
             <font>
                 <Font size="36.0" />
             </font>

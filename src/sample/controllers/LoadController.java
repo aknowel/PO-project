@@ -279,13 +279,7 @@ public class LoadController {
             length = Integer.parseInt(scanner.next());
             for (int i = 0; i < length; i++) {
                 int id = Integer.parseInt(scanner.next());
-                switch(id) {
-                    case 1 -> backgroundObj = Background.newCactus();
-                    case 2 -> backgroundObj = Background.newBarrel();
-                    case 3 -> backgroundObj = Background.newStone();
-                    case 4 -> backgroundObj = Background.newCrystal();
-                    default -> throw new IllegalStateException("Unexpected value: " + id);
-                }
+                backgroundObj=Background.newBackground(id);
                 backgroundObj.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
                 game.backgroundObjects.add(backgroundObj);
                 board.getChildren().add(backgroundObj);

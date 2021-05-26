@@ -236,7 +236,7 @@ public class Game  {
                 Counter.deathless();
             }
             FXMLLoader fxmlLoader=new FXMLLoader();
-            if(round<5) {
+            if(round<4) {
                 fxmlLoader.setLocation(getClass().getResource("/resources/fxml/bossDefeat.fxml"));
             }
             else
