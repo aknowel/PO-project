@@ -164,7 +164,7 @@ public abstract class Villain extends ImageView {
     }
     public boolean isBoss()
     {
-        return this.id==3;
+        return this instanceof Boss;
     }
     public static void check(int id)
     {
@@ -221,7 +221,7 @@ class Spider extends Villain
     {
         super(new Image("/resources/Images/Villains/Spider.png"));
         this.HP=1+mode;
-        this.speed=-2D;
+        this.speed=-2.5D;
         this.id=2;
     }
 }
@@ -325,6 +325,7 @@ class Bat extends Villain
 }
 abstract class Boss extends Villain
 {
+    int spawn=32;
     Boss(Image img)
     {
         super(img);
@@ -340,6 +341,10 @@ abstract class Boss extends Villain
         {
             sounds.playBossLaugh();
         }
+    }
+    public void skill()
+    {
+
     }
 }
 abstract class ShootingVillains extends Villain
@@ -365,8 +370,23 @@ class SpiderBoss extends Boss
     {
         super(new Image("/resources/Images/Villains/SpiderBoss.png"));
         this.HP=40*(mode+1);
-        this.speed=-2D;
+        this.speed=-1.75D;
         this.id=11;
+    }
+    @Override
+    public void skill()
+    {
+        if(spawn==0) {
+            Villain newVillain = new Spider(Game.game.mode);
+            newVillain.relocate(this.getLayoutX(), this.getLayoutY());
+            Game.game.villains.add(newVillain);
+            Game.game.board.getChildren().add(newVillain);
+            spawn=350;
+        }
+        else
+        {
+            spawn--;
+        }
     }
 }
 class VampireBoss extends Boss
@@ -375,8 +395,23 @@ class VampireBoss extends Boss
     {
         super(new Image("/resources/Images/Villains/VampireBig.png"));
         this.HP=30*(mode+1);
-        this.speed=-4D;
+        this.speed=-2.5D;
         this.id=12;
+    }
+    @Override
+    public void skill()
+    {
+        if(spawn==0) {
+            Villain newVillain = new Bat(Game.game.mode);
+            newVillain.relocate(this.getLayoutX(), this.getLayoutY());
+            Game.game.villains.add(newVillain);
+            Game.game.board.getChildren().add(newVillain);
+            spawn=350;
+        }
+        else
+        {
+            spawn--;
+        }
     }
 }
 class Loki extends Boss
@@ -385,8 +420,35 @@ class Loki extends Boss
     {
         super(new Image("/resources/Images/Villains/Loki.png"));
         this.HP=60*(mode+1);
-        this.speed=-2D;
+        this.speed=-2.5D;
         this.id=13;
+    }
+    @Override
+    public void skill()
+    {
+        if (spawn==0) {
+            double x = this.getLayoutX();
+            double y = this.getLayoutY();
+            double z = Game.game.hero.getLayoutX();
+            double v = Game.game.hero.getLayoutY();
+            Weapon newWeapon = new Star(v - y, x - z);
+            newWeapon.relocate(this.getLayoutX() , this.getLayoutY() );
+            Game.game.weaponsVillain.add(newWeapon);
+            Game.game.board.getChildren().add(newWeapon);
+            newWeapon = new Star(y - v, z - x);
+            newWeapon.relocate(this.getLayoutX() , this.getLayoutY() );
+            Game.game.weaponsVillain.add(newWeapon);
+            Game.game.board.getChildren().add(newWeapon);
+            newWeapon = new Star(x-z, y-v);
+            newWeapon.relocate(this.getLayoutX() , this.getLayoutY() );
+            Game.game.weaponsVillain.add(newWeapon);
+            Game.game.board.getChildren().add(newWeapon);
+            spawn=32;
+        }
+        else
+        {
+            spawn--;
+        }
     }
 }
 

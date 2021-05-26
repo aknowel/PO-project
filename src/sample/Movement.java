@@ -83,7 +83,9 @@ public abstract class Movement {
             }
             else
             {
-                bossBgCheck(currentVillain);
+                if(currentVillain.getVillainId()!=12) {
+                    bossBgCheck(currentVillain);
+                }
                 currentVillain.relocate(currentVillain.getLayoutX() + d * (x - z) / dd, currentVillain.getLayoutY() + d * (y - v) / dd);
             }
         }
@@ -145,6 +147,7 @@ public abstract class Movement {
         for (Background current : Game.game.backgroundObjects) {
             if(boss.getBoundsInParent().intersects(current.getBoundsInParent()))
             {
+                Game.game.backgroundObjects.remove(current);
                 Game.game.board.getChildren().remove(current);
             }
         }

@@ -43,7 +43,6 @@ public class Game  {
     static Random randomize=new Random();
     public VillainFactory villainFactory;
     public int counter=0;
-
     public Game(Pane board,Double mode, int round) {
         this.mode=mode;
         this.board=board;
@@ -147,21 +146,24 @@ public class Game  {
                     if (goSouth) dy += 3;
                     if (goEast) dx += 3;
                     if (goWest) dx -= 3;
-                    if (counter < 5) {
+                    if (counter < 50) {
                         villainCounter++;
                         Villain.newVillain(game);
                     } else if (villains.size() == 0) {
                         if (!isBoss) {
                             isBoss = true;
-                            boss = Villain.getNewPredatorBoss(mode);
+                            boss = villainFactory.produceBoss(mode);
                             boss.shout();
                             boss.relocate(W, Math.random() * (H - boss.getBoundsInLocal().getHeight()));
                             villains.add(boss);
-                            shootingVillains.add(boss);
                             board.getChildren().add(boss);
                         } else {
                             isBossDefeat(timer);
                         }
+                    }
+                    if(boss.isAlive())
+                    {
+                       boss.skill();
                     }
                     try {
                         Movement.moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
