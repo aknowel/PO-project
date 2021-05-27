@@ -7,13 +7,13 @@ import java.util.Iterator;
 public abstract class Movement {
     static Background curr=null;
     static void moveHeroTo (double x, double y) throws InstantiationException, IllegalAccessException {
-        if (x >= 0 && x <= Game.W - Game.game.hero.getBoundsInLocal().getWidth() && y >= 0 && y <= Game.H - Game.game.hero.getBoundsInLocal().getHeight() && backgroundCheck(x,y,Game.game.hero)) {
-               Game.game.hero.relocate(x, y);
-        } else if (x >= 0 && x <= Game.W - Game.game.hero.getBoundsInLocal().getWidth() && backgroundCheck(x,y,Game.game.hero)) {
-            Game.game.hero.relocate(x, Game.game.hero.getLayoutY());
+        if (x >= 0 && x <= Game.W - Game.game.heroes.get(0).getBoundsInLocal().getWidth() && y >= 0 && y <= Game.H - Game.game.heroes.get(0).getBoundsInLocal().getHeight() && backgroundCheck(x,y,Game.game.heroes.get(0))) {
+               Game.game.heroes.get(0).relocate(x, y);
+        } else if (x >= 0 && x <= Game.W - Game.game.heroes.get(0).getBoundsInLocal().getWidth() && backgroundCheck(x,y,Game.game.heroes.get(0))) {
+            Game.game.heroes.get(0).relocate(x, Game.game.heroes.get(0).getLayoutY());
         }
-        else if (y>=0 && y<= Game.H -Game.game.hero.getBoundsInLocal().getHeight() && backgroundCheck(x,y,Game.game.hero)) {
-            Game.game.hero.relocate(Game.game.hero.getLayoutX(), y);
+        else if (y>=0 && y<= Game.H -Game.game.heroes.get(0).getBoundsInLocal().getHeight() && backgroundCheck(x,y,Game.game.heroes.get(0))) {
+            Game.game.heroes.get(0).relocate(Game.game.heroes.get(0).getLayoutX(), y);
         }
     }
 
@@ -23,7 +23,7 @@ public abstract class Movement {
         while(it.hasNext()){
             Villain currentVillain=it.next();
             d=currentVillain.getSpeed();
-            if(Game.game.hero.getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
+            if(Game.game.heroes.get(0).getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
                 Game.game.lives--;
                 Game.game.livesText.setText("Lives: " + Game.game.lives);
                 if(Villain.isShooting(currentVillain))
@@ -36,8 +36,8 @@ public abstract class Movement {
             }
             double x=currentVillain.getLayoutX();
             double y=currentVillain.getLayoutY();
-            double z=Game.game.hero.getLayoutX();
-            double v=Game.game.hero.getLayoutY();
+            double z=Game.game.heroes.get(0).getLayoutX();
+            double v=Game.game.heroes.get(0).getLayoutY();
             double dd=Math.sqrt((x-z)*(x-z)+(y-v)*(y-v));
             boolean tt=villainBgCheck(currentVillain);
             boolean isBoss=currentVillain.isBoss();
@@ -48,9 +48,9 @@ public abstract class Movement {
                     double xx = curr.getLayoutX() + curr.getBoundsInLocal().getWidth() / 2;
                     double yy = curr.getLayoutY() + curr.getBoundsInLocal().getHeight() / 2;
                     double b = yy - y;
-                    double s = Math.signum(-Game.game.hero.getLayoutY() + currentVillain.getLayoutY());
+                    double s = Math.signum(-Game.game.heroes.get(0).getLayoutY() + currentVillain.getLayoutY());
                     if (b == 0) {
-                        if (!(Game.game.hero.getLayoutY() >= curr.getLayoutY() - Game.game.hero.getBoundsInLocal().getHeight() && Game.game.hero.getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 30)) {
+                        if (!(Game.game.heroes.get(0).getLayoutY() >= curr.getLayoutY() - Game.game.heroes.get(0).getBoundsInLocal().getHeight() && Game.game.heroes.get(0).getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 30)) {
                             if (xx < currentVillain.getLayoutX()) {
                                 currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() - s * d);
                             } else {
@@ -65,7 +65,7 @@ public abstract class Movement {
                         }
                     } else {
                         double a = Math.atan(-(x - xx) / (y - yy));
-                        if (!(Game.game.hero.getLayoutY() >= curr.getLayoutY() - Game.game.hero.getBoundsInLocal().getHeight() && Game.game.hero.getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 30)) {
+                        if (!(Game.game.heroes.get(0).getLayoutY() >= curr.getLayoutY() - Game.game.heroes.get(0).getBoundsInLocal().getHeight() && Game.game.heroes.get(0).getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 30)) {
                             if (yy < currentVillain.getLayoutY()) {
                                 currentVillain.relocate(currentVillain.getLayoutX() + s * d * Math.cos(a), currentVillain.getLayoutY() + s * d * Math.sin(a));
                             } else {

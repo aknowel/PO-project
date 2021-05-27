@@ -26,7 +26,7 @@ public abstract class Box extends ImageView {
         Iterator<Box> x=game.boxes.iterator();
         while(x.hasNext()){
             Box currentBox=x.next();
-            if (currentBox.getBoundsInParent().intersects(game.hero.getBoundsInParent())){
+            if (currentBox.getBoundsInParent().intersects(game.heroes.get(0).getBoundsInParent())){
                 switch(currentBox.i)
                 {
                     case 1->game.upgrade=50;
