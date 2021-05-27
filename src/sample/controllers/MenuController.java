@@ -55,6 +55,22 @@ public class MenuController {
         }
         stage.show();
     }
+    public void multiplayer(ActionEvent event) {
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader=new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/multiplayer.fxml"));
+        try {
+            root = fxmlLoader.load();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Multiplayer");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        stage.show();
+    }
     public void selectOptions(ActionEvent event)
     {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MenuController">
    <children>
       <ImageView blendMode="SRC_ATOP" cache="true" fitHeight="732.0" fitWidth="1289.0" layoutX="-3.0" layoutY="-6.0" pickOnBounds="true">
          <image>
@@ -17,7 +19,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ImageView>
-      <Button alignment="TOP_CENTER" contentDisplay="TOP" layoutX="542.0" layoutY="234.0" mnemonicParsing="false" onAction="#playGame" prefHeight="45.0" prefWidth="173.0" stylesheets="@../css/menu.css" text="New Game" textAlignment="CENTER" textFill="#030202" textOverrun="WORD_ELLIPSIS" AnchorPane.bottomAnchor="423.0" AnchorPane.leftAnchor="542.0" AnchorPane.rightAnchor="565.0" AnchorPane.topAnchor="234.0">
+      <Button alignment="TOP_CENTER" contentDisplay="TOP" layoutX="484.0" layoutY="234.0" mnemonicParsing="false" onAction="#playGame" prefHeight="63.0" prefWidth="282.0" stylesheets="@../css/menu.css" text="Singleplayer" textAlignment="CENTER" textFill="#030202" textOverrun="WORD_ELLIPSIS" AnchorPane.bottomAnchor="423.0" AnchorPane.leftAnchor="484.0" AnchorPane.rightAnchor="514.0" AnchorPane.topAnchor="234.0">
          <font>
             <Font name="System Italic" size="36.0" />
          </font>
@@ -25,7 +27,7 @@
             <Blend />
          </effect>
       </Button>
-      <Button contentDisplay="CENTER" layoutX="538.0" layoutY="290.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="40.0" prefWidth="182.0" stylesheets="@../css/menu.css" text="Load Game" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
+      <Button contentDisplay="CENTER" layoutX="501.0" layoutY="297.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="50.0" prefWidth="250.0" stylesheets="@../css/menu.css" text="Load Game" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font size="14.0" />
          </font>
@@ -33,17 +35,22 @@
             <Blend />
          </effect>
       </Button>
-      <Button layoutX="562.0" layoutY="353.0" mnemonicParsing="false" onAction="#selectOptions" prefHeight="63.0" prefWidth="134.0" stylesheets="@../css/menu.css" text="Options" textAlignment="CENTER" textFill="#0d0909" textOverrun="WORD_ELLIPSIS">
+      <Button contentDisplay="CENTER" layoutX="522.0" layoutY="347.0" mnemonicParsing="false" onAction="#multiplayer" prefHeight="72.0" prefWidth="207.0" stylesheets="@../css/menu.css" text="Multiplayer" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
+         <effect>
+            <Blend />
+         </effect>
+      </Button>
+      <Button layoutX="527.0" layoutY="425.0" mnemonicParsing="false" onAction="#selectOptions" prefHeight="63.0" prefWidth="196.0" stylesheets="@../css/menu.css" text="Options" textAlignment="CENTER" textFill="#0d0909" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font name="System Italic" size="14.0" />
          </font>
       </Button>
-      <Button layoutX="526.0" layoutY="416.0" mnemonicParsing="false" onAction="#selectAchievements" prefHeight="63.0" prefWidth="206.0" stylesheets="@../css/menu.css" text="Achievements" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
+      <Button layoutX="476.0" layoutY="488.0" mnemonicParsing="false" onAction="#selectAchievements" prefHeight="63.0" prefWidth="299.0" stylesheets="@../css/menu.css" text="Achievements" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="585.0" layoutY="479.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="52.0" prefWidth="88.0" stylesheets="@../css/menu.css" text="Exit" textAlignment="CENTER">
+      <Button layoutX="546.0" layoutY="551.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="52.0" prefWidth="158.0" stylesheets="@../css/menu.css" text="Exit" textAlignment="CENTER">
          <font>
             <Font name="System Italic" size="14.0" />
          </font>
