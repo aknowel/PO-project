@@ -429,8 +429,8 @@ class Loki extends Boss
         if (spawn==0) {
             double x = this.getLayoutX();
             double y = this.getLayoutY();
-            double z = Game.game.hero.getLayoutX();
-            double v = Game.game.hero.getLayoutY();
+            double z = Game.game.heroes.get(0).getLayoutX();
+            double v = Game.game.heroes.get(0).getLayoutY();
             Weapon newWeapon = new Star(v - y, x - z);
             newWeapon.relocate(this.getLayoutX() , this.getLayoutY() );
             Game.game.weaponsVillain.add(newWeapon);

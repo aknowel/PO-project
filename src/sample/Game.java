@@ -11,141 +11,156 @@ import javafx.stage.Stage;
 
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Vector;
 
 
-public class Game  {
+public class Game {
 
-    static final double W=1280, H=720;
+    static final double W = 1280, H = 720;
 
 
-    static final Random randomizer=new Random();
+    static final Random randomizer = new Random();
 
-    public Hero hero;
-    public final LinkedList<Weapon> weaponsHero= new LinkedList<>();
-    public final LinkedList<Weapon> weaponsVillain= new LinkedList<>();
-    public final LinkedList<Villain> villains= new LinkedList<>();
-    public final LinkedList<Villain> shootingVillains= new LinkedList<>();
-    public final LinkedList<Background> backgroundObjects =new LinkedList<>();
-    public final LinkedList<Box> boxes= new LinkedList<>();
+    public Vector<Hero> heroes = new Vector<>();
+    public final LinkedList<Weapon> weaponsHero = new LinkedList<>();
+    public final LinkedList<Weapon> weaponsVillain = new LinkedList<>();
+    public final LinkedList<Villain> villains = new LinkedList<>();
+    public final LinkedList<Villain> shootingVillains = new LinkedList<>();
+    public final LinkedList<Background> backgroundObjects = new LinkedList<>();
+    public final LinkedList<Box> boxes = new LinkedList<>();
     public Pane board;
     public AnimationTimer timer;
     public Text scoreText, livesText;
-    public final int dWeapon=10;
-    public int modifier=150, villainCounter=modifier-1, score=0, lives=10,livesMax=10;
-    public boolean goNorth, goSouth, goEast, goWest, isBoss=false;
-    public boolean pause=false,stop=false;
-    public int time=0, upgrade=0;
+    public final int dWeapon = 10;
+    public int modifier = 150, villainCounter = modifier - 1, score = 0, lives = 10, livesMax = 10;
+    public boolean isBoss = false;
+    public boolean pause = false, stop = false;
+    public int time = 0, upgrade = 0;
     public final int round;
-    public  Double mode;
+    public Double mode;
     AnchorPane root;
-    public Boss boss=null;
+    public Boss boss = null;
     public static Game game;
-    static Random randomize=new Random();
+    static Random randomize = new Random();
     public VillainFactory villainFactory;
-    public int counter=0;
-    public Game(Pane board,Double mode, int round) {
-        this.mode=mode;
-        this.board=board;
-        this.round=round;
-        game=this;
-        hero = new Hero();
+    public int counter = 0;
+
+    public Game(Pane board, Double mode, int round) {
+        this.mode = mode;
+        this.board = board;
+        this.round = round;
+        game = this;
+        heroes.add(new Hero());
         BackgroundSetter.setBackgroundObjects(round);
         BackgroundSetter.setBackground(round);
-        villainFactory=VillainFactory.getVillainFactory(round);
+        villainFactory = VillainFactory.getVillainFactory(round);
         try {
-            Movement.moveHeroTo(20, H/2);
+            Movement.moveHeroTo(20, H / 2);
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
 
     }
-    public Game(double x,double y,Pane board,Double mode, int round) {
-        this.mode=mode;
-        this.board=board;
-        this.round=round;
-        game=this;
-        hero = new Hero();
+
+    public Game(double x, double y, Pane board, Double mode, int round) {
+        this.mode = mode;
+        this.board = board;
+        this.round = round;
+        game = this;
+        heroes.add(new Hero());
         BackgroundSetter.setBackground(round);
-        villainFactory=VillainFactory.getVillainFactory(round);
+        villainFactory = VillainFactory.getVillainFactory(round);
         try {
-            Movement.moveHeroTo(x,y);
+            Movement.moveHeroTo(x, y);
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
 
-    public void play(Stage stage){
+    public void play(Stage stage) {
         Counter.games();
         Counter.thorGames();
-        Game.game.mode =mode;
-        scoreText= new Text(W/2, 30, "Score: " + score);
-        livesText = new Text (170, 10, "Lives: " + lives);
-        board.getChildren().addAll(hero, scoreText, livesText);
+        Game.game.mode = mode;
+        scoreText = new Text(W / 2, 30, "Score: " + score);
+        livesText = new Text(170, 10, "Lives: " + lives);
+        board.getChildren().addAll(heroes.get(0), scoreText, livesText);
         scoreText.setFont(new Font(30));
         livesText.setFont(new Font(30));
         livesText.setFill(Color.RED);
-        scoreText.relocate(W/2-scoreText.getBoundsInLocal().getWidth()/2, 0);
+        scoreText.relocate(W / 2 - scoreText.getBoundsInLocal().getWidth() / 2, 0);
         livesText.relocate(10, -3);
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         stage.setScene(scene);
         stage.setTitle("Ragnarok");
         stage.show();
 
-            scene.setOnKeyPressed(event -> {
-                    if(event.getCode().equals(KeyBinds.W)) goNorth = true;
-                    else if(event.getCode().equals(KeyBinds.S)) goSouth = true;
-                    else if(event.getCode().equals(KeyBinds.A)) goWest = true;
-                    else if(event.getCode().equals(KeyBinds.D)) goEast = true;
-                    else if(event.getCode().equals(KeyBinds.P)) {
-                        if(!pause & !stop)
-                        {
-                            timer.stop();
-                            pause();
-                            pause=true;
-                        }
-                        else if(!stop)
-                        {
-                            board.getChildren().remove(root);
-                            pause=false;
-                            timer.start();
-                        }
-                    }
-            });
-
-            scene.setOnKeyReleased(event -> {
-                if(event.getCode().equals(KeyBinds.W)) goNorth = false;
-                else if(event.getCode().equals(KeyBinds.S)) goSouth = false;
-                else if(event.getCode().equals(KeyBinds.A)) goWest = false;
-                else if(event.getCode().equals(KeyBinds.D)) goEast = false;
-            });
-            scene.setOnMouseClicked(event -> {
-                if(!pause) {
-                    Weapon newWeapon;
-                    if (upgrade<=0) {
-                        newWeapon = new Hammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
-                    } else {
-                        newWeapon = new SuperHammer(event.getSceneX() - hero.getLayoutX(), event.getSceneY() - hero.getLayoutY());
-                        upgrade--;
-                    }
-                    newWeapon.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY());
-                    weaponsHero.add(newWeapon);
-                    board.getChildren().add(newWeapon);
-                    Counter.thrownWeapon();
-                    if(randomize.nextInt(5)==1)
-                    {
-                        hero.shout();
-                    }
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyBinds.W)) heroes.get(0).goNorth = true;
+            else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = true;
+            else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = true;
+            else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = true;
+            else if (event.getCode().equals(KeyBinds.P)) {
+                if (!pause & !stop) {
+                    timer.stop();
+                    pause();
+                    pause = true;
+                } else if (!stop) {
+                    board.getChildren().remove(root);
+                    pause = false;
+                    timer.start();
                 }
-            });
+            }
+        });
 
-            timer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    int dx = 0, dy = 0;
-                    if (goNorth) dy -= 3;
-                    if (goSouth) dy += 3;
-                    if (goEast) dx += 3;
-                    if (goWest) dx -= 3;
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode().equals(KeyBinds.W)) heroes.get(0).goNorth = false;
+            else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = false;
+            else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = false;
+            else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = false;
+        });
+        scene.setOnMouseClicked(event -> {
+            if (!pause) {
+                Weapon newWeapon;
+                if (upgrade <= 0) {
+                    newWeapon = new Hammer(event.getSceneX() - heroes.get(0).getLayoutX(), event.getSceneY() - heroes.get(0).getLayoutY());
+                } else {
+                    newWeapon = new SuperHammer(event.getSceneX() - heroes.get(0).getLayoutX(), event.getSceneY() - heroes.get(0).getLayoutY());
+                    upgrade--;
+                }
+                newWeapon.relocate(heroes.get(0).getLayoutX() + heroes.get(0).getBoundsInLocal().getWidth(), heroes.get(0).getLayoutY());
+                weaponsHero.add(newWeapon);
+                board.getChildren().add(newWeapon);
+                Counter.thrownWeapon();
+                if (randomize.nextInt(5) == 1) {
+                    heroes.get(0).shout();
+                }
+            }
+        });
+
+        timer = new AnimationTimer() {
+            int cnt = 0;
+            @Override
+            public void handle(long now) {
+                if (cnt >= Menu.screen_refresh_divisor) {
+                    cnt = 0;
+
+                    for (Hero hero : heroes) {
+                        hero.dx = 0;
+                        hero.dy = 0;
+                        if (hero.goNorth) hero.dy -= 1;
+                        if (hero.goSouth) hero.dy += 1;
+                        if (hero.goEast) hero.dx += 1;
+                        if (hero.goWest) hero.dx -= 1;
+                        double length = Math.sqrt(Math.pow(hero.dx, 2) + Math.pow(hero.dy, 2));
+                        if (length > 0) {
+                            hero.dx /= length;
+                            hero.dy /= length;
+                            hero.dx *= 3;
+                            hero.dy *= 3;
+                        }
+                    }
+
+
                     if (counter < 50) {
                         villainCounter++;
                         Villain.newVillain(game);
@@ -161,89 +176,85 @@ public class Game  {
                             isBossDefeat(timer);
                         }
                     }
-                    if(isBoss) {
+                    if (isBoss) {
                         if (boss.isAlive()) {
                             boss.skill();
                         }
                     }
                     try {
-                        Movement.moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
+                        heroes.get(0).pos_x += heroes.get(0).dx;
+                        heroes.get(0).pos_y += heroes.get(0).dy;
+                        Movement.moveHeroTo(heroes.get(0).pos_x, heroes.get(0).pos_y);
                         Movement.throwWeapon(dWeapon);
                         Movement.enemyWeapon(5);
                         Movement.moveVillain();
                     } catch (InstantiationException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
-                    if(time==32-8*mode) {
+                    if (time == 32 - 8 * mode) {
                         Weapon.newEnemyWeapon(game);
-                        time=0;
-                    }
-                    else {
+                        time = 0;
+                    } else {
                         time++;
                     }
-                    Hero.checkHitHero(game);
+                    heroes.get(0).checkHitHero(game);
                     Villain.checkHitVillain(game);
                     Box.checkBox(game);
                     gameOver(this);
                 }
-            };
-            timer.start();
+                cnt += 1;
+            }
+        };
+        timer.start();
     }
-    void gameOver(AnimationTimer timer)
-    {
+
+    void gameOver(AnimationTimer timer) {
         if (lives <= 0) {
             timer.stop();
-            stop=true;
-            Sounds sounds=new Sounds();
+            stop = true;
+            Sounds sounds = new Sounds();
             sounds.playGameOver();
-            FXMLLoader fxmlLoader=new FXMLLoader();
+            FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOver.fxml"));
             try {
                 root = fxmlLoader.load();
                 root.setLayoutX(445);
                 root.setLayoutY(193);
                 board.getChildren().add(root);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-    private void pause()
-    {
-        FXMLLoader fxmlLoader=new FXMLLoader();
+
+    private void pause() {
+        FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/resources/fxml/pause.fxml"));
         try {
             root = fxmlLoader.load();
             root.setLayoutX(445);
             root.setLayoutY(193);
             board.getChildren().add(root);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private void isBossDefeat(AnimationTimer timer)
-    {
+
+    private void isBossDefeat(AnimationTimer timer) {
         if (!boss.isAlive()) {
             timer.stop();
-            stop=true;
+            stop = true;
             Counter.victories();
             Counter.killedBoss();
-            Sounds sounds=new Sounds();
+            Sounds sounds = new Sounds();
             sounds.playWonGame();
-            if(lives==livesMax)
-            {
+            if (lives == livesMax) {
                 Counter.deathless();
             }
-            FXMLLoader fxmlLoader=new FXMLLoader();
-            if(round<4) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            if (round < 4) {
                 fxmlLoader.setLocation(getClass().getResource("/resources/fxml/bossDefeat.fxml"));
-            }
-            else
-            {
+            } else {
                 fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameEnd.fxml"));
             }
             try {
@@ -251,9 +262,7 @@ public class Game  {
                 root.setLayoutX(340);
                 root.setLayoutY(160);
                 board.getChildren().add(root);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
