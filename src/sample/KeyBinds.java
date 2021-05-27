@@ -8,4 +8,9 @@ public class KeyBinds {
     public static KeyCode S=KeyCode.S;
     public static KeyCode D=KeyCode.D;
     public static KeyCode P=KeyCode.P;
+
+    public static KeyCode UP=KeyCode.UP;
+    public static KeyCode DOWN=KeyCode.DOWN;
+    public static KeyCode LEFT=KeyCode.LEFT;
+    public static KeyCode RIGHT=KeyCode.RIGHT;
 }

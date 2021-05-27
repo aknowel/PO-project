@@ -11,12 +11,14 @@ public class Hero extends ImageView {
     double pos_y;
     double dx;
     double dy;
+    int hp;
 
     Hero() {
         super("resources/Images/Thor.png");
         goNorth = goSouth = goEast = goWest = false;
         pos_x = getLayoutX();
         pos_y = getLayoutY();
+        hp = 10;
     }
     Hero(String path_to_image)
     {
@@ -24,6 +26,7 @@ public class Hero extends ImageView {
         goNorth = goSouth = goEast = goWest = false;
         pos_x = getLayoutX();
         pos_y = getLayoutY();
+        hp = 10;
     }
     static void checkHitHero(Game game)
     {
@@ -32,7 +35,7 @@ public class Hero extends ImageView {
             Node currentWeapon=x.next();
             if (currentWeapon.getBoundsInParent().intersects(game.heroes.get(0).getBoundsInParent())){
                 game.lives--;
-                game.livesText.setText("Lives: " + game.lives);
+                game.livesText.setText("HP: " + game.lives);
                 Game.game.board.getChildren().remove(currentWeapon);
                 x.remove();
             }

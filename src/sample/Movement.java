@@ -6,14 +6,14 @@ import java.util.Iterator;
 
 public abstract class Movement {
     static Background curr=null;
-    static void moveHeroTo (double x, double y) throws InstantiationException, IllegalAccessException {
-        if (x >= 0 && x <= Game.W - Game.game.heroes.get(0).getBoundsInLocal().getWidth() && y >= 0 && y <= Game.H - Game.game.heroes.get(0).getBoundsInLocal().getHeight() && backgroundCheck(x,y,Game.game.heroes.get(0))) {
-               Game.game.heroes.get(0).relocate(x, y);
-        } else if (x >= 0 && x <= Game.W - Game.game.heroes.get(0).getBoundsInLocal().getWidth() && backgroundCheck(x,y,Game.game.heroes.get(0))) {
-            Game.game.heroes.get(0).relocate(x, Game.game.heroes.get(0).getLayoutY());
+    static void moveHeroTo (Hero hero, double x, double y) throws InstantiationException, IllegalAccessException {
+        if (x >= 0 && x <= Game.W - hero.getBoundsInLocal().getWidth() && y >= 0 && y <= Game.H - hero.getBoundsInLocal().getHeight() && backgroundCheck(x,y,hero)) {
+               hero.relocate(x, y);
+        } else if (x >= 0 && x <= Game.W -hero.getBoundsInLocal().getWidth() && backgroundCheck(x,y,hero)) {
+            hero.relocate(x, hero.getLayoutY());
         }
-        else if (y>=0 && y<= Game.H -Game.game.heroes.get(0).getBoundsInLocal().getHeight() && backgroundCheck(x,y,Game.game.heroes.get(0))) {
-            Game.game.heroes.get(0).relocate(Game.game.heroes.get(0).getLayoutX(), y);
+        else if (y>=0 && y<= Game.H -hero.getBoundsInLocal().getHeight() && backgroundCheck(x,y,hero)) {
+            hero.relocate(hero.getLayoutX(), y);
         }
     }
 
@@ -23,6 +23,7 @@ public abstract class Movement {
         while(it.hasNext()){
             Villain currentVillain=it.next();
             d=currentVillain.getSpeed();
+
             if(Game.game.heroes.get(0).getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
                 Game.game.lives--;
                 Game.game.livesText.setText("Lives: " + Game.game.lives);

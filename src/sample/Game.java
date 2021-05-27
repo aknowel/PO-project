@@ -21,7 +21,7 @@ public class Game {
 
     static final Random randomizer = new Random();
 
-    public Vector<Hero> heroes = new Vector<>();
+    public final Vector<Hero> heroes = new Vector<>();
     public final LinkedList<Weapon> weaponsHero = new LinkedList<>();
     public final LinkedList<Weapon> weaponsVillain = new LinkedList<>();
     public final LinkedList<Villain> villains = new LinkedList<>();
@@ -31,6 +31,7 @@ public class Game {
     public Pane board;
     public AnimationTimer timer;
     public Text scoreText, livesText;
+    public Vector<Text> hp_texts;
     public final int dWeapon = 10;
     public int modifier = 150, villainCounter = modifier - 1, score = 0, lives = 10, livesMax = 10;
     public boolean isBoss = false;
@@ -51,11 +52,14 @@ public class Game {
         this.round = round;
         game = this;
         heroes.add(new Hero());
+        //heroes.add(new Hero("resources/Images/Thor2.png"));
         BackgroundSetter.setBackgroundObjects(round);
         BackgroundSetter.setBackground(round);
         villainFactory = VillainFactory.getVillainFactory(round);
         try {
-            Movement.moveHeroTo(20, H / 2);
+            for (Hero hero : heroes) {
+                Movement.moveHeroTo(hero, 20, H / 2);
+            }
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -71,7 +75,9 @@ public class Game {
         BackgroundSetter.setBackground(round);
         villainFactory = VillainFactory.getVillainFactory(round);
         try {
-            Movement.moveHeroTo(x, y);
+            for (Hero hero : heroes) {
+                Movement.moveHeroTo(hero, x, y);
+            }
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -82,13 +88,25 @@ public class Game {
         Counter.thorGames();
         Game.game.mode = mode;
         scoreText = new Text(W / 2, 30, "Score: " + score);
-        livesText = new Text(170, 10, "Lives: " + lives);
-        board.getChildren().addAll(heroes.get(0), scoreText, livesText);
+
+
+        for (Hero hero : heroes) {
+            board.getChildren().add(hero);
+        }
         scoreText.setFont(new Font(30));
-        livesText.setFont(new Font(30));
-        livesText.setFill(Color.RED);
         scoreText.relocate(W / 2 - scoreText.getBoundsInLocal().getWidth() / 2, 0);
-        livesText.relocate(10, -3);
+
+        for (int i = 0; i < heroes.size(); i += 1) {
+            livesText = new Text(170, 10, "HP: " + heroes.get(i).hp);
+            livesText.setFont(new Font(30));
+            livesText.setFill(Color.RED);
+            livesText.relocate(10 + 150 * i, 0);
+            board.getChildren().add(livesText);
+        }
+
+
+        board.getChildren().add(scoreText);
+
         Scene scene = new Scene(board, W, H, Color.POWDERBLUE);
         stage.setScene(scene);
         stage.setTitle("Ragnarok");
@@ -99,6 +117,10 @@ public class Game {
             else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = true;
             else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = true;
             else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = true;
+            else if (event.getCode().equals(KeyBinds.UP)) heroes.get(1).goNorth = true;
+            else if (event.getCode().equals(KeyBinds.DOWN)) heroes.get(1).goSouth = true;
+            else if (event.getCode().equals(KeyBinds.LEFT)) heroes.get(1).goWest = true;
+            else if (event.getCode().equals(KeyBinds.RIGHT)) heroes.get(1).goEast = true;
             else if (event.getCode().equals(KeyBinds.P)) {
                 if (!pause & !stop) {
                     timer.stop();
@@ -117,6 +139,10 @@ public class Game {
             else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = false;
             else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = false;
             else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = false;
+            else if (event.getCode().equals(KeyBinds.UP)) heroes.get(1).goNorth = false;
+            else if (event.getCode().equals(KeyBinds.DOWN)) heroes.get(1).goSouth = false;
+            else if (event.getCode().equals(KeyBinds.LEFT)) heroes.get(1).goWest = false;
+            else if (event.getCode().equals(KeyBinds.RIGHT)) heroes.get(1).goEast = false;
         });
         scene.setOnMouseClicked(event -> {
             if (!pause) {
@@ -160,7 +186,6 @@ public class Game {
                         }
                     }
 
-
                     if (counter < 50) {
                         villainCounter++;
                         Villain.newVillain(game);
@@ -182,9 +207,11 @@ public class Game {
                         }
                     }
                     try {
-                        heroes.get(0).pos_x += heroes.get(0).dx;
-                        heroes.get(0).pos_y += heroes.get(0).dy;
-                        Movement.moveHeroTo(heroes.get(0).pos_x, heroes.get(0).pos_y);
+                        for (Hero hero : heroes) {
+                            hero.pos_x += hero.dx;
+                            hero.pos_y += hero.dy;
+                            Movement.moveHeroTo(hero ,hero.pos_x, hero.pos_y);
+                        }
                         Movement.throwWeapon(dWeapon);
                         Movement.enemyWeapon(5);
                         Movement.moveVillain();
@@ -267,7 +294,7 @@ public class Game {
             }
         } else {
             lives = 0;
-            livesText.setText("Lives: " + lives);
+            livesText.setText("HP: " + lives);
         }
     }
 }
