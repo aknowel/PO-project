@@ -7,9 +7,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Menu extends Application {
+    static int screen_refresh_divisor = 2;
 
     @Override
-    public  void start(Stage stage){
+    public void start(Stage stage){
         FXMLLoader fxmlLoader=new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/resources/fxml/menu.fxml"));
         try {
