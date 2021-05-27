@@ -20,6 +20,13 @@ public class Hero extends ImageView {
         pos_y = getLayoutY();
         hp = 10;
     }
+    Hero(double x,double y) {
+        super("resources/Images/Thor.png");
+        goNorth = goSouth = goEast = goWest = false;
+        pos_x = x;
+        pos_y = y;
+        hp = 10;
+    }
     Hero(String path_to_image)
     {
         super(path_to_image);

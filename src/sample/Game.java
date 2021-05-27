@@ -71,7 +71,7 @@ public class Game {
         this.board = board;
         this.round = round;
         game = this;
-        heroes.add(new Hero());
+        heroes.add(new Hero(x,y));
         BackgroundSetter.setBackground(round);
         villainFactory = VillainFactory.getVillainFactory(round);
         try {

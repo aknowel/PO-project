@@ -39,7 +39,7 @@ public abstract class Villain extends ImageView {
     }
     public boolean isAlive()
     {
-        return HP!=0;
+        return HP>0;
     }
     Double getSpeed()
     {
