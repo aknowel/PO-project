@@ -28,8 +28,8 @@ public abstract class Movement {
             d=currentVillain.getSpeed();
 
             if(Game.game.heroes.get(0).getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
-                Game.game.lives--;
-                Game.game.livesText.setText("Lives: " + Game.game.lives);
+                Game.game.heroes.get(0).hp--;
+                Game.game.hp_texts.get(Game.game.heroes.get(0)).setText("HP: " + Game.game.heroes.get(0).hp);
                 if(Villain.isShooting(currentVillain))
                 {
                     Game.game.shootingVillains.remove(currentVillain);

@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Vector;
@@ -31,7 +32,7 @@ public class Game {
     public Pane board;
     public AnimationTimer timer;
     public Text scoreText, livesText;
-    public Vector<Text> hp_texts;
+    public HashMap<Hero, Text> hp_texts = new HashMap<>();
     public final int dWeapon = 10;
     public int modifier = 150, villainCounter = modifier - 1, score = 0, lives = 10, livesMax = 10;
     public boolean isBoss = false;
@@ -97,13 +98,12 @@ public class Game {
         scoreText.relocate(W / 2 - scoreText.getBoundsInLocal().getWidth() / 2, 0);
 
         for (int i = 0; i < heroes.size(); i += 1) {
-            livesText = new Text(170, 10, "HP: " + heroes.get(i).hp);
-            livesText.setFont(new Font(30));
-            livesText.setFill(Color.RED);
-            livesText.relocate(10 + 150 * i, 0);
-            board.getChildren().add(livesText);
+            hp_texts.put(heroes.get(i), new Text(170, 10, "HP: " + heroes.get(i).hp));
+            hp_texts.get(heroes.get(i)).setFont(new Font(30));
+            hp_texts.get(heroes.get(i)).setFill(Color.RED);
+            hp_texts.get(heroes.get(i)).relocate(10 + 150 * i, 0);
+            board.getChildren().add(hp_texts.get(heroes.get(i)));
         }
-
 
         board.getChildren().add(scoreText);
 
@@ -224,7 +224,9 @@ public class Game {
                     } else {
                         time++;
                     }
-                    heroes.get(0).checkHitHero(game);
+                    for (Hero hero : heroes) {
+                        hero.checkHitHero(game);
+                    }
                     Villain.checkHitVillain(game);
                     Box.checkBox(game);
                     gameOver(this);
@@ -236,7 +238,7 @@ public class Game {
     }
 
     void gameOver(AnimationTimer timer) {
-        if (lives <= 0) {
+        if (heroes.get(0).hp <= 0) {
             timer.stop();
             stop = true;
             Sounds sounds = new Sounds();
@@ -294,7 +296,9 @@ public class Game {
             }
         } else {
             lives = 0;
-            livesText.setText("HP: " + lives);
+            for (Hero hero : heroes) {
+                hp_texts.get(hero).setText("HP: " + hero.hp);
+            }
         }
     }
 }
