@@ -161,9 +161,10 @@ public class Game  {
                             isBossDefeat(timer);
                         }
                     }
-                    if(boss.isAlive())
-                    {
-                       boss.skill();
+                    if(isBoss) {
+                        if (boss.isAlive()) {
+                            boss.skill();
+                        }
                     }
                     try {
                         Movement.moveHeroTo(hero.getLayoutX() + dx, hero.getLayoutY() + dy);
