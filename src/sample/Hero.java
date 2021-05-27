@@ -16,8 +16,8 @@ public class Hero extends ImageView {
     Hero() {
         super("resources/Images/Thor.png");
         goNorth = goSouth = goEast = goWest = false;
-        pos_x = getLayoutX();
-        pos_y = getLayoutY();
+        pos_x = 20;
+        pos_y = Game.H /2;
         hp = 10;
     }
     Hero(double x,double y) {
