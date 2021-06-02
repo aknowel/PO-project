@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 public class Hero extends ImageView {
     boolean goNorth, goSouth, goEast, goWest;
+    HpBars hpBars;
     double pos_x;
     double pos_y;
     double dx;
@@ -19,6 +20,7 @@ public class Hero extends ImageView {
         pos_x = 20;
         pos_y = Game.H /2;
         hp = 10;
+        hpBars=new HpBarFull();
     }
     Hero(double x,double y, int hp) {
         super("resources/Images/Thor.png");
@@ -42,11 +44,34 @@ public class Hero extends ImageView {
             Node currentWeapon=x.next();
             if (currentWeapon.getBoundsInParent().intersects(getBoundsInParent())){
                 hp -= 1;
+                changeHpBar();
                 game.hp_texts.get(this).setText("HP: " + hp);
                 Game.game.board.getChildren().remove(currentWeapon);
                 x.remove();
             }
         }
+    }
+    protected void changeHpBar()
+    {
+        Game.game.board.getChildren().remove(hpBars);
+        if(hp<=1)
+        {
+            hpBars=new HpBarCritic();
+        }
+        else if(hp<=4)
+        {
+            hpBars=new HpBar13();
+        }
+        else if(hp<=7)
+        {
+            hpBars=new HpBar23();
+        }
+        else
+        {
+            hpBars=new HpBarFull();
+        }
+        hpBars.relocate(this.getLayoutX(),this.getLayoutY());
+        Game.game.board.getChildren().add(hpBars);
     }
     public void shout()
     {
