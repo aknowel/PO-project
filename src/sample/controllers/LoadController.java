@@ -206,7 +206,9 @@ public class LoadController {
             double x, y;
             x = Double.parseDouble(scanner.next());
             y = Double.parseDouble(scanner.next());
-            game = new Game(x, y, board, mode, round);
+            int heroHp=Integer.parseInt(scanner.next());
+            Hero h=Hero.getNewThor(x, y, heroHp);
+            game = new Game(board, mode, round, h);
             Weapon weapon;
             int length = Integer.parseInt(scanner.next());
             for (int i = 0; i < length; i++) {

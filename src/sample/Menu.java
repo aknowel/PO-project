@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Menu extends Application {
-    static int screen_refresh_divisor = 2;
+    static int screen_refresh_divisor = 1;
 
     @Override
     public void start(Stage stage){

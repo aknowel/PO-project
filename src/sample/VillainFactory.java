@@ -55,7 +55,7 @@ public interface VillainFactory {
         @Override
         public Villain produce(int i, Double mode) {
             return switch (i) {
-                case 0, 1, 2 -> new Bat(mode);
+                case 0, 1, 2 -> new Zombie(mode);
                 case 3, 4, 5 -> new Predator(mode);
                 default -> new Wizard(mode);
             };
@@ -66,6 +66,29 @@ public interface VillainFactory {
             Boss boss=new Loki(mode);
             Game.game.shootingVillains.add(boss);
             return boss;
+        }
+    }
+    class AllVillainFactory implements  VillainFactory {
+        @Override
+        public Villain produce(int i, Double mode) {
+            return switch (i){
+                case 1 -> new Bat(mode);
+                case 2 -> new Skull(mode);
+                case 3 -> new Predator(mode);
+                case 4 -> new Spider (mode);
+                case 5 -> new Mummy(mode);
+                case 6 -> new Ogre(mode);
+                case 7 -> new Orc(mode);
+                case 8 -> new Vampire(mode);
+                case 9 -> new Wizard(mode);
+                case 10 -> new Zombie(mode);
+                default -> throw new IllegalStateException("Unexpected value: " + i);
+            };
+        }
+        @Override
+        public Boss produceBoss(Double mode)
+        {
+            return null;
         }
     }
     static VillainFactory getVillainFactory(int k)
@@ -81,8 +104,11 @@ public interface VillainFactory {
             case 3 ->{
                 return new Round3VillainFactory();
             }
-            default  ->{
+            case 4  ->{
                 return new Round4VillainFactory();
+            }
+            default -> {
+                return new AllVillainFactory();
             }
         }
     }

@@ -33,7 +33,7 @@
             <Blend />
          </effect>
       </Button>
-      <Button contentDisplay="CENTER" layoutX="522.0" layoutY="353.0" mnemonicParsing="false" onAction="#multiplayer" prefHeight="72.0" prefWidth="207.0" stylesheets="@../css/menu.css" text="Multiplayer" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
+      <Button contentDisplay="CENTER" layoutX="522.0" layoutY="360.0" mnemonicParsing="false" onAction="#multiplayer" prefHeight="72.0" prefWidth="207.0" stylesheets="@../css/menu.css" text="Multiplayer" textAlignment="CENTER" textOverrun="WORD_ELLIPSIS">
          <effect>
             <Blend />
          </effect>

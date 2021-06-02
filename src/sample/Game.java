@@ -31,7 +31,7 @@ public class Game {
     public final LinkedList<Box> boxes = new LinkedList<>();
     public Pane board;
     public AnimationTimer timer;
-    public Text scoreText, livesText;
+    public Text scoreText;
     public HashMap<Hero, Text> hp_texts = new HashMap<>();
     public final int dWeapon = 10;
     public int modifier = 150, villainCounter = modifier - 1, score = 0, lives = 10, livesMax = 10;
@@ -67,21 +67,21 @@ public class Game {
 
     }
 
-    public Game(double x, double y, Pane board, Double mode, int round) {
+    public Game(Pane board, Double mode, int round, Hero h) {
         this.mode = mode;
         this.board = board;
         this.round = round;
         game = this;
-        heroes.add(new Hero(x,y));
+        heroes.add(h);
         BackgroundSetter.setBackground(round);
         villainFactory = VillainFactory.getVillainFactory(round);
-        try {
+        /*try {
             for (Hero hero : heroes) {
                 Movement.moveHeroTo(hero, x, y);
             }
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void play(Stage stage) {
@@ -186,7 +186,7 @@ public class Game {
                         }
                     }
 
-                    if (counter < 50) {
+                    if (counter < 10) {
                         villainCounter++;
                         Villain.newVillain(game);
                     } else if (villains.size() == 0) {

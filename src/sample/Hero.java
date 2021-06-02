@@ -20,12 +20,12 @@ public class Hero extends ImageView {
         pos_y = Game.H /2;
         hp = 10;
     }
-    Hero(double x,double y) {
+    Hero(double x,double y, int hp) {
         super("resources/Images/Thor.png");
         goNorth = goSouth = goEast = goWest = false;
         pos_x = x;
         pos_y = y;
-        hp = 10;
+        this.hp = hp;
     }
     Hero(String path_to_image)
     {
@@ -55,6 +55,10 @@ public class Hero extends ImageView {
     }
     public String toString()
     {
-        return this.getLayoutX()+ " " + this.getLayoutY();
+        return this.getLayoutX()+ " " + this.getLayoutY() + " " + this.hp;
+    }
+    static public Hero getNewThor(double x, double y, int hp)
+    {
+        return new Hero(x,y, hp);
     }
 }
