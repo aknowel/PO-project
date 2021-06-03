@@ -1,6 +1,5 @@
 package sample.controllers;
 
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +45,7 @@ public class ChooseModeController {
     public void playStory(ActionEvent event)
     {
         Pane board=new Pane();
-        Game main=new Game(board,mode, 1,10);
+        Game main=new Game(board,mode, 1,10, chosenHero);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         main.play(stage);
     }

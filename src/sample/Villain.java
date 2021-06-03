@@ -10,15 +10,15 @@ import java.util.Random;
 
 public abstract class Villain extends ImageView {
     static Random randomize=new Random();
-    protected Double HP;
+    protected Double HP=1000.0;
     protected Double speed;
-    protected HpBars hpBars;
+    protected HpBar hpBar=new HpBar();
     protected int id;
     Villain(Image img)
     {
         super(img);
-        this.hpBars=new MiniHpBarFull();
-        Game.game.board.getChildren().add(hpBars);
+        changeHpBar();
+        Game.game.board.getChildren().add(hpBar);
     }
      public void  hp()
     {
@@ -44,7 +44,7 @@ public abstract class Villain extends ImageView {
     {
         return HP>0;
     }
-    protected abstract void changeHpBar();
+    public abstract void changeHpBar();
     Double getSpeed()
     {
         return speed;
@@ -70,7 +70,7 @@ public abstract class Villain extends ImageView {
                             game.boxes.add(newBox);
                             Game.game.board.getChildren().add(newBox);
                         }
-                        Game.game.board.getChildren().remove(currentVillain.hpBars);
+                        Game.game.board.getChildren().remove(currentVillain.hpBar);
                         Game.game.board.getChildren().remove(currentVillain);
                         check(currentVillain.id);
                         y.remove();
@@ -105,7 +105,7 @@ public abstract class Villain extends ImageView {
                     newVillain.relocate(0, Math.random() * (Game.H - newVillain.getBoundsInLocal().getHeight()));
                     game.modifier--;
                 }
-                case 2 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), Game.H -30);
+                case 2 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), Game.H - 30);
                 case 3 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), 0);
             }
             game.villains.add(newVillain);
@@ -186,13 +186,6 @@ public abstract class Villain extends ImageView {
         Sounds sounds=new Sounds();
         sounds.playCritic();
     }
-    protected void setHpBar(HpBars hpBar)
-    {
-        Game.game.board.getChildren().remove(hpBars);
-        hpBars=hpBar;
-        hpBars.setCoordinates(this.getLayoutX(),this.getLayoutY());
-        Game.game.board.getChildren().add(hpBars);
-    }
     public String toString()
     {
         return this.id + " "  + this.HP+ " "+ this.getLayoutX()+ " " + this.getLayoutY();
@@ -207,16 +200,14 @@ class Skull extends Villain{
             this.id=0;
         }
         @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==1)
-        {
-            setHpBar(new MiniHpBarCritic());
-        }
-        else if(HP==2)
-        {
-            setHpBar(new MiniHpBar13());
-        }
+        if(HP<=1)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarCritic.png"));
+        else if(HP<=2)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar13.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 class Predator extends ShootingVillains{
@@ -228,16 +219,14 @@ class Predator extends ShootingVillains{
         this.id=1;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==1)
-        {
-            setHpBar(new MiniHpBarCritic());
-        }
-        else if(HP==2)
-        {
-            setHpBar(new MiniHpBar13());
-        }
+        if(HP<=1)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarCritic.png"));
+        else if(HP<=2)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar13.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 class Spider extends Villain
@@ -250,8 +239,9 @@ class Spider extends Villain
         this.id=2;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
+        hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 class Zombie extends Villain
@@ -264,20 +254,16 @@ class Zombie extends Villain
         this.id=4;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==1)
-        {
-            setHpBar(new MiniHpBarCritic());
-        }
-        else if(HP==2)
-        {
-            setHpBar(new MiniHpBar13());
-        }
-        else if(HP==4)
-        {
-            setHpBar(new MiniHpBar23());
-        }
+        if(HP<=1)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarCritic.png"));
+        else if(HP<=2)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar13.png"));
+        else if(HP<=4)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 class Wizard extends ShootingVillains
@@ -290,12 +276,12 @@ class Wizard extends ShootingVillains
         this.id=5;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==1)
-        {
-            setHpBar(new MiniHpBar13());
-        }
+        if(HP<=1)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar13.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 class Vampire extends Villain
@@ -308,12 +294,12 @@ class Vampire extends Villain
         this.id=6;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==1)
-        {
-            setHpBar(new MiniHpBar13());
-        }
+        if(HP<=1)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar13.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 class Orc extends Villain
@@ -326,20 +312,16 @@ class Orc extends Villain
         this.id=7;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==1)
-        {
-            setHpBar(new MiniHpBarCritic());
-        }
-        else if(HP==2)
-        {
-            setHpBar(new MiniHpBar13());
-        }
-        else if(HP==4)
-        {
-            setHpBar(new MiniHpBar23());
-        }
+        if(HP<=1)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarCritic.png"));
+        else if(HP<=2)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar13.png"));
+        else if(HP<=4)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 class Ogre extends Villain
@@ -352,20 +334,16 @@ class Ogre extends Villain
         this.id=8;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==1)
-        {
-            setHpBar(new MiniHpBarCritic());
-        }
-        else if(HP==2)
-        {
-            setHpBar(new MiniHpBar13());
-        }
-        else if(HP==3)
-        {
-            setHpBar(new MiniHpBar23());
-        }
+        if(HP<=1)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarCritic.png"));
+        else if(HP<=2)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar13.png"));
+        else if(HP<=3)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 class Mummy extends Villain
@@ -378,20 +356,17 @@ class Mummy extends Villain
         this.id=9;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==1)
-        {
-            setHpBar(new MiniHpBarCritic());
-        }
-        else if(HP==2)
-        {
-            setHpBar(new MiniHpBar13());
-        }
-        else if(HP==3)
-        {
-            setHpBar(new MiniHpBar23());
-        }
+        if(HP<=1)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarCritic.png"));
+
+        else if(HP<=2)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar13.png"));
+        else if(HP<=3)
+                hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 class Bat extends Villain
@@ -404,12 +379,12 @@ class Bat extends Villain
         this.id=10;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==1)
-        {
-            setHpBar(new MiniHpBar13());
-        }
+        if(HP<=1)
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBar13.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
 abstract class Boss extends Villain
@@ -418,9 +393,6 @@ abstract class Boss extends Villain
     Boss(Image img)
     {
         super(img);
-        Game.game.board.getChildren().remove(hpBars);
-        hpBars=new HpBarFull();
-        Game.game.board.getChildren().add(hpBars);
     }
     @Override
     public void shout()
@@ -456,20 +428,16 @@ class PredatorBoss extends Boss
         this.id=3;
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==3)
-        {
-            setHpBar(new HpBarCritic());
-        }
-        else if(HP==8)
-        {
-            setHpBar(new HpBar13());
-        }
-        else if(HP==13)
-        {
-            setHpBar(new HpBar23());
-        }
+        if(HP<=3)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarCritic.png"));
+        else if(HP<=8)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar13.png"));
+        else if(HP<=13)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
     }
 }
 class SpiderBoss extends Boss
@@ -497,20 +465,16 @@ class SpiderBoss extends Boss
         }
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==5)
-        {
-            setHpBar(new HpBarCritic());
-        }
-        else if(HP==15)
-        {
-            setHpBar(new HpBar13());
-        }
-        else if(HP==30)
-        {
-            setHpBar(new HpBar23());
-        }
+        if(HP<=5)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarCritic.png"));
+        else if(HP<=15)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar13.png"));
+        else if(HP<=30)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
     }
 }
 class VampireBoss extends Boss
@@ -538,20 +502,16 @@ class VampireBoss extends Boss
         }
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==5)
-        {
-            setHpBar(new HpBarCritic());
-        }
-        else if(HP==12)
-        {
-            setHpBar(new HpBar13());
-        }
-        else if(HP==22)
-        {
-            setHpBar(new HpBar23());
-        }
+        if(HP<=5)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarCritic.png"));
+        else if(HP<=12)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar13.png"));
+        else if(HP<=22)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
     }
 }
 class Loki extends Boss
@@ -591,20 +551,16 @@ class Loki extends Boss
         }
     }
     @Override
-    protected void changeHpBar()
+    public void changeHpBar()
     {
-        if(HP==7)
-        {
-            setHpBar(new HpBarCritic());
-        }
-        else if(HP==25)
-        {
-            setHpBar(new HpBar13());
-        }
-        else if(HP==45)
-        {
-            setHpBar(new HpBar23());
-        }
+        if(HP<=7)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarCritic.png"));
+        else if(HP<=25)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar13.png"));
+        else if(HP<=45)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
     }
 }
 

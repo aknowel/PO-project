@@ -31,9 +31,11 @@ public abstract class Box extends ImageView {
                 {
                     case 1->game.upgrade=50;
                     case 2-> {
-                        game.heroes.get(0).hp += 1;
-                        game.heroes.get(0).changeHpBar();
-                        game.hp_texts.get(game.heroes.get(0)).setText("HP: "+ game.heroes.get(0).hp);
+                        if(game.heroes.get(0).hp<game.heroes.get(0).maxHp) {
+                            game.heroes.get(0).hp += 1;
+                            game.heroes.get(0).changeHpBar();
+                            game.hp_texts.get(game.heroes.get(0)).setText("HP: " + game.heroes.get(0).hp);
+                        }
                     }
                 }
                 if(randomize.nextInt(3)==1)

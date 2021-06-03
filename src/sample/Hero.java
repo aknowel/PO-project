@@ -1,41 +1,41 @@
 package sample;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.Iterator;
 
-public class Hero extends ImageView {
+public abstract class Hero extends ImageView {
     boolean goNorth, goSouth, goEast, goWest;
-    HpBars hpBars;
+    HpBar hpBar=new HpBar();
     double pos_x;
     double pos_y;
     double dx;
     double dy;
     public int hp;
+    final public int maxHp=10;
+    protected int id=2;
 
-    Hero() {
-        super("resources/Images/Thor.png");
-        goNorth = goSouth = goEast = goWest = false;
-        pos_x = 20;
-        pos_y = Game.H /2;
-        hp = 10;
-        hpBars=new HpBarFull();
-    }
     Hero(double x,double y, int hp) {
         super("resources/Images/Thor.png");
         goNorth = goSouth = goEast = goWest = false;
         pos_x = x;
         pos_y = y;
         this.hp = hp;
+        changeHpBar();
     }
-    Hero(String path_to_image)
+    /*Hero(String path_to_image)
     {
         super(path_to_image);
         goNorth = goSouth = goEast = goWest = false;
         pos_x = getLayoutX();
         pos_y = getLayoutY();
         hp = 10;
+    }*/
+    public int getHeroId()
+    {
+        return id;
     }
     void checkHitHero(Game game)
     {
@@ -53,25 +53,14 @@ public class Hero extends ImageView {
     }
     protected void changeHpBar()
     {
-        Game.game.board.getChildren().remove(hpBars);
         if(hp<=1)
-        {
-            hpBars=new HpBarCritic();
-        }
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarCritic.png"));
         else if(hp<=4)
-        {
-            hpBars=new HpBar13();
-        }
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar13.png"));
         else if(hp<=7)
-        {
-            hpBars=new HpBar23();
-        }
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar23.png"));
         else
-        {
-            hpBars=new HpBarFull();
-        }
-        hpBars.relocate(this.getLayoutX(),this.getLayoutY());
-        Game.game.board.getChildren().add(hpBars);
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
     }
     public void shout()
     {
@@ -80,10 +69,37 @@ public class Hero extends ImageView {
     }
     public String toString()
     {
-        return this.getLayoutX()+ " " + this.getLayoutY() + " " + this.hp;
+        return getLayoutX()+ " " + getLayoutY() + " " + hp + " " + id;
     }
-    static public Hero getNewThor(double x, double y, int hp)
+    public static class Thor extends Hero{
+        public Thor(double x,double y, int hp)
+        {
+            super(x, y, hp);
+        }
+    }
+    public static class Warrior extends Hero{
+        public Warrior(double x,double y, int hp)
+        {
+            super(x, y, hp);
+            id=1;
+            this.setImage(new Image("resources/Images/Warrior.png"));
+        }
+    }
+    public static class Assassin extends Hero{
+        public Assassin(double x,double y, int hp)
+        {
+            super(x, y, hp);
+            id=3;
+            this.setImage(new Image("resources/Images/Assassin.png"));
+        }
+    }
+    static public Hero getNewHero(double x, double y, int hp, int id)
     {
-        return new Hero(x,y, hp);
+        return switch (id)
+        {
+            case 1->new Warrior(x, y, hp);
+            case 2->new Thor(x, y, hp);
+            default->new Assassin(x, y, hp);
+        };
     }
 }

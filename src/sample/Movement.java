@@ -20,7 +20,7 @@ public abstract class Movement {
             hero.pos_x -= hero.dx;
             hero.pos_y -= hero.dy;
         }
-        hero.hpBars.setCoordinates(hero.getLayoutX()-4,hero.getLayoutY()-20);
+        hero.hpBar.setCoordinates(hero.getLayoutX()-4,hero.getLayoutY()-20);
     }
 
     static void moveVillain () throws InstantiationException, IllegalAccessException {
@@ -39,7 +39,7 @@ public abstract class Movement {
                 }
                 it.remove();
                 Game.game.board.getChildren().remove(currentVillain);
-                Game.game.board.getChildren().remove(currentVillain.hpBars);
+                Game.game.board.getChildren().remove(currentVillain.hpBar);
                 continue;
             }
             double x = currentVillain.getLayoutX();
@@ -94,7 +94,7 @@ public abstract class Movement {
                 }
                 currentVillain.relocate(currentVillain.getLayoutX() + d * (x - z) / dd, currentVillain.getLayoutY() + d * (y - v) / dd);
             }
-                currentVillain.hpBars.relocate(x + currentVillain.getBoundsInLocal().getWidth()/2-currentVillain.hpBars.getBoundsInLocal().getWidth()/2, y - currentVillain.hpBars.getBoundsInLocal().getHeight()-3);
+                currentVillain.hpBar.relocate(x + currentVillain.getBoundsInLocal().getWidth()/2-currentVillain.hpBar.getBoundsInLocal().getWidth()/2, y - currentVillain.hpBar.getBoundsInLocal().getHeight()-3);
         }
     }
     static void throwWeapon(double d) throws InstantiationException, IllegalAccessException {
@@ -125,10 +125,10 @@ public abstract class Movement {
             }
         }
     }
-    private static boolean backgroundCheck(double x, double y, ImageView object) throws IllegalAccessException, InstantiationException {
+    private static boolean backgroundCheck(double x, double y, ImageView object) {
         Iterator<Background> it=Game.game.backgroundObjects.iterator();
-        ImageView test=object.getClass().newInstance();
-        test.relocate(x,y);
+        ImageView test=new ImageView(object.getImage());
+        test.relocate(x, y);
         while(it.hasNext())
         {
             Background current=it.next();

@@ -207,7 +207,8 @@ public class LoadController {
             x = Double.parseDouble(scanner.next());
             y = Double.parseDouble(scanner.next());
             int heroHp=Integer.parseInt(scanner.next());
-            Hero h=Hero.getNewThor(x, y, heroHp);
+            int heroId=Integer.parseInt(scanner.next());
+            Hero h=Hero.getNewHero(x, y, heroHp, heroId);
             game = new Game(board, mode, round, h);
             Weapon weapon;
             int length = Integer.parseInt(scanner.next());
@@ -262,6 +263,7 @@ public class LoadController {
                 villain.setHP(hp);
                 game.villains.add(villain);
                 board.getChildren().add(villain);
+                villain.changeHpBar();
             }
             Box box;
             length = Integer.parseInt(scanner.next());
@@ -296,6 +298,7 @@ public class LoadController {
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             anchorPane.getChildren().remove(label);
             anchorPane.getChildren().remove(label2);
             anchorPane.getChildren().remove(label3);
