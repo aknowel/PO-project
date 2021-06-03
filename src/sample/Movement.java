@@ -20,34 +20,36 @@ public abstract class Movement {
             hero.pos_x -= hero.dx;
             hero.pos_y -= hero.dy;
         }
+        hero.hpBars.setCoordinates(hero.getLayoutX()-4,hero.getLayoutY()-20);
     }
 
     static void moveVillain () throws InstantiationException, IllegalAccessException {
         double d;
         Iterator<Villain> it=Game.game.villains.iterator();
-        while(it.hasNext()){
-            Villain currentVillain=it.next();
-            d=currentVillain.getSpeed();
+        while(it.hasNext()) {
+            Villain currentVillain = it.next();
+            d = currentVillain.getSpeed();
 
-            if(Game.game.heroes.get(0).getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
+            if (Game.game.heroes.get(0).getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
                 Game.game.heroes.get(0).hp--;
                 Game.game.hp_texts.get(Game.game.heroes.get(0)).setText("HP: " + Game.game.heroes.get(0).hp);
-                if(Villain.isShooting(currentVillain))
-                {
+                Game.game.heroes.get(0).changeHpBar();
+                if (Villain.isShooting(currentVillain)) {
                     Game.game.shootingVillains.remove(currentVillain);
                 }
                 it.remove();
                 Game.game.board.getChildren().remove(currentVillain);
+                Game.game.board.getChildren().remove(currentVillain.hpBars);
                 continue;
             }
-            double x=currentVillain.getLayoutX();
-            double y=currentVillain.getLayoutY();
-            double z=Game.game.heroes.get(0).getLayoutX();
-            double v=Game.game.heroes.get(0).getLayoutY();
-            double dd=Math.sqrt((x-z)*(x-z)+(y-v)*(y-v));
-            boolean tt=villainBgCheck(currentVillain);
-            boolean isBoss=currentVillain.isBoss();
-            if(!isBoss) {
+            double x = currentVillain.getLayoutX();
+            double y = currentVillain.getLayoutY();
+            double z = Game.game.heroes.get(0).getLayoutX();
+            double v = Game.game.heroes.get(0).getLayoutY();
+            double dd = Math.sqrt((x - z) * (x - z) + (y - v) * (y - v));
+            boolean tt = villainBgCheck(currentVillain);
+            boolean isBoss = currentVillain.isBoss();
+            if (!isBoss) {
                 if (tt) {
                     currentVillain.relocate(currentVillain.getLayoutX() + d * (x - z) / dd, currentVillain.getLayoutY() + d * (y - v) / dd);
                 } else {
@@ -86,14 +88,13 @@ public abstract class Movement {
                         }
                     }
                 }
-            }
-            else
-            {
-                if(currentVillain.getVillainId()!=12) {
+            } else {
+                if (currentVillain.getVillainId() != 12) {
                     bossBgCheck(currentVillain);
                 }
                 currentVillain.relocate(currentVillain.getLayoutX() + d * (x - z) / dd, currentVillain.getLayoutY() + d * (y - v) / dd);
             }
+                currentVillain.hpBars.relocate(x + currentVillain.getBoundsInLocal().getWidth()/2-currentVillain.hpBars.getBoundsInLocal().getWidth()/2, y - currentVillain.hpBars.getBoundsInLocal().getHeight()-3);
         }
     }
     static void throwWeapon(double d) throws InstantiationException, IllegalAccessException {

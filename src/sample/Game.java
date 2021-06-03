@@ -103,6 +103,7 @@ public class Game {
             hp_texts.get(heroes.get(i)).setFill(Color.RED);
             hp_texts.get(heroes.get(i)).relocate(10 + 150 * i, 0);
             board.getChildren().add(hp_texts.get(heroes.get(i)));
+            board.getChildren().add(heroes.get(i).hpBars);
         }
 
         board.getChildren().add(scoreText);
@@ -186,7 +187,7 @@ public class Game {
                         }
                     }
 
-                    if (counter < 10) {
+                    if (counter < 50) {
                         villainCounter++;
                         Villain.newVillain(game);
                     } else if (villains.size() == 0) {
@@ -295,8 +296,8 @@ public class Game {
                 e.printStackTrace();
             }
         } else {
-            lives = 0;
             for (Hero hero : heroes) {
+                hero.hp=0;
                 hp_texts.get(hero).setText("HP: " + hero.hp);
             }
         }
