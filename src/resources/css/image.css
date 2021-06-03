@@ -1,0 +1,4 @@
+.image:hover
+{
+    -fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);
+}

@@ -17,7 +17,7 @@ public class GameEndController {
     {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Pane board=new Pane();
-        Game game=new Game(board,Game.game.mode, 1);
+        Game game=new Game(board,Game.game.mode, 1,10);
         game.play(stage);
     }
     public void returnMenu(ActionEvent event)
@@ -39,12 +39,10 @@ public class GameEndController {
     }
     public void continues(ActionEvent event)
     {
-        int lives=Game.game.lives;
         int score=Game.game.score;
         Pane board=new Pane();
-        Game main=new Game(board,Game.game.mode, Game.game.round+1);
+        Game main=new Game(board,Game.game.mode, Game.game.round+1,Game.game.heroes.get(0).hp);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Game.game.lives=lives;
         Game.game.score=score;
         main.play(stage);
     }

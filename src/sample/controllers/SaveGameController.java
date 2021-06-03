@@ -146,7 +146,6 @@ public class SaveGameController {
             writer.println(Game.game.modifier);
             writer.println(Game.game.villainCounter);
             writer.println(Game.game.score);
-            writer.println(Game.game.lives);
             writer.println(Game.game.isBoss);
             writer.println(Game.game.upgrade);
             writer.println(Game.game.time);

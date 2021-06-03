@@ -14,11 +14,11 @@ public class OptionsController {
     Scene scene;
     public void easyMode(ActionEvent event)
     {
-        MenuController.mode=0D;
+        ChooseModeController.mode=0D;
     }
     public void hardMode(ActionEvent event)
     {
-        MenuController.mode=1D;
+        ChooseModeController.mode=1D;
     }
     public void returnMenu(ActionEvent event)
     {

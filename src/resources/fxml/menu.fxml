@@ -17,7 +17,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ImageView>
-      <Button alignment="TOP_CENTER" contentDisplay="TOP" layoutX="484.0" layoutY="234.0" mnemonicParsing="false" onAction="#playGame" prefHeight="63.0" prefWidth="282.0" stylesheets="@../css/menu.css" text="Singleplayer" textAlignment="CENTER" textFill="#030202" textOverrun="WORD_ELLIPSIS" AnchorPane.bottomAnchor="423.0" AnchorPane.leftAnchor="484.0" AnchorPane.rightAnchor="514.0" AnchorPane.topAnchor="234.0">
+      <Button alignment="TOP_CENTER" contentDisplay="TOP" layoutX="484.0" layoutY="234.0" mnemonicParsing="false" onAction="#chooseMode" prefHeight="63.0" prefWidth="282.0" stylesheets="@../css/menu.css" text="Singleplayer" textAlignment="CENTER" textFill="#030202" textOverrun="WORD_ELLIPSIS" AnchorPane.bottomAnchor="423.0" AnchorPane.leftAnchor="484.0" AnchorPane.rightAnchor="514.0" AnchorPane.topAnchor="234.0">
          <font>
             <Font name="System Italic" size="36.0" />
          </font>

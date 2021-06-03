@@ -12,7 +12,7 @@ public class Hero extends ImageView {
     double pos_y;
     double dx;
     double dy;
-    int hp;
+    public int hp;
 
     Hero() {
         super("resources/Images/Thor.png");

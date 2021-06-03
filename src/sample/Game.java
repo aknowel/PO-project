@@ -34,7 +34,7 @@ public class Game {
     public Text scoreText;
     public HashMap<Hero, Text> hp_texts = new HashMap<>();
     public final int dWeapon = 10;
-    public int modifier = 150, villainCounter = modifier - 1, score = 0, lives = 10, livesMax = 10;
+    public int modifier = 150, villainCounter = modifier - 1, score = 0, livesMax = 10;
     public boolean isBoss = false;
     public boolean pause = false, stop = false;
     public int time = 0, upgrade = 0;
@@ -47,12 +47,13 @@ public class Game {
     public VillainFactory villainFactory;
     public int counter = 0;
 
-    public Game(Pane board, Double mode, int round) {
+    public Game(Pane board, Double mode, int round,int hp) {
         this.mode = mode;
         this.board = board;
         this.round = round;
         game = this;
         heroes.add(new Hero());
+        heroes.get(0).hp=hp;
         //heroes.add(new Hero("resources/Images/Thor2.png"));
         BackgroundSetter.setBackgroundObjects(round);
         BackgroundSetter.setBackground(round);
@@ -278,7 +279,7 @@ public class Game {
             Counter.killedBoss();
             Sounds sounds = new Sounds();
             sounds.playWonGame();
-            if (lives == livesMax) {
+            if (heroes.get(0).hp == livesMax) {
                 Counter.deathless();
             }
             FXMLLoader fxmlLoader = new FXMLLoader();

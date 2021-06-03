@@ -26,17 +26,26 @@ public class MenuController {
     private Stage stage;
     private AnchorPane root;
     private Scene scene;
-    public static double mode=0D;
     File file;
     List<String> list;
     Scanner scanner;
     PrintWriter writer;
-    public void playGame(ActionEvent event)
+    public void chooseMode(ActionEvent event)
     {
-        Pane board=new Pane();
-        Game main=new Game(board,mode, 1);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        main.play(stage);
+        FXMLLoader fxmlLoader=new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/chooseMode.fxml"));
+        try {
+            root = fxmlLoader.load();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Choose Mode");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        stage.show();
     }
     public void loadGame(ActionEvent event)
     {
