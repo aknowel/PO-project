@@ -11,9 +11,11 @@ public abstract class Movement {
                hero.relocate(x, y);
         } else if (x >= 0 && x <= Game.W -hero.getBoundsInLocal().getWidth() && backgroundCheck(x,y,hero)) {
             hero.relocate(x, hero.getLayoutY());
+            hero.pos_y -= hero.dy;
         }
         else if (y>=0 && y<= Game.H -hero.getBoundsInLocal().getHeight() && backgroundCheck(x,y,hero)) {
             hero.relocate(hero.getLayoutX(), y);
+            hero.pos_x -= hero.dx;
         } else {
             hero.pos_x -= hero.dx;
             hero.pos_y -= hero.dy;
