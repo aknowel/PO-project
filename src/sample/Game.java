@@ -3,6 +3,7 @@ package sample;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -46,6 +47,8 @@ public class Game {
     static Random randomize = new Random();
     public VillainFactory villainFactory;
     public int counter = 0;
+    public static int swordCounter=0;
+    public Sword sword=new Sword();
 
     public Game(Pane board, Double mode, int round,int hp, int heroId) {
         this.mode = mode;
@@ -83,8 +86,7 @@ public class Game {
         Counter.thorGames();
         Game.game.mode = mode;
         scoreText = new Text(W / 2, 30, "Score: " + score);
-
-
+        board.getChildren().add(sword);
         for (Hero hero : heroes) {
             board.getChildren().add(hero);
         }
@@ -164,7 +166,7 @@ public class Game {
             public void handle(long now) {
                 if (cnt >= Menu.screen_refresh_divisor) {
                     cnt = 0;
-
+                    sword(sword);
                     for (Hero hero : heroes) {
                         hero.dx = 0;
                         hero.dy = 0;
@@ -223,6 +225,9 @@ public class Game {
                         hero.checkHitHero(game);
                     }
                     Villain.checkHitVillain(game);
+                    if(swordCounter%10==0) {
+                        Villain.swordCheck();
+                    }
                     Box.checkBox(game);
                     gameOver(this);
                 }
@@ -295,5 +300,26 @@ public class Game {
                 hp_texts.get(hero).setText("HP: " + hero.hp);
             }
         }
+    }
+    private void sword(Sword sword)
+    {
+        if(swordCounter==15)
+        {
+            sword.setImage(new Image("resources/Images/Meele/Sword30.png"));
+        }
+        else if(swordCounter==30)
+        {
+            sword.setImage(new Image("resources/Images/Meele/Sword60.png"));
+        }
+        else if(swordCounter==45)
+        {
+            sword.setImage(new Image("resources/Images/Meele/Sword90.png"));
+        }
+        else if(swordCounter==60)
+        {
+            sword.setImage(new Image("resources/Images/Meele/Sword.png"));
+            swordCounter=0;
+        }
+        swordCounter++;
     }
 }

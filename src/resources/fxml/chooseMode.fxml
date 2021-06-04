@@ -39,7 +39,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/Background/ThorBig.png" />
+                  <Image url="@../Images/Background/WarriorBig.png" />
                </image>
             </ImageView>
          </children>
@@ -57,7 +57,7 @@
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Images/Background/ThorBig.png" />
+                  <Image url="@../Images/Background/AssassinBig.png" />
                </image>
             </ImageView>
          </children>

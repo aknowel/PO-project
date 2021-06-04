@@ -23,7 +23,7 @@ public class ChooseModeController {
     Scene scene;
     private final String style="-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
     public static double mode=0D;
-    private static int chosenHero;
+    private static int chosenHero=2;
     public void chooseWarrior()
     {
         resetAll();

@@ -91,6 +91,40 @@ public abstract class Villain extends ImageView {
             }
         }
     }
+    public static void swordCheck()
+    {
+        Iterator<Villain> y=Game.game.villains.iterator();
+        while(y.hasNext()) {
+            Villain currentVillain = y.next();
+            if (Game.game.sword.getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
+                currentVillain.hp();
+                currentVillain.changeHpBar();
+                if (!currentVillain.isAlive()) {
+                    int i = Game.randomizer.nextInt(20);
+                    if (i < 3) {
+                        Box newBox = Box.getNewBox(i);
+                        newBox.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY());
+                        Game.game.boxes.add(newBox);
+                        Game.game.board.getChildren().add(newBox);
+                    }
+                    Game.game.board.getChildren().remove(currentVillain.hpBar);
+                    Game.game.board.getChildren().remove(currentVillain);
+                    check(currentVillain.id);
+                    y.remove();
+                    Game.game.score++;
+                    Game.game.counter++;
+                    Game.game.scoreText.setText("Score: " + Game.game.score);
+                    if (isShooting(currentVillain)) {
+                        Game.game.shootingVillains.remove(currentVillain);
+                        currentVillain.shout();
+                        if (randomize.nextInt(2) == 1) {
+                            currentVillain.shout();
+                        }
+                    }
+                }
+            }
+        }
+    }
     public static void newVillain(Game game)
     {
         if (game.villainCounter % game.modifier == 0) {

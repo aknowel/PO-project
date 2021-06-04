@@ -21,6 +21,7 @@ public abstract class Movement {
             hero.pos_y -= hero.dy;
         }
         hero.hpBar.setCoordinates(hero.getLayoutX()-4,hero.getLayoutY()-20);
+        Game.game.sword.relocate(hero.getLayoutX()+hero.getBoundsInLocal().getWidth(),hero.getLayoutY()+ 4*Game.swordCounter /20.0);
     }
 
     static void moveVillain () throws InstantiationException, IllegalAccessException {
@@ -58,7 +59,7 @@ public abstract class Movement {
                     double b = yy - y;
                     double s = Math.signum(-Game.game.heroes.get(0).getLayoutY() + currentVillain.getLayoutY());
                     if (b == 0) {
-                        if (!(Game.game.heroes.get(0).getLayoutY() >= curr.getLayoutY() - Game.game.heroes.get(0).getBoundsInLocal().getHeight() && Game.game.heroes.get(0).getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 40)) {
+                        if (!(Game.game.heroes.get(0).getLayoutY() >= curr.getLayoutY() - Game.game.heroes.get(0).getBoundsInLocal().getHeight()  && Game.game.heroes.get(0).getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 30)) {
                             if (xx < currentVillain.getLayoutX()) {
                                 currentVillain.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY() - s * d);
                             } else {
@@ -73,7 +74,7 @@ public abstract class Movement {
                         }
                     } else {
                         double a = Math.atan(-(x - xx) / (y - yy));
-                        if (!(Game.game.heroes.get(0).getLayoutY() >= curr.getLayoutY() - Game.game.heroes.get(0).getBoundsInLocal().getHeight() && Game.game.heroes.get(0).getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 40)) {
+                        if (!(Game.game.heroes.get(0).getLayoutY() >= curr.getLayoutY() - Game.game.heroes.get(0).getBoundsInLocal().getHeight() && Game.game.heroes.get(0).getLayoutY() <= curr.getLayoutY() + curr.getBoundsInLocal().getHeight() + 30)) {
                             if (yy < currentVillain.getLayoutY()) {
                                 currentVillain.relocate(currentVillain.getLayoutX() + s * d * Math.cos(a), currentVillain.getLayoutY() + s * d * Math.sin(a));
                             } else {

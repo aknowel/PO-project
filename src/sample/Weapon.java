@@ -103,3 +103,11 @@ class Star extends Weapon
         this.id=4;
     }
 }
+class Sword extends Weapon
+{
+    Sword()
+    {
+        super(new Image("resources/Images/Meele/Sword.png"));
+        this.id=5;
+    }
+}
