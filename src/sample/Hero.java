@@ -232,7 +232,7 @@ public abstract class Hero extends ImageView {
         {
             if(counter==2) {
                 Weapon newWeapon;
-                newWeapon = new Arrow(event.getSceneX() - Game.game.heroes.get(0).getLayoutX(), event.getSceneY() - Game.game.heroes.get(0).getLayoutY());
+                newWeapon = new Shuriken(event.getSceneX() - Game.game.heroes.get(0).getLayoutX(), event.getSceneY() - Game.game.heroes.get(0).getLayoutY());
                 newWeapon.relocate(
                         Game.game.heroes.get(0).getLayoutX() + Game.game.heroes.get(0).getBoundsInLocal().getWidth(), Game.game.heroes.get(0).getLayoutY());
                 Game.game.weaponsHero.add(newWeapon);

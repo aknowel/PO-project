@@ -111,16 +111,16 @@ class Sword extends Weapon
         this.id=5;
     }
 }
-class Arrow extends Weapon
+class Shuriken extends Weapon
 {
-    Arrow()
+    Shuriken()
     {
-        super(new Image("resources/Images/Weapons/arrow.png"));
+        super(new Image("resources/Images/Weapons/Shuriken.png"));
         this.id=6;
     }
-    Arrow(double x,double y)
+    Shuriken(double x,double y)
     {
-        super(new Image("resources/Images/Weapons/arrow.png"));
+        super(new Image("resources/Images/Weapons/Shuriken.png"));
         this.x=x;
         this.y=y;
         this.id=5;
