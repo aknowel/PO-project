@@ -19,7 +19,7 @@ public abstract class Hero extends ImageView {
     Sword sword;
     final public int maxHp=10;
     protected int id=2;
-    static int swordCounter=0;
+    static int counter=0;
     boolean side;
     boolean top;
     Hero(double x,double y, int hp) {
@@ -162,61 +162,61 @@ public abstract class Hero extends ImageView {
                 if (!side) {
                     if(top)
                     {
-                        if (swordCounter == 15) {
+                        if (counter == 15) {
                             sword.setImage(new Image("resources/Images/Meele/Sword290.png"));
-                        } else if (swordCounter == 30) {
+                        } else if (counter == 30) {
                             sword.setImage(new Image("resources/Images/Meele/Sword90.png"));
-                        } else if (swordCounter == 45) {
+                        } else if (counter == 45) {
                             sword.setImage(new Image("resources/Images/Meele/Sword60.png"));
-                        } else if (swordCounter == 60) {
+                        } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
-                            swordCounter = 0;
+                            counter = 0;
                             Game.game.sword = false;
                         }
                     }
                     else {
-                        if (swordCounter == 15) {
+                        if (counter == 15) {
                             sword.setImage(new Image("resources/Images/Meele/Sword30.png"));
-                        } else if (swordCounter == 30) {
+                        } else if (counter == 30) {
                             sword.setImage(new Image("resources/Images/Meele/Sword60.png"));
-                        } else if (swordCounter == 45) {
+                        } else if (counter == 45) {
                             sword.setImage(new Image("resources/Images/Meele/Sword90.png"));
-                        } else if (swordCounter == 60) {
+                        } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
-                            swordCounter = 0;
+                            counter = 0;
                             Game.game.sword = false;
                         }
                     }
                 } else {
                     if(!top) {
-                        if (swordCounter == 15) {
+                        if (counter == 15) {
                             sword.setImage(new Image("resources/Images/Meele/Sword230.png"));
-                        } else if (swordCounter == 30) {
+                        } else if (counter == 30) {
                             sword.setImage(new Image("resources/Images/Meele/Sword260.png"));
-                        } else if (swordCounter == 45) {
+                        } else if (counter == 45) {
                             sword.setImage(new Image("resources/Images/Meele/Sword290.png"));
-                        } else if (swordCounter == 60) {
+                        } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
-                            swordCounter = 0;
+                            counter = 0;
                             Game.game.sword = false;
                         }
                     }
                     else
                     {
-                        if (swordCounter == 15) {
+                        if (counter == 15) {
                             sword.setImage(new Image("resources/Images/Meele/Sword.png"));
-                        } else if (swordCounter == 30) {
+                        } else if (counter == 30) {
                             sword.setImage(new Image("resources/Images/Meele/Sword2.png"));
-                        } else if (swordCounter == 45) {
+                        } else if (counter == 45) {
                             sword.setImage(new Image("resources/Images/Meele/Sword230.png"));
-                        } else if (swordCounter == 60) {
+                        } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
-                            swordCounter = 0;
+                            counter = 0;
                             Game.game.sword = false;
                         }
                     }
                 }
-                swordCounter++;
+                counter++;
             }
         }
     }
@@ -230,7 +230,24 @@ public abstract class Hero extends ImageView {
         @Override
         public void weapon(MouseEvent event)
         {
-
+            if(counter==2) {
+                Weapon newWeapon;
+                newWeapon = new Arrow(event.getSceneX() - Game.game.heroes.get(0).getLayoutX(), event.getSceneY() - Game.game.heroes.get(0).getLayoutY());
+                newWeapon.relocate(
+                        Game.game.heroes.get(0).getLayoutX() + Game.game.heroes.get(0).getBoundsInLocal().getWidth(), Game.game.heroes.get(0).getLayoutY());
+                Game.game.weaponsHero.add(newWeapon);
+                Game.game.board.getChildren().add(newWeapon);
+                Counter.thrownWeapon();
+                Random randomize = new Random();
+                if (randomize.nextInt(5) == 1) {
+                    Game.game.heroes.get(0).shout();
+                }
+                counter=0;
+            }
+            else
+            {
+                counter++;
+            }
         }
         @Override
         public void skill()

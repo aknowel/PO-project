@@ -71,7 +71,7 @@ public class Game {
     }
 
     public void play(Stage stage) {
-        Hero.swordCounter=0;
+        Hero.counter=0;
         Counter.games();
         Counter.thorGames();
         Game.game.mode = mode;
@@ -201,7 +201,7 @@ public class Game {
                         hero.skill();
                     }
                     Villain.checkHitVillain(game);
-                    if(Hero.isWarrior(heroes.get(0)) && Hero.swordCounter%7==0) {
+                    if(Hero.isWarrior(heroes.get(0)) && Hero.counter%7==0) {
                         Villain.swordCheck();
                     }
                     Box.checkBox(game);
@@ -220,7 +220,36 @@ public class Game {
             Sounds sounds = new Sounds();
             sounds.playGameOver();
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOver.fxml"));
+            if(round>0) {
+                fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOver.fxml"));
+                try {
+                    root = fxmlLoader.load();
+                    root.setLayoutX(445);
+                    root.setLayoutY(193);
+                    board.getChildren().add(root);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOverSurvi.fxml"));
+                try {
+                    root = fxmlLoader.load();
+                    root.setLayoutX(445);
+                    root.setLayoutY(193);
+                    board.getChildren().add(root);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void pause() {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        if(round>0) {
+            fxmlLoader.setLocation(getClass().getResource("/resources/fxml/pause.fxml"));
             try {
                 root = fxmlLoader.load();
                 root.setLayoutX(445);
@@ -230,18 +259,17 @@ public class Game {
                 e.printStackTrace();
             }
         }
-    }
-
-    private void pause() {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/pause.fxml"));
-        try {
-            root = fxmlLoader.load();
-            root.setLayoutX(445);
-            root.setLayoutY(193);
-            board.getChildren().add(root);
-        } catch (Exception e) {
-            e.printStackTrace();
+        else
+        {
+            fxmlLoader.setLocation(getClass().getResource("/resources/fxml/pauseSurvi.fxml"));
+            try {
+                root = fxmlLoader.load();
+                root.setLayoutX(445);
+                root.setLayoutY(193);
+                board.getChildren().add(root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

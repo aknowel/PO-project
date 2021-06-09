@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="318.0" prefWidth="423.0" styleClass="image" stylesheets="@../css/border.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.PauseController">
+   <children>
+      <ImageView fitHeight="310.0" fitWidth="415.0" layoutX="4.0" layoutY="4.0" pickOnBounds="true">
+         <image>
+            <Image url="@../Images/Background/background.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="155.0" layoutY="144.0" mnemonicParsing="false" onAction="#resumeGame" stylesheets="@../css/menu.css" text="Resume" />
+      <Button layoutX="159.0" layoutY="207.0" mnemonicParsing="false" onAction="#returnMenu" prefHeight="56.0" prefWidth="124.0" stylesheets="@../css/menu.css" text="MENU" />
+      <Label layoutX="83.0" layoutY="-13.0" styleClass="title" stylesheets="@../css/menu.css" text="PAUSE">
+         <font>
+            <Font size="72.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

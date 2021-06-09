@@ -111,3 +111,18 @@ class Sword extends Weapon
         this.id=5;
     }
 }
+class Arrow extends Weapon
+{
+    Arrow()
+    {
+        super(new Image("resources/Images/Weapons/arrow.png"));
+        this.id=6;
+    }
+    Arrow(double x,double y)
+    {
+        super(new Image("resources/Images/Weapons/arrow.png"));
+        this.x=x;
+        this.y=y;
+        this.id=5;
+    }
+}
