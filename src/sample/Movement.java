@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 public abstract class Movement {
     static Background curr=null;
+    static int counter=0;
     static void moveHeroTo (Hero hero, double x, double y) throws InstantiationException, IllegalAccessException {
         if (x >= 0 && x <= Game.W - hero.getBoundsInLocal().getWidth() && y >= 0 && y <= Game.H - hero.getBoundsInLocal().getHeight() && backgroundCheck(x,y,hero)) {
                hero.relocate(x, y);
@@ -22,25 +23,19 @@ public abstract class Movement {
         }
         hero.hpBar.setCoordinates(hero.getLayoutX()-4,hero.getLayoutY()-20);
         if(Hero.isWarrior(Game.game.heroes.get(0))) {
-            if(!hero.side) {
-                if(hero.top)
-                {
-                   hero.sword.relocate(hero.getLayoutX() + 4*Hero.counter / 15.0, hero.getLayoutY() +hero.getBoundsInLocal().getHeight());
-                }
-                else {
-                    hero.sword.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY() + 4 * Hero.counter / 15.0);
-                }
+            swordMove(hero);
+        }
+        if(hero.barrierCheck)
+        {
+            if(counter<750) {
+                hero.barrier.relocate(hero.getLayoutX(),hero.getLayoutY());
             }
             else
             {
-                if(hero.top)
-                {
-                    hero.sword.relocate(hero.getLayoutX() - 4*Hero.counter / 15.0, hero.getLayoutY() - hero.sword.getBoundsInLocal().getHeight());
-                }
-                else {
-                    hero.sword.relocate(hero.getLayoutX() - hero.sword.getBoundsInLocal().getWidth(), hero.getLayoutY() + 4 * Hero.counter / 15.0);
-                }
+                Game.game.board.getChildren().remove(hero.barrier);
+                hero.barrierCheck=false;
             }
+            counter++;
         }
     }
 
@@ -50,19 +45,25 @@ public abstract class Movement {
         while(it.hasNext()) {
             Villain currentVillain = it.next();
             d = currentVillain.getSpeed();
-
-            if (Game.game.heroes.get(0).getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
-                Game.game.heroes.get(0).hp--;
-                Game.game.hp_texts.get(Game.game.heroes.get(0)).setText("HP: " + Game.game.heroes.get(0).hp);
-                Game.game.heroes.get(0).changeHpBar();
-                if (Villain.isShooting(currentVillain)) {
-                    Game.game.shootingVillains.remove(currentVillain);
+                if (Game.game.heroes.get(0).getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
+                    if(!Game.game.heroes.get(0).barrierCheck) {
+                        Game.game.heroes.get(0).hp--;
+                        Game.game.hp_texts.get(Game.game.heroes.get(0)).setText("HP: " + Game.game.heroes.get(0).hp);
+                        Game.game.heroes.get(0).changeHpBar();
+                    }
+                    else
+                    {
+                        Game.game.heroes.get(0).barrierCheck=false;
+                        Game.game.board.getChildren().remove(Game.game.heroes.get(0).barrier);
+                    }
+                    if (Villain.isShooting(currentVillain)) {
+                        Game.game.shootingVillains.remove(currentVillain);
+                    }
+                    it.remove();
+                    Game.game.board.getChildren().remove(currentVillain);
+                    Game.game.board.getChildren().remove(currentVillain.hpBar);
+                    continue;
                 }
-                it.remove();
-                Game.game.board.getChildren().remove(currentVillain);
-                Game.game.board.getChildren().remove(currentVillain.hpBar);
-                continue;
-            }
             double x = currentVillain.getLayoutX();
             double y = currentVillain.getLayoutY();
             double z = Game.game.heroes.get(0).getLayoutX();
@@ -177,6 +178,28 @@ public abstract class Movement {
             {
                 Game.game.backgroundObjects.remove(current);
                 Game.game.board.getChildren().remove(current);
+            }
+        }
+    }
+    private static void swordMove(Hero hero)
+    {
+        if(!hero.side) {
+            if(hero.top)
+            {
+                hero.sword.relocate(hero.getLayoutX() + 4*Hero.counter / 15.0, hero.getLayoutY() +hero.getBoundsInLocal().getHeight());
+            }
+            else {
+                hero.sword.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY() + 4 * Hero.counter / 15.0);
+            }
+        }
+        else
+        {
+            if(hero.top)
+            {
+                hero.sword.relocate(hero.getLayoutX() - 4*Hero.counter / 15.0, hero.getLayoutY() - hero.sword.getBoundsInLocal().getHeight());
+            }
+            else {
+                hero.sword.relocate(hero.getLayoutX() - hero.sword.getBoundsInLocal().getWidth(), hero.getLayoutY() + 4 * Hero.counter / 15.0);
             }
         }
     }

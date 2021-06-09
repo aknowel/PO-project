@@ -18,7 +18,8 @@ public abstract class Box extends ImageView {
         return switch(i) {
             case 0 -> new EmptyBox();
             case 1 -> new UpgradeBox();
-            default -> new HeartBox();
+            case 2 -> new HeartBox();
+            default -> new BarrierBox();
         };
     }
     static void checkBox(Game game)
@@ -37,12 +38,19 @@ public abstract class Box extends ImageView {
                             game.hp_texts.get(game.heroes.get(0)).setText("HP: " + game.heroes.get(0).hp);
                         }
                     }
+                    case 3 ->
+                            {
+                                game.heroes.get(0).barrierCheck=true;
+                                game.heroes.get(0).barrier=currentBox;
+                            }
                 }
                 if(randomize.nextInt(3)==1)
                 {
                     currentBox.openChest();
                 }
-                Game.game.board.getChildren().remove(currentBox);
+                if(currentBox.i!=3) {
+                    Game.game.board.getChildren().remove(currentBox);
+                }
                 x.remove();
             }
         }
@@ -91,5 +99,13 @@ class HeartBox extends Box
     {
         super(new Image("/resources/Images/heart.png"));
         i=2;
+    }
+}
+class BarrierBox extends Box
+{
+    BarrierBox()
+    {
+        super(new Image("/resources/Images/cake.png"));
+        i=3;
     }
 }

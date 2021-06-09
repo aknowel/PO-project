@@ -22,6 +22,10 @@ public abstract class Hero extends ImageView {
     static int counter=0;
     boolean side;
     boolean top;
+    boolean barrierCheck=false;
+    Box barrier;
+    private boolean barrierCheck1;
+
     Hero(double x,double y, int hp) {
         super("resources/Images/Thor.png");
         goNorth = goSouth = goEast = goWest = false;
@@ -40,11 +44,17 @@ public abstract class Hero extends ImageView {
         while(x.hasNext()){
             Node currentWeapon=x.next();
             if (currentWeapon.getBoundsInParent().intersects(getBoundsInParent())){
-                hp -= 1;
-                changeHpBar();
-                game.hp_texts.get(this).setText("HP: " + hp);
-                Game.game.board.getChildren().remove(currentWeapon);
-                x.remove();
+                if(!barrierCheck) {
+                    hp -= 1;
+                    changeHpBar();
+                    game.hp_texts.get(this).setText("HP: " + hp);
+                    Game.game.board.getChildren().remove(currentWeapon);
+                    x.remove();
+                }else
+                {
+                    barrierCheck=false;
+                    Game.game.board.getChildren().remove(barrier);
+                }
             }
         }
     }

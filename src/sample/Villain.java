@@ -62,8 +62,8 @@ public abstract class Villain extends ImageView {
                     Game.game.board.getChildren().remove(currentWeapon);
                     x.remove();
                     if(!currentVillain.isAlive()) {
-                        int i= Game.randomizer.nextInt(20);
-                        if(i<3)
+                        int i= Game.randomizer.nextInt(4);
+                        if(i<4)
                         {
                             Box newBox=Box.getNewBox(i);
                             newBox.relocate(currentVillain.getLayoutX(),currentVillain.getLayoutY());
