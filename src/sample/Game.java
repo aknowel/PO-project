@@ -3,7 +3,6 @@ package sample;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -47,8 +46,7 @@ public class Game {
     static Random randomize = new Random();
     public VillainFactory villainFactory;
     public int counter = 0;
-    public static int swordCounter=0;
-    public Sword sword=new Sword();
+    public boolean sword=false;
 
     public Game(Pane board, Double mode, int round, int hp, int heroId) {
         this.mode = mode;
@@ -73,11 +71,11 @@ public class Game {
     }
 
     public void play(Stage stage) {
+        Hero.swordCounter=0;
         Counter.games();
         Counter.thorGames();
         Game.game.mode = mode;
         scoreText = new Text(W / 2, 30, "Score: " + score);
-        board.getChildren().add(sword);
         for (Hero hero : heroes) {
             board.getChildren().add(hero);
         }
@@ -134,20 +132,7 @@ public class Game {
         });
         scene.setOnMouseClicked(event -> {
             if (!pause) {
-                Weapon newWeapon;
-                if (upgrade <= 0) {
-                    newWeapon = new Hammer(event.getSceneX() - heroes.get(0).getLayoutX(), event.getSceneY() - heroes.get(0).getLayoutY());
-                } else {
-                    newWeapon = new SuperHammer(event.getSceneX() - heroes.get(0).getLayoutX(), event.getSceneY() - heroes.get(0).getLayoutY());
-                    upgrade--;
-                }
-                newWeapon.relocate(heroes.get(0).getLayoutX() + heroes.get(0).getBoundsInLocal().getWidth(), heroes.get(0).getLayoutY());
-                weaponsHero.add(newWeapon);
-                board.getChildren().add(newWeapon);
-                Counter.thrownWeapon();
-                if (randomize.nextInt(5) == 1) {
-                    heroes.get(0).shout();
-                }
+                heroes.get(0).weapon(event);
             }
         });
 
@@ -157,7 +142,6 @@ public class Game {
             public void handle(long now) {
                 if (cnt >= Menu.screen_refresh_divisor) {
                     cnt = 0;
-                    sword(sword);
                     for (Hero hero : heroes) {
                         hero.dx = 0;
                         hero.dy = 0;
@@ -174,7 +158,7 @@ public class Game {
                         }
                     }
 
-                    if (counter < 10 || round==0) {
+                    if (counter < 50 || round==0) {
                         villainCounter++;
                         Villain.newVillain(game, round==0);
                     } else if (villains.size() == 0) {
@@ -214,9 +198,10 @@ public class Game {
                     }
                     for (Hero hero : heroes) {
                         hero.checkHitHero(game);
+                        hero.skill();
                     }
                     Villain.checkHitVillain(game);
-                    if(swordCounter%10==0) {
+                    if(Hero.isWarrior(heroes.get(0)) && Hero.swordCounter%7==0) {
                         Villain.swordCheck();
                     }
                     Box.checkBox(game);
@@ -291,26 +276,5 @@ public class Game {
                 hp_texts.get(hero).setText("HP: " + hero.hp);
             }
         }
-    }
-    private void sword(Sword sword)
-    {
-        if(swordCounter==15)
-        {
-            sword.setImage(new Image("resources/Images/Meele/Sword30.png"));
-        }
-        else if(swordCounter==30)
-        {
-            sword.setImage(new Image("resources/Images/Meele/Sword60.png"));
-        }
-        else if(swordCounter==45)
-        {
-            sword.setImage(new Image("resources/Images/Meele/Sword90.png"));
-        }
-        else if(swordCounter==60)
-        {
-            sword.setImage(new Image("resources/Images/Meele/Sword.png"));
-            swordCounter=0;
-        }
-        swordCounter++;
     }
 }

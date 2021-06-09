@@ -96,7 +96,7 @@ public abstract class Villain extends ImageView {
         Iterator<Villain> y=Game.game.villains.iterator();
         while(y.hasNext()) {
             Villain currentVillain = y.next();
-            if (Game.game.sword.getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
+            if (Game.game.heroes.get(0).sword.getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
                 currentVillain.hp();
                 currentVillain.changeHpBar();
                 if (!currentVillain.isAlive()) {
