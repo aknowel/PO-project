@@ -25,14 +25,6 @@ public abstract class Hero extends ImageView {
         this.hp = hp;
         changeHpBar();
     }
-    /*Hero(String path_to_image)
-    {
-        super(path_to_image);
-        goNorth = goSouth = goEast = goWest = false;
-        pos_x = getLayoutX();
-        pos_y = getLayoutY();
-        hp = 10;
-    }*/
     public int getHeroId()
     {
         return id;

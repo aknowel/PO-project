@@ -125,10 +125,10 @@ public abstract class Villain extends ImageView {
             }
         }
     }
-    public static void newVillain(Game game)
+    public static void newVillain(Game game, boolean z)
     {
         if (game.villainCounter % game.modifier == 0) {
-            Villain newVillain = game.villainFactory.produce(Game.randomizer.nextInt(7),Game.game.mode);
+            Villain newVillain = game.villainFactory.produce(Game.randomizer.nextInt((z) ? 10 : 7),Game.game.mode);
             int r = Game.randomizer.nextInt(4);
             switch (r) {
                 case 0 -> {

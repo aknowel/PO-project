@@ -20,6 +20,7 @@ public abstract class Background extends ImageView {
             case 6 -> new Shrub();
             case 7 -> new MaleBust();
             case 8 -> new FemaleBust();
+            case 9 -> new Gazebo();
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
@@ -90,5 +91,13 @@ class FemaleBust extends Background
     {
         super(new Image("/resources/Images/Background/FemaleBust.png"));
         this.id=8;
+    }
+}
+class Gazebo extends Background
+{
+    Gazebo()
+    {
+        super(new Image("resources/Images/Background/Gazebo.png"));
+        this.id=9;
     }
 }

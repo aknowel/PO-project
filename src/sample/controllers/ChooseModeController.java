@@ -49,9 +49,12 @@ public class ChooseModeController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         main.play(stage);
     }
-    public void playSurvival()
+    public void playSurvival(ActionEvent event)
     {
-
+        Pane board=new Pane();
+        Game main=new Game(board, mode, 0, 10, chosenHero);
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        main.play(stage);
     }
     public void returnMenu(ActionEvent event)
     {

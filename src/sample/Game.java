@@ -50,24 +50,15 @@ public class Game {
     public static int swordCounter=0;
     public Sword sword=new Sword();
 
-    public Game(Pane board, Double mode, int round,int hp, int heroId) {
+    public Game(Pane board, Double mode, int round, int hp, int heroId) {
         this.mode = mode;
         this.board = board;
         this.round = round;
         game = this;
-        heroes.add(Hero.getNewHero(20, H/2, 10, heroId));
-        heroes.get(0).hp=hp;
-        //heroes.add(new Hero("resources/Images/Thor2.png"));
+        heroes.add(Hero.getNewHero(20, H/2, hp, heroId));
         BackgroundSetter.setBackgroundObjects(round);
         BackgroundSetter.setBackground(round);
         villainFactory = VillainFactory.getVillainFactory(round);
-        try {
-            for (Hero hero : heroes) {
-                Movement.moveHeroTo(hero, 20, H / 2);
-            }
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -183,9 +174,9 @@ public class Game {
                         }
                     }
 
-                    if (counter < 10) {
+                    if (counter < 10 || round==0) {
                         villainCounter++;
-                        Villain.newVillain(game);
+                        Villain.newVillain(game, round==0);
                     } else if (villains.size() == 0) {
                         if (!isBoss) {
                             isBoss = true;

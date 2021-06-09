@@ -72,16 +72,16 @@ public interface VillainFactory {
         @Override
         public Villain produce(int i, Double mode) {
             return switch (i){
-                case 1 -> new Bat(mode);
-                case 2 -> new Skull(mode);
-                case 3 -> new Predator(mode);
-                case 4 -> new Spider (mode);
-                case 5 -> new Mummy(mode);
-                case 6 -> new Ogre(mode);
-                case 7 -> new Orc(mode);
-                case 8 -> new Vampire(mode);
-                case 9 -> new Wizard(mode);
-                case 10 -> new Zombie(mode);
+                case 0 -> new Bat(mode);
+                case 1 -> new Skull(mode);
+                case 2 -> new Predator(mode);
+                case 3 -> new Spider (mode);
+                case 4 -> new Mummy(mode);
+                case 5 -> new Ogre(mode);
+                case 6 -> new Orc(mode);
+                case 7 -> new Vampire(mode);
+                case 8 -> new Wizard(mode);
+                case 9 -> new Zombie(mode);
                 default -> throw new IllegalStateException("Unexpected value: " + i);
             };
         }
