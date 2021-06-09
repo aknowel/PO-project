@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sample.Game;
+import sample.Hero;
 
 public class GameEndController {
     Stage stage;
@@ -17,7 +18,7 @@ public class GameEndController {
     {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Pane board=new Pane();
-        Game game=new Game(board,Game.game.mode, 1,10, Game.game.heroes.get(0).getHeroId());
+        Game game=new Game(board,Game.game.mode, 1, 10, Game.game.heroes.get(0).getHeroId());
         game.play(stage);
     }
     public void returnMenu(ActionEvent event)
@@ -41,7 +42,8 @@ public class GameEndController {
     {
         int score=Game.game.score;
         Pane board=new Pane();
-        Game main=new Game(board,Game.game.mode, Game.game.round+1,Game.game.heroes.get(0).hp, Game.game.heroes.get(0).getHeroId());
+        Hero h=Game.game.heroes.get(0);
+        Game main=new Game(board,Game.game.mode, Game.game.round+1, h);
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Game.game.score=score;
         main.play(stage);

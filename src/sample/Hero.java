@@ -241,10 +241,10 @@ public abstract class Hero extends ImageView {
     static public Hero getNewHero(double x, double y, int hp, int id)
     {
         return switch (id)
-        {
-            case 1->new Warrior(x, y, hp);
-            case 2->new Thor(x, y, hp);
-            default->new Assassin(x, y, hp);
-        };
+                {
+                    case 1->new Warrior(x, y, hp);
+                    case 2->new Thor(x, y, hp);
+                    default->new Assassin(x, y, hp);
+                };
     }
 }
