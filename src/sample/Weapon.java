@@ -126,3 +126,18 @@ class Shuriken extends Weapon
         this.id=5;
     }
 }
+class Axe extends Weapon
+{
+    Axe()
+    {
+        super(new Image("resources/Images/Weapons/Axe.png"));
+        this.id=6;
+    }
+    Axe(double x,double y)
+    {
+        super(new Image("resources/Images/Weapons/Axe.png"));
+        this.x=x;
+        this.y=y;
+        this.id=5;
+    }
+}
