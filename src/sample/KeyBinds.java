@@ -13,4 +13,6 @@ public class KeyBinds {
     public static KeyCode DOWN=KeyCode.DOWN;
     public static KeyCode LEFT=KeyCode.LEFT;
     public static KeyCode RIGHT=KeyCode.RIGHT;
+
+    public static KeyCode SPACE=KeyCode.SPACE;
 }

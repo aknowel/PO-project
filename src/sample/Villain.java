@@ -13,6 +13,7 @@ public abstract class Villain extends ImageView {
     protected Double HP=1000.0;
     protected Double speed;
     protected HpBar hpBar=new HpBar();
+    protected int cooldownSO=0;
     protected int id;
     Villain(Image img)
     {
@@ -45,50 +46,91 @@ public abstract class Villain extends ImageView {
         return HP>0;
     }
     public abstract void changeHpBar();
+    public static void cooldownSODecrease()
+    {
+        for(Villain villain:Game.game.villains)
+        {
+            villain.cooldownSO--;
+        }
+    }
     Double getSpeed()
     {
         return speed;
     }
-    static void checkHitVillain(Game game){
-        Iterator<Weapon> x=game.weaponsHero.iterator();
+    static void checkHitVillains(){
+        Iterator<Weapon> x=Game.game.weaponsHero.iterator();
         while(x.hasNext()){
             Node currentWeapon=x.next();
-            Iterator<Villain> y=game.villains.iterator();
+            Iterator<Villain> y=Game.game.villains.iterator();
             while(y.hasNext()){
                 Villain currentVillain=y.next();
-                if (currentWeapon.getBoundsInParent().intersects(currentVillain.getBoundsInParent())){
-                    currentVillain.hp();
-                    currentVillain.changeHpBar();
-                    Game.game.board.getChildren().remove(currentWeapon);
-                    x.remove();
-                    if(!currentVillain.isAlive()) {
-                        int i= Game.randomizer.nextInt(4);
-                        if(i<4)
-                        {
-                            Box newBox=Box.getNewBox(i);
-                            newBox.relocate(currentVillain.getLayoutX(),currentVillain.getLayoutY());
-                            game.boxes.add(newBox);
-                            Game.game.board.getChildren().add(newBox);
-                        }
-                        Game.game.board.getChildren().remove(currentVillain.hpBar);
-                        Game.game.board.getChildren().remove(currentVillain);
-                        check(currentVillain.id);
-                        y.remove();
-                       game.score++;
-                       game.counter++;
-                        game.scoreText.setText("Score: " + game.score);
-                        if(isShooting(currentVillain))
-                        {
-                            game.shootingVillains.remove(currentVillain);
-                            currentVillain.shout();
-                            if(randomize.nextInt(2)==1)
-                            {
-                                currentVillain.shout();
-                            }
+                currentVillain.checkHitVillainByWeapon( currentWeapon,y,x);
+                }
+            }
+        }
+    public void checkHitVillainByWeapon(Node currentObject,Iterator<Villain> y,Iterator<?> x)
+    {
+            if (currentObject.getBoundsInParent().intersects(getBoundsInParent())) {
+                hp();
+                changeHpBar();
+                Game.game.board.getChildren().remove(currentObject);
+                x.remove();
+                if (!isAlive()) {
+                    int i = Game.randomizer.nextInt(20);
+                    if (i < 4) {
+                        Box newBox = Box.getNewBox(i);
+                        newBox.relocate(getLayoutX(), getLayoutY());
+                        Game.game.boxes.add(newBox);
+                        Game.game.board.getChildren().add(newBox);
+                    }
+                    Game.game.board.getChildren().remove(hpBar);
+                    Game.game.board.getChildren().remove(this);
+                    check(id);
+                    y.remove();
+                    Game.game.score++;
+                    Game.game.counter++;
+                    Game.game.scoreText.setText("Score: " + Game.game.score);
+                    if (isShooting(this)) {
+                        Game.game.shootingVillains.remove();
+                        shout();
+                        if (randomize.nextInt(2) == 1) {
+                            shout();
                         }
                     }
                 }
             }
+    }
+    public void checkHitVillainBySpecialO(Node currentObject,Iterator<Villain> y)
+    {
+        if(cooldownSO<=0) {
+            if (currentObject.getBoundsInParent().intersects(getBoundsInParent())) {
+                hp();
+                changeHpBar();
+                if (!isAlive()) {
+                    int i = Game.randomizer.nextInt(20);
+                    if (i < 4) {
+                        Box newBox = Box.getNewBox(i);
+                        newBox.relocate(getLayoutX(), getLayoutY());
+                        Game.game.boxes.add(newBox);
+                        Game.game.board.getChildren().add(newBox);
+                    }
+                    Game.game.board.getChildren().remove(hpBar);
+                    Game.game.board.getChildren().remove(this);
+                    check(id);
+                    y.remove();
+                    Game.game.score++;
+                    Game.game.counter++;
+                    Game.game.scoreText.setText("Score: " + Game.game.score);
+                    if (isShooting(this)) {
+                        Game.game.shootingVillains.remove();
+                        shout();
+                        if (randomize.nextInt(2) == 1) {
+                            shout();
+                        }
+                    }
+                }
+            }
+            cooldownSO=100;
         }
     }
     public static void swordCheck()

@@ -107,7 +107,7 @@ class Sword extends Weapon
 {
     Sword()
     {
-        super(new Image("resources/Images/Meele/Sword.png"));
+        super(new Image("resources/Images/Melee/Sword.png"));
         this.id=5;
     }
 }

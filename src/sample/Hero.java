@@ -24,6 +24,8 @@ public abstract class Hero extends ImageView {
     boolean top;
     boolean barrierCheck=false;
     int barrierTime=0;
+    int skillCooldown=0;
+    boolean heroSkill=false;
     ImageView barrier;
 
     Hero(double x,double y, int hp) {
@@ -74,7 +76,7 @@ public abstract class Hero extends ImageView {
         Sounds sounds=new Sounds();
         sounds.playHuh();
     }
-    public abstract void weapon(MouseEvent event);
+    public abstract void newWeapon(MouseEvent event);
     public abstract void skill();
     static boolean isWarrior(Hero hero)
     {
@@ -88,9 +90,10 @@ public abstract class Hero extends ImageView {
         public Thor(double x,double y, int hp)
         {
             super(x, y, hp);
+            id=2;
         }
         @Override
-        public void weapon(MouseEvent event)
+        public void newWeapon(MouseEvent event)
         {
             Weapon newWeapon;
             if (Game.game.upgrade <= 0) {
@@ -123,36 +126,29 @@ public abstract class Hero extends ImageView {
             sword=new Sword();
             this.setImage(new Image("resources/Images/Warrior.png"));
         }
-        public void weapon(MouseEvent event)
+        public void newWeapon(MouseEvent event)
         {
             if(!Game.game.sword)
             {
                 Game.game.sword=true;
                 side= !(event.getSceneX() >= this.getLayoutX() + this.getBoundsInLocal().getWidth() / 2);
-                if((event.getSceneX() - this.getLayoutX() <= 100) && (this.getLayoutX() - event.getSceneX() <= 75))
-                {
-                    top=true;
-                }
-                else
-                {
-                    top=false;
-                }
+                top= (event.getSceneX() - this.getLayoutX() <= 100) && (this.getLayoutX() - event.getSceneX() <= 75);
                 if(!top) {
                     if (side) {
-                        sword.setImage(new Image("resources/Images/Meele/Sword2.png"));
+                        sword.setImage(new Image("resources/Images/Melee/Sword2.png"));
                     } else {
-                        sword.setImage(new Image("resources/Images/Meele/Sword.png"));
+                        sword.setImage(new Image("resources/Images/Melee/Sword.png"));
                     }
                 }
                 else
                 {
                     if(event.getSceneY()>=this.getLayoutY())
                     {
-                        sword.setImage(new Image("resources/Images/Meele/Sword260.png"));
+                        sword.setImage(new Image("resources/Images/Melee/Sword260.png"));
                     }
                     else
                     {
-                        sword.setImage(new Image("resources/Images/Meele/Sword30.png"));
+                        sword.setImage(new Image("resources/Images/Melee/Sword30.png"));
                     }
                 }
                 if(top && event.getSceneY()<=this.getLayoutY())
@@ -168,16 +164,38 @@ public abstract class Hero extends ImageView {
         }
         @Override
         public void skill() {
+            if(heroSkill && skillCooldown==0) {
+                Weapon newWeapon;
+                newWeapon = new Axe(Mouse.x - Game.game.heroes.get(0).getLayoutX(), Mouse.y - Game.game.heroes.get(0).getLayoutY());
+                newWeapon.relocate(
+                        Game.game.heroes.get(0).getLayoutX() + Game.game.heroes.get(0).getBoundsInLocal().getWidth(), Game.game.heroes.get(0).getLayoutY());
+                Game.game.weaponsHero.add(newWeapon);
+                Game.game.board.getChildren().add(newWeapon);
+                Counter.thrownWeapon();
+                Random randomize = new Random();
+                if (randomize.nextInt(5) == 1) {
+                    Game.game.heroes.get(0).shout();
+                }
+                skillCooldown=45;
+                heroSkill=false;
+            }
+            else if(heroSkill)
+            {
+                skillCooldown--;
+            }
+        }
+        void moveSword()
+        {
             if (Game.game.sword) {
                 if (!side) {
                     if(top)
                     {
                         if (counter == 15) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword290.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword290.png"));
                         } else if (counter == 30) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword90.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword90.png"));
                         } else if (counter == 45) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword60.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword60.png"));
                         } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
                             counter = 0;
@@ -186,11 +204,11 @@ public abstract class Hero extends ImageView {
                     }
                     else {
                         if (counter == 15) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword30.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword30.png"));
                         } else if (counter == 30) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword60.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword60.png"));
                         } else if (counter == 45) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword90.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword90.png"));
                         } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
                             counter = 0;
@@ -200,11 +218,11 @@ public abstract class Hero extends ImageView {
                 } else {
                     if(!top) {
                         if (counter == 15) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword230.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword230.png"));
                         } else if (counter == 30) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword260.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword260.png"));
                         } else if (counter == 45) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword290.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword290.png"));
                         } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
                             counter = 0;
@@ -214,11 +232,11 @@ public abstract class Hero extends ImageView {
                     else
                     {
                         if (counter == 15) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword.png"));
                         } else if (counter == 30) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword2.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword2.png"));
                         } else if (counter == 45) {
-                            sword.setImage(new Image("resources/Images/Meele/Sword230.png"));
+                            sword.setImage(new Image("resources/Images/Melee/Sword230.png"));
                         } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
                             counter = 0;
@@ -238,7 +256,7 @@ public abstract class Hero extends ImageView {
             this.setImage(new Image("resources/Images/Assassin.png"));
         }
         @Override
-        public void weapon(MouseEvent event)
+        public void newWeapon(MouseEvent event)
         {
             if(counter==2) {
                 Weapon newWeapon;
@@ -262,7 +280,18 @@ public abstract class Hero extends ImageView {
         @Override
         public void skill()
         {
-
+            if(heroSkill && skillCooldown==0) {
+                SpecialObject specialObject=new PoisonCloud();
+                Game.game.specialObjects.add(specialObject);
+                specialObject.relocate(pos_x,pos_y);
+                Game.game.board.getChildren().add(specialObject);
+                skillCooldown=150;
+                heroSkill=false;
+            }
+            else if(heroSkill)
+            {
+                skillCooldown--;
+            }
         }
     }
     static public Hero getNewHero(double x, double y, int hp, int id)

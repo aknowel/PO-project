@@ -3,8 +3,10 @@ package sample;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.robot.Robot;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -48,6 +50,7 @@ public class Game {
     public VillainFactory villainFactory;
     public int counter = 0;
     public boolean sword=false;
+    Robot robot=new Robot();
 
     public Game(Pane board, Double mode, int round, int hp, int heroId) {
         this.mode = mode;
@@ -98,13 +101,15 @@ public class Game {
         stage.setScene(scene);
         stage.setTitle("Ragnarok");
         stage.show();
-
+        scene.setOnMouseMoved(event -> {Mouse.x=event.getSceneX();
+        Mouse.y=event.getSceneY();});
         scene.setOnKeyPressed(event -> {
             if (event.getCode().equals(KeyBinds.W)) heroes.get(0).goNorth = true;
             else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = true;
             else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = true;
             else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = true;
             else if (event.getCode().equals(KeyBinds.UP)) heroes.get(1).goNorth = true;
+            else if(event.getCode().equals(KeyBinds.SPACE)) heroes.get(0).heroSkill=true;
             else if (event.getCode().equals(KeyBinds.DOWN)) heroes.get(1).goSouth = true;
             else if (event.getCode().equals(KeyBinds.LEFT)) heroes.get(1).goWest = true;
             else if (event.getCode().equals(KeyBinds.RIGHT)) heroes.get(1).goEast = true;
@@ -133,7 +138,7 @@ public class Game {
         });
         scene.setOnMouseClicked(event -> {
             if (!pause) {
-                heroes.get(0).weapon(event);
+                heroes.get(0).newWeapon(event);
             }
         });
 
@@ -179,11 +184,17 @@ public class Game {
                             boss.skill();
                         }
                     }
+                    Villain.cooldownSODecrease();
+                    SpecialObject.specialObjectsSkills();
                     try {
                         for (Hero hero : heroes) {
                             hero.pos_x += hero.dx;
                             hero.pos_y += hero.dy;
                             Movement.moveHeroTo(hero ,hero.pos_x, hero.pos_y);
+                        }
+                        if(Hero.isWarrior(heroes.get(0))) {
+                            Hero.Warrior warrior=(Hero.Warrior) heroes.get(0);
+                            warrior.moveSword();
                         }
                         Movement.throwWeapon(dWeapon);
                         Movement.enemyWeapon(5);
@@ -201,7 +212,7 @@ public class Game {
                         hero.checkHitHero(game);
                         hero.skill();
                     }
-                    Villain.checkHitVillain(game);
+                    Villain.checkHitVillains();
                     if(Hero.isWarrior(heroes.get(0)) && Hero.counter%7==0) {
                         Villain.swordCheck();
                     }
