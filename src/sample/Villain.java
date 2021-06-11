@@ -25,6 +25,10 @@ public abstract class Villain extends ImageView {
     {
         HP--;
     }
+    public void kill()
+    {
+        HP=0D;
+    }
     public static Boss getNewPredatorBoss(Double mode)
     {
         return new PredatorBoss(mode);
@@ -100,12 +104,18 @@ public abstract class Villain extends ImageView {
                 }
             }
     }
-    public void checkHitVillainBySpecialO(Node currentObject,Iterator<Villain> y)
+    public void checkHitVillainBySpecialO(Node currentObject,Iterator<Villain> y,boolean boomCheck)
     {
-        if(cooldownSO<=0) {
+        if(cooldownSO<=0 || boomCheck) {
             if (currentObject.getBoundsInParent().intersects(getBoundsInParent())) {
-                hp();
-                changeHpBar();
+                if(boomCheck)
+                {
+                    kill();
+                }
+                else {
+                    hp();
+                    changeHpBar();
+                }
                 if (!isAlive()) {
                     int i = Game.randomizer.nextInt(20);
                     if (i < 4) {

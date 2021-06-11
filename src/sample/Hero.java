@@ -60,6 +60,20 @@ public abstract class Hero extends ImageView {
             }
         }
     }
+    void checkHitByTNT(Node tnt)
+    {
+        if (tnt.getBoundsInParent().intersects(getBoundsInParent())){
+            if(!barrierCheck) {
+                hp -= 1;
+                changeHpBar();
+                Game.game.hp_texts.get(this).setText("HP: " + hp);
+            }else
+            {
+                barrierCheck=false;
+                Game.game.board.getChildren().remove(barrier);
+            }
+        }
+    }
     protected void changeHpBar()
     {
         if(hp<=1)
@@ -91,6 +105,7 @@ public abstract class Hero extends ImageView {
         {
             super(x, y, hp);
             id=2;
+            skillCooldown=0;
         }
         @Override
         public void newWeapon(MouseEvent event)
@@ -115,7 +130,18 @@ public abstract class Hero extends ImageView {
         @Override
         public void skill()
         {
-
+            if(heroSkill && skillCooldown==0) {
+                SpecialObject specialObject=new TNT();
+                Game.game.specialObjects.add(specialObject);
+                specialObject.relocate(pos_x,pos_y);
+                Game.game.board.getChildren().add(specialObject);
+                skillCooldown=150;
+                heroSkill=false;
+            }
+            else if(heroSkill)
+            {
+                skillCooldown--;
+            }
         }
     }
     public static class Warrior extends Hero{

@@ -3,10 +3,8 @@ package sample;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.robot.Robot;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -50,7 +48,6 @@ public class Game {
     public VillainFactory villainFactory;
     public int counter = 0;
     public boolean sword=false;
-    Robot robot=new Robot();
 
     public Game(Pane board, Double mode, int round, int hp, int heroId) {
         this.mode = mode;
