@@ -47,7 +47,7 @@ public abstract class Box extends ImageView {
                                     game.heroes.get(0).barrier.setOpacity(0.50);
                                     game.board.getChildren().add(game.heroes.get(0).barrier);
                                 }
-                                Movement.barrierTime=0;
+                                game.heroes.get(0).barrierTime=0;
                             }
                 }
                 if(randomize.nextInt(3)==1)

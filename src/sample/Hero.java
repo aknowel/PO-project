@@ -23,6 +23,7 @@ public abstract class Hero extends ImageView {
     boolean side;
     boolean top;
     boolean barrierCheck=false;
+    int barrierTime=0;
     ImageView barrier;
 
     Hero(double x,double y, int hp) {
