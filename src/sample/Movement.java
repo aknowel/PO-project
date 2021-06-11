@@ -7,6 +7,7 @@ import java.util.Iterator;
 public abstract class Movement {
     static Background curr=null;
     static int counter=0;
+    static int barrierTime=0;
     static void moveHeroTo (Hero hero, double x, double y) throws InstantiationException, IllegalAccessException {
         if (x >= 0 && x <= Game.W - hero.getBoundsInLocal().getWidth() && y >= 0 && y <= Game.H - hero.getBoundsInLocal().getHeight() && backgroundCheck(x,y,hero)) {
                hero.relocate(x, y);
@@ -27,13 +28,15 @@ public abstract class Movement {
         }
         if(hero.barrierCheck)
         {
-            if(counter<750) {
-                hero.barrier.relocate(hero.getLayoutX(),hero.getLayoutY());
+            if(barrierTime<600) {
+                hero.barrier.relocate(hero.getLayoutX()-4.5,hero.getLayoutY()-4);
+                barrierTime++;
             }
             else
             {
                 Game.game.board.getChildren().remove(hero.barrier);
                 hero.barrierCheck=false;
+                barrierTime=0;
             }
             counter++;
         }
@@ -54,6 +57,7 @@ public abstract class Movement {
                     else
                     {
                         Game.game.heroes.get(0).barrierCheck=false;
+                        barrierTime=0;
                         Game.game.board.getChildren().remove(Game.game.heroes.get(0).barrier);
                     }
                     if (Villain.isShooting(currentVillain)) {

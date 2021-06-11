@@ -40,17 +40,21 @@ public abstract class Box extends ImageView {
                     }
                     case 3 ->
                             {
-                                game.heroes.get(0).barrierCheck=true;
-                                game.heroes.get(0).barrier=currentBox;
+                                if(!game.heroes.get(0).barrierCheck)
+                                {
+                                    game.heroes.get(0).barrierCheck = true;
+                                    game.heroes.get(0).barrier = new ImageView(new Image("resources/Images/Barrier.png"));
+                                    game.heroes.get(0).barrier.setOpacity(0.50);
+                                    game.board.getChildren().add(game.heroes.get(0).barrier);
+                                }
+                                Movement.barrierTime=0;
                             }
                 }
                 if(randomize.nextInt(3)==1)
                 {
                     currentBox.openChest();
                 }
-                if(currentBox.i!=3) {
-                    Game.game.board.getChildren().remove(currentBox);
-                }
+                Game.game.board.getChildren().remove(currentBox);
                 x.remove();
             }
         }
@@ -105,7 +109,7 @@ class BarrierBox extends Box
 {
     BarrierBox()
     {
-        super(new Image("/resources/Images/cake.png"));
+        super(new Image("/resources/Images/Shield.png"));
         i=3;
     }
 }

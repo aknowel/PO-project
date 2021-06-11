@@ -23,8 +23,7 @@ public abstract class Hero extends ImageView {
     boolean side;
     boolean top;
     boolean barrierCheck=false;
-    Box barrier;
-    private boolean barrierCheck1;
+    ImageView barrier;
 
     Hero(double x,double y, int hp) {
         super("resources/Images/Thor.png");
@@ -48,13 +47,13 @@ public abstract class Hero extends ImageView {
                     hp -= 1;
                     changeHpBar();
                     game.hp_texts.get(this).setText("HP: " + hp);
-                    Game.game.board.getChildren().remove(currentWeapon);
-                    x.remove();
                 }else
                 {
                     barrierCheck=false;
                     Game.game.board.getChildren().remove(barrier);
                 }
+                Game.game.board.getChildren().remove(currentWeapon);
+                x.remove();
             }
         }
     }
@@ -271,7 +270,8 @@ public abstract class Hero extends ImageView {
                 {
                     case 1->new Warrior(x, y, hp);
                     case 2->new Thor(x, y, hp);
-                    default->new Assassin(x, y, hp);
+                    case 3->new Assassin(x, y, hp);
+                    default -> throw new IllegalStateException("Unexpected value: " + id);
                 };
     }
 }
