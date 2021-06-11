@@ -4,11 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sample.Game;
-import sample.Hero;
 
 public class GameEndController {
     Stage stage;
@@ -40,12 +40,29 @@ public class GameEndController {
     }
     public void continues(ActionEvent event)
     {
-        int score=Game.game.score;
-        Pane board=new Pane();
-        Hero h=Game.game.heroes.get(0);
-        Game main=new Game(board,Game.game.mode, Game.game.round+1, h);
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Game.game.score=score;
-        main.play(stage);
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/plotWindow.fxml"));
+        try
+        {
+            root = fxmlLoader.load();
+            root.setLayoutX(340);
+            root.setLayoutY(160);
+            Label text=new Label();
+            text.relocate(10, 10);
+            String s=switch (Game.game.round)
+                    {
+                        case 1->PlotStrings.second;
+                        case 2->PlotStrings.third;
+                        case 3->PlotStrings.forth;
+
+                        default -> throw new IllegalStateException("Unexpected value: " + Game.game.round);
+                    };
+            text.setText(s);
+            text.setStyle("-fx-font-size: 20; -fx-font-style: italic");
+            root.getChildren().add(text);
+            Game.game.board.getChildren().add(root);
+        } catch (Exception e) {
+                e.printStackTrace();
+        }
     }
 }

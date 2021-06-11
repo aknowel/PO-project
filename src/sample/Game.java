@@ -159,7 +159,7 @@ public class Game {
                         }
                     }
 
-                    if (counter < 50 || round==0) {
+                    if (counter < 2 || round==0) {
                         villainCounter++;
                         Villain.newVillain(game, round==0);
                     } else if (villains.size() == 0) {

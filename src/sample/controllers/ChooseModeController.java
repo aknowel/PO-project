@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -12,6 +13,8 @@ import javafx.stage.Stage;
 import sample.Game;
 
 public class ChooseModeController {
+    @FXML
+    AnchorPane pane;
     @FXML
     StackPane hero1;
     @FXML
@@ -24,6 +27,10 @@ public class ChooseModeController {
     private final String style="-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
     public static double mode=0D;
     private static int chosenHero=2;
+    static int getHeroId()
+    {
+        return chosenHero;
+    }
     public void chooseWarrior()
     {
         resetAll();
@@ -44,10 +51,22 @@ public class ChooseModeController {
     }
     public void playStory(ActionEvent event)
     {
-        Pane board=new Pane();
-        Game main=new Game(board,mode, 1, 10, chosenHero);
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        main.play(stage);
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/plotStart.fxml"));
+        try
+        {
+            root = fxmlLoader.load();
+            root.setLayoutX(324);
+            root.setLayoutY(160);
+            Label text=new Label();
+            text.relocate(10, 10);
+            text.setText(PlotStrings.first);
+            text.setStyle("-fx-font-size: 20; -fx-font-style: italic");
+            root.getChildren().add(text);
+            pane.getChildren().add(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void playSurvival(ActionEvent event)
     {
