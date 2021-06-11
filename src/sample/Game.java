@@ -29,6 +29,7 @@ public class Game {
     public final LinkedList<Villain> shootingVillains = new LinkedList<>();
     public final LinkedList<Background> backgroundObjects = new LinkedList<>();
     public final LinkedList<Box> boxes = new LinkedList<>();
+    public final LinkedList<SpecialObject> specialObjects = new LinkedList<>();
     public Pane board;
     public AnimationTimer timer;
     public Text scoreText;
