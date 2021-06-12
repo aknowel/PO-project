@@ -212,7 +212,7 @@ public abstract class Hero extends ImageView {
                 }
                 heroSkill=false;
             }
-            else if(heroSkill)
+            else
             {
                 skillCooldown--;
             }
@@ -327,7 +327,7 @@ public abstract class Hero extends ImageView {
                 }
                 heroSkill = false;
             }
-            else if(heroSkill)
+            else
             {
                 skillCooldown--;
             }
