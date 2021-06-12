@@ -16,8 +16,9 @@ public abstract class Weapon extends ImageView {
         for (Villain currentVillain : game.shootingVillains) {
             double x = currentVillain.getLayoutX();
             double y = currentVillain.getLayoutY();
-            double z = game.heroes.get(0).getLayoutX();
-            double v = game.heroes.get(0).getLayoutY();
+            int i=Hero.minDistance(currentVillain);
+            double z = game.heroes.get(i).getLayoutX();
+            double v = game.heroes.get(i).getLayoutY();
             Weapon newWeapon;
             if (currentVillain.getVillainId() == 1||currentVillain.getVillainId() == 3) {
                 newWeapon = new RedBall(z - x, v - y);

@@ -16,8 +16,8 @@ public interface VillainFactory {
         @Override
         public Boss produceBoss( Double mode)
         {
-            Boss boss=new PredatorBoss(mode);
-            Game.game.shootingVillains.add(boss);
+            Boss boss=new Bombman(mode);
+            //Game.game.shootingVillains.add(boss);
             return boss;
         }
     }

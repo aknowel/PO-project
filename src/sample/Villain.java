@@ -612,8 +612,9 @@ class Loki extends Boss
         if (spawn==0) {
             double x = this.getLayoutX();
             double y = this.getLayoutY();
-            double z = Game.game.heroes.get(0).getLayoutX();
-            double v = Game.game.heroes.get(0).getLayoutY();
+            int i=Hero.minDistance(this);
+            double z = Game.game.heroes.get(i).getLayoutX();
+            double v = Game.game.heroes.get(i).getLayoutY();
             Weapon newWeapon = new Star(v - y, x - z);
             newWeapon.relocate(this.getLayoutX() , this.getLayoutY() );
             Game.game.weaponsVillain.add(newWeapon);
@@ -641,6 +642,48 @@ class Loki extends Boss
         else if(HP<=25)
             hpBar.setImage(new Image("resources/Images/HpBars/HpBar13.png"));
         else if(HP<=45)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
+    }
+}
+class Bombman extends Boss
+{
+    Bombman(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/VampireBig.png"));
+        this.HP=25*(mode+1);
+        this.speed=-0.5D;
+        this.id=14;
+    }
+    @Override
+    public void skill()
+    {
+        if(spawn==0) {
+            double x = getLayoutX();
+            double y = getLayoutY();
+            int i=Hero.minDistance(this);
+            double z = Game.game.heroes.get(i).getLayoutX();
+            double v = Game.game.heroes.get(i).getLayoutY();
+            SpecialObject newObject = new Bomb(z-x,v-y);
+            newObject.relocate(x, y);
+            Game.game.specialObjects.add(newObject);
+            Game.game.board.getChildren().add(newObject);
+            spawn=45;
+        }
+        else
+        {
+            spawn--;
+        }
+    }
+    @Override
+    public void changeHpBar()
+    {
+        if(HP<=5)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarCritic.png"));
+        else if(HP<=11)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar13.png"));
+        else if(HP<=18)
             hpBar.setImage(new Image("resources/Images/HpBars/HpBar23.png"));
         else
             hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));

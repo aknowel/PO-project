@@ -181,6 +181,7 @@ public class Game {
                             boss.skill();
                         }
                     }
+                    Hero.decreaseVulnerability();
                     Villain.cooldownSODecrease();
                     SpecialObject.specialObjectsSkills();
                     try {

@@ -27,6 +27,10 @@ public abstract class Hero extends ImageView {
     int upgrade=0;
     int skillCooldown=0;
     boolean heroSkill=false;
+    boolean slow=false;
+    boolean speedUp=false;
+    int slowDuration=0;
+    int SObjInvulnerability=0;
     ImageView barrier;
 
     Hero(double x,double y, int hp) {
@@ -61,9 +65,9 @@ public abstract class Hero extends ImageView {
             }
         }
     }
-    void checkHitByTNT(Node tnt)
+    void checkHitBySObj(Node specialObj)
     {
-        if (tnt.getBoundsInParent().intersects(getBoundsInParent())){
+        if (specialObj.getBoundsInParent().intersects(getBoundsInParent())){
             if(!barrierCheck) {
                 hp -= 1;
                 changeHpBar();
@@ -86,6 +90,13 @@ public abstract class Hero extends ImageView {
         else
             hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
     }
+    public static void decreaseVulnerability()
+    {
+        for(Hero hero:Game.game.heroes)
+        {
+            hero.SObjInvulnerability--;
+        }
+    }
     public void shout()
     {
         Sounds sounds=new Sounds();
@@ -96,6 +107,22 @@ public abstract class Hero extends ImageView {
     static boolean isWarrior(Hero hero)
     {
         return hero instanceof Warrior;
+    }
+    public static int minDistance(Node obj)
+    {
+        double m=-1;
+        int i=0,j=0;
+        for(Hero hero:Game.game.heroes)
+        {
+            double dd=Math.sqrt((hero.getLayoutX()-obj.getLayoutX())*((hero.getLayoutX()-obj.getLayoutX()))+(hero.getLayoutY()-obj.getLayoutY())*(hero.getLayoutY()-obj.getLayoutY()));
+            if(m==-1 && dd<m)
+            {
+                j=i;
+                m=dd;
+            }
+            i++;
+        }
+        return j;
     }
     public String toString()
     {
