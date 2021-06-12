@@ -9,6 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.util.Locale;
+import java.net.*;
+import java.io.*;
 
 public class MultiplayerController {
     Stage stage;
@@ -16,11 +18,29 @@ public class MultiplayerController {
     Scene scene;
     StringBuilder typed_address;
 
-    public void create_server(ActionEvent event) {
-        System.out.println("create_server");
+    public void create_server(ActionEvent event) throws IOException {
+        Runnable serverThread = () -> {
+            try {
+                ServerSocket serverSocket = new ServerSocket(23456);
+                System.out.println("Server created");
+                Socket server = serverSocket.accept();
+                System.out.println("socket accepted");
+                DataInputStream in = new DataInputStream(server.getInputStream());
+                System.out.println(in.readUTF());
+                System.out.println("server exited");
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        };
+        Thread server_thread = new Thread(serverThread);
+        server_thread.start();
     }
-    public void connect_to_server(ActionEvent event) {
-        System.out.println("connect_to_server");
+    public void connect_to_server(ActionEvent event) throws IOException {
+        Socket client = new Socket("localhost", 23456);
+        System.out.println("client created");
+        DataOutputStream out = new DataOutputStream(client.getOutputStream());
+        out.writeUTF("hello here");
+        System.out.println("client exited");
     }
     public void key_typed() {
         System.out.println("key_typed");
