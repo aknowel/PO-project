@@ -77,8 +77,8 @@ class TNT extends SpecialObject {
 
             else if(duration==150)
             {
-                boom.setImage(new Image("resources/Images/SpecialObjects/Fire.png"));
-                boom.relocate(boom.getLayoutX()+10, boom.getLayoutY());
+                boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionGiga.png"));
+                boom.relocate(boom.getLayoutX()-7, boom.getLayoutY()-10);
             }
             else if(duration==200)
              {
