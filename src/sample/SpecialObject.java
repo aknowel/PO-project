@@ -18,6 +18,12 @@ public abstract class SpecialObject extends ImageView {
             specialObject.skill();
         }
     }
+    public static void specialObjectsSkills(GameAsServer gameAsServer)
+    {
+        for (SpecialObject specialObject : gameAsServer.specialObjects) {
+            specialObject.skill();
+        }
+    }
 }
 class PoisonCloud extends SpecialObject {
     PoisonCloud()

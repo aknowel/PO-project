@@ -8,41 +8,100 @@ import javafx.scene.layout.BackgroundRepeat;
 abstract public class BackgroundSetter {
     static public void setBackgroundObjects(int round)
     {
-        BackgroundFactory factory;
-        factory=switch (round)
+        if (!Server.serverCreated && !Client.clientCreated) {
+            BackgroundFactory factory;
+            factory=switch (round)
+                    {
+                        case 1->new Round1BackgroundFactory();
+                        case 2->new Round2BackgroundFactory();
+                        case 3->new Round3BackgroundFactory();
+                        case 4->new Round4BackgroundFactory();
+                        default -> new SurvivalBackGroundFactory();
+                    };
+            for (int j=0; j<2; j++)
+                for(int i=0; i<3; i++)
                 {
-                    case 1->new Round1BackgroundFactory();
-                    case 2->new Round2BackgroundFactory();
-                    case 3->new Round3BackgroundFactory();
-                    case 4->new Round4BackgroundFactory();
-                    default -> new SurvivalBackGroundFactory();
-                };
-        for (int j=0; j<2; j++)
-            for(int i=0; i<3; i++)
-            {
-                Background b=factory.produce(i+j);
-                double x=(i+1)*Game.W/5+Game.W*Game.randomize.nextDouble()/5;
-                double y=(2*j+1)*Game.H/6+Game.H*Game.randomize.nextDouble()/3;
-                b.relocate(x, y);
-                Game.game.backgroundObjects.add(b);
-                Game.game.board.getChildren().add(b);
-            }
+                    Background b=factory.produce(i+j);
+                    double x=(i+1)*Game.W/5+Game.W*Game.randomize.nextDouble()/5;
+                    double y=(2*j+1)*Game.H/6+Game.H*Game.randomize.nextDouble()/3;
+                    b.relocate(x, y);
+                    Game.game.backgroundObjects.add(b);
+                    Game.game.board.getChildren().add(b);
+                }
+        } else if (Server.serverCreated) {
+            BackgroundFactory factory;
+            factory=switch (round)
+                    {
+                        case 1->new Round1BackgroundFactory();
+                        case 2->new Round2BackgroundFactory();
+                        case 3->new Round3BackgroundFactory();
+                        case 4->new Round4BackgroundFactory();
+                        default -> new SurvivalBackGroundFactory();
+                    };
+            for (int j=0; j<2; j++)
+                for(int i=0; i<3; i++)
+                {
+                    Background b=factory.produce(i+j);
+                    double x=(i+1)*GameAsServer.game.W/5+GameAsServer.game.W*GameAsServer.game.randomize.nextDouble()/5;
+                    double y=(2*j+1)*GameAsServer.game.H/6+GameAsServer.game.H*GameAsServer.game.randomize.nextDouble()/3;
+                    b.relocate(x, y);
+                    GameAsServer.game.backgroundObjects.add(b);
+                    GameAsServer.game.pane.getChildren().add(b);
+                }
+        } else if (Client.clientCreated) {
+            BackgroundFactory factory;
+            factory=switch (round)
+                    {
+                        case 1->new Round1BackgroundFactory();
+                        case 2->new Round2BackgroundFactory();
+                        case 3->new Round3BackgroundFactory();
+                        case 4->new Round4BackgroundFactory();
+                        default -> new SurvivalBackGroundFactory();
+                    };
+            for (int j=0; j<2; j++)
+                for(int i=0; i<3; i++)
+                {
+                    Background b=factory.produce(i+j);
+                    double x=(i+1)*GameAsClient.game.W/5+GameAsClient.game.W*GameAsClient.game.randomize.nextDouble()/5;
+                    double y=(2*j+1)*GameAsClient.game.H/6+GameAsClient.game.H*GameAsClient.game.randomize.nextDouble()/3;
+                    b.relocate(x, y);
+                    GameAsClient.game.game.backgroundObjects.add(b);
+                    GameAsClient.game.game.pane.getChildren().add(b);
+                }
+        }
     }
+
     static public void setBackground(int round)
     {
-        String imageName;
-        imageName=switch (round)
-                {
-                    case 1->"resources/Images/Background/sand_background.png";
-                    case 2->"resources/Images/Background/cave_background.png";
-                    case 3->"resources/Images/Background/grass_background.png";
-                    case 4->"resources/Images/Background/sandstone_background.png";
-                    default -> "resources/Images/Background/ground_background.png";
-                };
-        BackgroundImage myBI= new BackgroundImage(new Image(imageName,Game.W,Game.H,false,true),
-                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
-        Game.game.board.setBackground(new javafx.scene.layout.Background(myBI));
+        if (!Server.serverCreated && !Client.clientCreated) {
+            String imageName;
+            imageName=switch (round)
+                    {
+                        case 1->"resources/Images/Background/sand_background.png";
+                        case 2->"resources/Images/Background/cave_background.png";
+                        case 3->"resources/Images/Background/grass_background.png";
+                        case 4->"resources/Images/Background/sandstone_background.png";
+                        default -> "resources/Images/Background/ground_background.png";
+                    };
+            BackgroundImage myBI= new BackgroundImage(new Image(imageName,Game.W,Game.H,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
+            Game.game.board.setBackground(new javafx.scene.layout.Background(myBI));
+        } else if (Server.serverCreated) {
+            String imageName;
+            imageName=switch (round)
+                    {
+                        case 1->"resources/Images/Background/sand_background.png";
+                        case 2->"resources/Images/Background/cave_background.png";
+                        case 3->"resources/Images/Background/grass_background.png";
+                        case 4->"resources/Images/Background/sandstone_background.png";
+                        default -> "resources/Images/Background/ground_background.png";
+                    };
+            BackgroundImage myBI= new BackgroundImage(new Image(imageName,GameAsServer.game.W,GameAsServer.game.H,false,true),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, null, null);
+            GameAsServer.game.pane.setBackground(new javafx.scene.layout.Background(myBI));
+        }
     }
+
     interface BackgroundFactory{
         Background produce (int k);
     }

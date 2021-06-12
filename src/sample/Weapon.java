@@ -30,6 +30,25 @@ public abstract class Weapon extends ImageView {
             game.board.getChildren().add(newWeapon);
         }
     }
+    static void newEnemyWeapon(GameAsServer game)
+    {
+        for (Villain currentVillain : game.shootingVillains) {
+            double x = currentVillain.getLayoutX();
+            double y = currentVillain.getLayoutY();
+            double z = game.heroes.get(0).getLayoutX();
+            double v = game.heroes.get(0).getLayoutY();
+            Weapon newWeapon;
+            if (currentVillain.getVillainId() == 1||currentVillain.getVillainId() == 3) {
+                newWeapon = new RedBall(z - x, v - y);
+            } else
+            {
+                newWeapon = new Star(z - x, v - y);
+            }
+            newWeapon.relocate(currentVillain.getLayoutX() , currentVillain.getLayoutY() );
+            game.weaponsVillain.add(newWeapon);
+            game.pane.getChildren().add(newWeapon);
+        }
+    }
     public static Hammer newHammer(double x,double y)
     {
         return new Hammer(x,y);

@@ -61,6 +61,26 @@ public abstract class Hero extends ImageView {
             }
         }
     }
+    void checkHitHero(GameAsServer game)
+    {
+        Iterator<Weapon> x=game.weaponsVillain.iterator();
+        while(x.hasNext()){
+            Node currentWeapon=x.next();
+            if (currentWeapon.getBoundsInParent().intersects(getBoundsInParent())){
+                if(!barrierCheck) {
+                    hp -= 1;
+                    changeHpBar();
+                    game.hp_texts.get(this).setText("HP: " + hp);
+                }else
+                {
+                    barrierCheck=false;
+                    game.pane.getChildren().remove(barrier);
+                }
+                game.pane.getChildren().remove(currentWeapon);
+                x.remove();
+            }
+        }
+    }
     void checkHitByTNT(Node tnt)
     {
         if (tnt.getBoundsInParent().intersects(getBoundsInParent())){
@@ -111,22 +131,42 @@ public abstract class Hero extends ImageView {
         @Override
         public void newWeapon(MouseEvent event)
         {
-            Weapon newWeapon;
-            if (Game.game.heroes.get(0).upgrade <= 0) {
-                newWeapon = new Hammer(event.getSceneX() - Game.game.heroes.get(0).getLayoutX(), event.getSceneY() - Game.game.heroes.get(0).getLayoutY());
+            if (!Server.serverCreated) {
+                Weapon newWeapon;
+                if (Game.game.heroes.get(0).upgrade <= 0) {
+                    newWeapon = new Hammer(event.getSceneX() - Game.game.heroes.get(0).getLayoutX(), event.getSceneY() - Game.game.heroes.get(0).getLayoutY());
+                } else {
+                    newWeapon = new SuperHammer(event.getSceneX() - Game.game.heroes.get(0).getLayoutX(), event.getSceneY() - Game.game.heroes.get(0).getLayoutY());
+                    Game.game.heroes.get(0).upgrade--;
+                }
+                newWeapon.relocate(
+                        Game.game.heroes.get(0).getLayoutX() + Game.game.heroes.get(0).getBoundsInLocal().getWidth(), Game.game.heroes.get(0).getLayoutY());
+                Game.game.weaponsHero.add(newWeapon);
+                Game.game.board.getChildren().add(newWeapon);
+                Counter.thrownWeapon();
+                Random randomize=new Random();
+                if (randomize.nextInt(5) == 1) {
+                    Game.game.heroes.get(0).shout();
+                }
             } else {
-                newWeapon = new SuperHammer(event.getSceneX() - Game.game.heroes.get(0).getLayoutX(), event.getSceneY() - Game.game.heroes.get(0).getLayoutY());
-                Game.game.heroes.get(0).upgrade--;
+                Weapon newWeapon;
+                if (GameAsServer.game.heroes.get(0).upgrade <= 0) {
+                    newWeapon = new Hammer(event.getSceneX() - GameAsServer.game.heroes.get(0).getLayoutX(), event.getSceneY() - GameAsServer.game.heroes.get(0).getLayoutY());
+                } else {
+                    newWeapon = new SuperHammer(event.getSceneX() - GameAsServer.game.heroes.get(0).getLayoutX(), event.getSceneY() - GameAsServer.game.heroes.get(0).getLayoutY());
+                    GameAsServer.game.heroes.get(0).upgrade--;
+                }
+                newWeapon.relocate(
+                        GameAsServer.game.heroes.get(0).getLayoutX() + GameAsServer.game.heroes.get(0).getBoundsInLocal().getWidth(), GameAsServer.game.heroes.get(0).getLayoutY());
+                GameAsServer.game.weaponsHero.add(newWeapon);
+                GameAsServer.game.pane.getChildren().add(newWeapon);
+                Counter.thrownWeapon();
+                Random randomize=new Random();
+                if (randomize.nextInt(5) == 1) {
+                    GameAsServer.game.heroes.get(0).shout();
+                }
             }
-            newWeapon.relocate(
-                    Game.game.heroes.get(0).getLayoutX() + Game.game.heroes.get(0).getBoundsInLocal().getWidth(), Game.game.heroes.get(0).getLayoutY());
-            Game.game.weaponsHero.add(newWeapon);
-            Game.game.board.getChildren().add(newWeapon);
-            Counter.thrownWeapon();
-            Random randomize=new Random();
-            if (randomize.nextInt(5) == 1) {
-                Game.game.heroes.get(0).shout();
-            }
+
         }
         @Override
         public void skill()
