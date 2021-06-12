@@ -181,6 +181,7 @@ public class Game {
                             boss.skill();
                         }
                     }
+                    Hero.decreaseVulnerability();
                     Villain.cooldownSODecrease();
                     SpecialObject.specialObjectsSkills();
                     try {
@@ -294,7 +295,7 @@ public class Game {
                 Counter.deathless();
             }
             FXMLLoader fxmlLoader = new FXMLLoader();
-            if (round < 4) {
+            if (round < 6) {
                 fxmlLoader.setLocation(getClass().getResource("/resources/fxml/bossDefeat.fxml"));
             } else {
                 fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameEnd.fxml"));

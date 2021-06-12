@@ -8,6 +8,36 @@ public interface VillainFactory {
         @Override
         public Villain produce(int i, Double mode) {
             return switch (i) {
+                case 0, 1, 2 -> new Ogre(mode);
+                case 3, 4, 5 -> new Orc(mode);
+                default -> new Mummy(mode);
+            };
+        }
+        @Override
+        public Boss produceBoss( Double mode)
+        {
+            return new OgreBoss(mode);
+        }
+    }
+    class Round2VillainFactory implements VillainFactory {
+        @Override
+        public Villain produce(int i, Double mode) {
+            return switch (i) {
+                case 0, 1, 2 -> new Spider(mode);
+                case 3, 4, 5 -> new Spider2(mode);
+                default -> new Bat(mode);
+            };
+        }
+        @Override
+        public Boss produceBoss( Double mode)
+        {
+            return new SpiderBoss(mode);
+        }
+    }
+    class Round3VillainFactory implements VillainFactory {
+        @Override
+        public Villain produce(int i, Double mode) {
+            return switch (i) {
                 case 0, 1, 2 -> new Skull(mode);
                 case 3, 4, 5 -> new Spider(mode);
                 default -> new Predator(mode);
@@ -21,28 +51,13 @@ public interface VillainFactory {
             return boss;
         }
     }
-    class Round2VillainFactory implements VillainFactory {
+    class Round4VillainFactory implements VillainFactory {
         @Override
         public Villain produce(int i, Double mode) {
             return switch (i) {
-                case 0, 1, 2 -> new Spider(mode);
-                case 3, 4, 5 -> new Bat(mode);
+                case 0, 1, 2 -> new Bat(mode);
+                case 3, 4, 5 -> new Spider(mode);
                 default -> new Vampire(mode);
-            };
-        }
-        @Override
-        public Boss produceBoss( Double mode)
-        {
-            return new SpiderBoss(mode);
-        }
-    }
-    class Round3VillainFactory implements VillainFactory {
-        @Override
-        public Villain produce(int i, Double mode) {
-            return switch (i) {
-                case 0, 1, 2 -> new Ogre(mode);
-                case 3, 4, 5 -> new Orc(mode);
-                default -> new Mummy(mode);
             };
         }
         @Override
@@ -51,7 +66,7 @@ public interface VillainFactory {
             return new VampireBoss(mode);
         }
     }
-    class Round4VillainFactory implements VillainFactory {
+    class Round5VillainFactory implements VillainFactory {
         @Override
         public Villain produce(int i, Double mode) {
             return switch (i) {
@@ -66,6 +81,21 @@ public interface VillainFactory {
             Boss boss=new Loki(mode);
             Game.game.shootingVillains.add(boss);
             return boss;
+        }
+    }
+    class Round6VillainFactory implements VillainFactory {
+        @Override
+        public Villain produce(int i, Double mode) {
+            return switch (i) {
+                case 0, 1, 2 -> new Mummy(mode);
+                case 3, 4, 5 -> new Zombie(mode);
+                default -> new Wizard(mode);
+            };
+        }
+        @Override
+        public Boss produceBoss( Double mode)
+        {
+            return new Bombman(mode);
         }
     }
     class AllVillainFactory implements  VillainFactory {
@@ -106,6 +136,12 @@ public interface VillainFactory {
             }
             case 4  ->{
                 return new Round4VillainFactory();
+            }
+            case 5 ->{
+                return new Round5VillainFactory();
+            }
+            case 6 ->{
+                return  new Round6VillainFactory();
             }
             default -> {
                 return new AllVillainFactory();
