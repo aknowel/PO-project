@@ -90,13 +90,14 @@ class TNT extends SpecialObject {
                      Villain currentVillain = it.next();
                      currentVillain.checkHitVillainBySpecialO(this, it,true);
                  }
-                 if(duration%49==0)
-                 {
                      for(Hero hero:Game.game.heroes)
                      {
-                         hero.checkHitBySObj(boom);
+                         if(hero.SObjInvulnerability<0)
+                         {
+                             hero.checkHitBySObj(this);
+                             hero.SObjInvulnerability=50;
+                         }
                      }
-                 }
              }
             duration++;
         }
@@ -271,16 +272,51 @@ class Bomb extends SpecialObject {
             }
             else
             {
-                if(duration%30==0)
-                {
                     for(Hero hero:Game.game.heroes)
                     {
-                        hero.checkHitBySObj(boom);
+                        if(hero.SObjInvulnerability<0)
+                        {
+                            hero.checkHitBySObj(this);
+                            hero.SObjInvulnerability=50;
+                        }
                     }
-                }
             }
             duration++;
         }
+        return false;
+    }
+}
+class ShockWave extends SpecialObject {
+    ShockWave() {
+        super(new Image("resources/Images/SpecialObjects/BrownCircle.png"));
+        lifetime=200;
+    }
+
+    @Override
+    public boolean skill() {
+        if(lifetime==100)
+        {
+            double size=getBoundsInLocal().getWidth();
+            this.setImage(new Image("resources/Images/SpecialObjects/BrownCircleBig.png"));
+            this.relocate(getLayoutX()+size/2-getBoundsInLocal().getWidth()/2,getLayoutY()+size/2-getBoundsInLocal().getHeight()/2);
+        }
+        else if(lifetime==0)
+        {
+            Game.game.board.getChildren().remove(this);
+            return true;
+        }
+        else
+        {
+            for(Hero hero:Game.game.heroes)
+            {
+                if(hero.SObjInvulnerability<0)
+                {
+                    hero.checkHitBySObj(this);
+                    hero.SObjInvulnerability=50;
+                }
+            }
+        }
+        lifetime--;
         return false;
     }
 }

@@ -470,6 +470,21 @@ class Bat extends Villain
             hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
     }
 }
+class Spider2 extends Villain
+{
+    Spider2(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/Spider2.png"));
+        this.HP=1+mode;
+        this.speed=-2.5D;
+        this.id=16;
+    }
+    @Override
+    public void changeHpBar()
+    {
+        hpBar.setImage(new Image("resources/Images/HpBars/MiniHpBarFull.png"));
+    }
+}
 abstract class Boss extends Villain
 {
     int spawn=32;
@@ -689,5 +704,41 @@ class Bombman extends Boss
             hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
     }
 }
-
+class OgreBoss extends Boss
+{
+    OgreBoss(Double mode)
+    {
+        super(new Image("/resources/Images/Villains/VampireBig.png"));
+        this.HP=70*(mode+1);
+        this.speed=-1.2D;
+        this.id=15;
+    }
+    @Override
+    public void skill()
+    {
+        if(spawn==0) {
+            SpecialObject newObject = new ShockWave();
+            newObject.relocate(getLayoutX()+getBoundsInLocal().getWidth()/2-newObject.getBoundsInLocal().getWidth()/2,getLayoutY()+getBoundsInLocal().getHeight()/2-newObject.getBoundsInLocal().getHeight()/2);
+            Game.game.specialObjects.add(newObject);
+            Game.game.board.getChildren().add(newObject);
+            spawn=45;
+        }
+        else
+        {
+            spawn--;
+        }
+    }
+    @Override
+    public void changeHpBar()
+    {
+        if(HP<=10)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarCritic.png"));
+        else if(HP<=30)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar13.png"));
+        else if(HP<=50)
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBar23.png"));
+        else
+            hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
+    }
+}
 

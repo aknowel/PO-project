@@ -38,7 +38,7 @@ abstract public class BackgroundSetter {
                     case 1->"resources/Images/Background/wild_grass_background.png";
                     case 2->"resources/Images/Background/cave_background.png";
                     case 3->"resources/Images/Background/sand_background.png";
-                    case 4->"resources/Images/Background/cave2_background.png";
+                    case 4->"resources/Images/Background/cave_background2.png";
                     case 5->"resources/Images/Background/grass_background.png";
                     case 6->"resources/Images/Background/sandstone_background.png";
                     default -> "resources/Images/Background/ground_background.png";
