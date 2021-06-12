@@ -34,4 +34,6 @@ public interface PlotStrings {
             This is unacceptable. Loki is gonna pay.
             Just you wait Loki!
             Your destiny is coming!""";
+    String fifth="";
+    String sixth="";
 }

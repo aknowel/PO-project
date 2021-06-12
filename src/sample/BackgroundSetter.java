@@ -15,6 +15,8 @@ abstract public class BackgroundSetter {
                     case 2->new Round2BackgroundFactory();
                     case 3->new Round3BackgroundFactory();
                     case 4->new Round4BackgroundFactory();
+                    case 5->new Round5BackgroundFactory();
+                    case 6->new Round6BackgroundFactory();
                     default -> new SurvivalBackGroundFactory();
                 };
         for (int j=0; j<2; j++)
@@ -33,10 +35,12 @@ abstract public class BackgroundSetter {
         String imageName;
         imageName=switch (round)
                 {
-                    case 1->"resources/Images/Background/sand_background.png";
+                    case 1->"resources/Images/Background/wild_grass_background.png";
                     case 2->"resources/Images/Background/cave_background.png";
-                    case 3->"resources/Images/Background/grass_background.png";
-                    case 4->"resources/Images/Background/sandstone_background.png";
+                    case 3->"resources/Images/Background/sand_background.png";
+                    case 4->"resources/Images/Background/cave2_background.png";
+                    case 5->"resources/Images/Background/grass_background.png";
+                    case 6->"resources/Images/Background/sandstone_background.png";
                     default -> "resources/Images/Background/ground_background.png";
                 };
         BackgroundImage myBI= new BackgroundImage(new Image(imageName,Game.W,Game.H,false,true),
@@ -50,7 +54,7 @@ abstract public class BackgroundSetter {
         @Override
         public Background produce (int k)
         {
-            return (k%2==0) ? new Cactus() : new Barrel();
+            return (k%2==0) ? new Barrel() : new Gazebo();
         }
     }
     private static class Round2BackgroundFactory implements BackgroundFactory{
@@ -64,10 +68,24 @@ abstract public class BackgroundSetter {
         @Override
         public Background produce (int k)
         {
-            return (k%2==0) ? new Shrub() : new Stone2();
+            return (k%2==0) ? new Cactus() : new Barrel();
         }
     }
     private static class Round4BackgroundFactory implements BackgroundFactory{
+        @Override
+        public Background produce (int k)
+        {
+            return (k%2==0) ? new Stone2() : new Crystal();
+        }
+    }
+    private static class Round5BackgroundFactory implements BackgroundFactory{
+        @Override
+        public Background produce (int k)
+        {
+            return (k%2==0) ? new Shrub() : new Stone2();
+        }
+    }
+    private static class Round6BackgroundFactory implements BackgroundFactory{
         @Override
         public Background produce (int k)
         {

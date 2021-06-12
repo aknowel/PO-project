@@ -54,7 +54,8 @@ public class GameEndController {
                         case 1->PlotStrings.second;
                         case 2->PlotStrings.third;
                         case 3->PlotStrings.forth;
-
+                        case 4->PlotStrings.fifth;
+                        case 5->PlotStrings.sixth;
                         default -> throw new IllegalStateException("Unexpected value: " + Game.game.round);
                     };
             text.setText(s);

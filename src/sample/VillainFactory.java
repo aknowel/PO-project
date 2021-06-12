@@ -16,8 +16,8 @@ public interface VillainFactory {
         @Override
         public Boss produceBoss( Double mode)
         {
-            Boss boss=new Bombman(mode);
-            //Game.game.shootingVillains.add(boss);
+            Boss boss=new PredatorBoss(mode);
+            Game.game.shootingVillains.add(boss);
             return boss;
         }
     }
@@ -52,6 +52,40 @@ public interface VillainFactory {
         }
     }
     class Round4VillainFactory implements VillainFactory {
+        @Override
+        public Villain produce(int i, Double mode) {
+            return switch (i) {
+                case 0, 1, 2 -> new Zombie(mode);
+                case 3, 4, 5 -> new Predator(mode);
+                default -> new Wizard(mode);
+            };
+        }
+        @Override
+        public Boss produceBoss( Double mode)
+        {
+            Boss boss=new Loki(mode);
+            Game.game.shootingVillains.add(boss);
+            return boss;
+        }
+    }
+    class Round5VillainFactory implements VillainFactory {
+        @Override
+        public Villain produce(int i, Double mode) {
+            return switch (i) {
+                case 0, 1, 2 -> new Zombie(mode);
+                case 3, 4, 5 -> new Predator(mode);
+                default -> new Wizard(mode);
+            };
+        }
+        @Override
+        public Boss produceBoss( Double mode)
+        {
+            Boss boss=new Loki(mode);
+            Game.game.shootingVillains.add(boss);
+            return boss;
+        }
+    }
+    class Round6VillainFactory implements VillainFactory {
         @Override
         public Villain produce(int i, Double mode) {
             return switch (i) {
@@ -106,6 +140,12 @@ public interface VillainFactory {
             }
             case 4  ->{
                 return new Round4VillainFactory();
+            }
+            case 5 ->{
+                return new Round5VillainFactory();
+            }
+            case 6 ->{
+                return  new Round6VillainFactory();
             }
             default -> {
                 return new AllVillainFactory();
