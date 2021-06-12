@@ -1,4 +1,4 @@
-package sample.controllers;
+/*package sample.controllers;
 
 
 import javafx.event.ActionEvent;
@@ -110,4 +110,4 @@ public class MultiplayerController {
         }
         stage.show();
     }
-}
+}*/

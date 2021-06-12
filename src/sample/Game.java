@@ -156,8 +156,8 @@ public class Game {
                         if (length > 0) {
                             hero.dx /= length;
                             hero.dy /= length;
-                            hero.dx *= 3;
-                            hero.dy *= 3;
+                            hero.dx *= hero.speed;
+                            hero.dy *= hero.speed;
                         }
                     }
 

@@ -59,43 +59,6 @@ public abstract class Box extends ImageView {
             }
         }
     }
-    static void checkBox(GameAsServer game)
-    {
-        Iterator<Box> x=game.boxes.iterator();
-        while(x.hasNext()){
-            Box currentBox=x.next();
-            if (currentBox.getBoundsInParent().intersects(game.heroes.get(0).getBoundsInParent())){
-                switch(currentBox.i)
-                {
-                    case 1->game.game.heroes.get(0).upgrade=50;
-                    case 2-> {
-                        if(game.heroes.get(0).hp<game.heroes.get(0).maxHp) {
-                            game.heroes.get(0).hp += 1;
-                            game.heroes.get(0).changeHpBar();
-                            game.hp_texts.get(game.heroes.get(0)).setText("HP: " + game.heroes.get(0).hp);
-                        }
-                    }
-                    case 3 ->
-                            {
-                                if(!game.heroes.get(0).barrierCheck)
-                                {
-                                    game.heroes.get(0).barrierCheck = true;
-                                    game.heroes.get(0).barrier = new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
-                                    game.heroes.get(0).barrier.setOpacity(0.50);
-                                    game.pane.getChildren().add(game.heroes.get(0).barrier);
-                                }
-                                game.heroes.get(0).barrierTime=0;
-                            }
-                }
-                if(randomize.nextInt(3)==1)
-                {
-                    currentBox.openChest();
-                }
-                game.pane.getChildren().remove(currentBox);
-                x.remove();
-            }
-        }
-    }
     public void openChest()
     {
         Sounds sounds=new Sounds();

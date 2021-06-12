@@ -19,18 +19,9 @@ public abstract class Villain extends ImageView {
     {
         super(img);
         changeHpBar();
-        if (Server.serverCreated) {
-            GameAsServer.game.pane.getChildren().add(hpBar);
-        } else {
-            Game.game.board.getChildren().add(hpBar);
-        }
+        Game.game.board.getChildren().add(hpBar);
     }
-    Villain(Image img, GameAsServer gameAsServer) {
-        super(img);
-        changeHpBar();
-        gameAsServer.pane.getChildren().add(hpBar);
-    }
-    public void  hp()
+     public void hp()
     {
         HP--;
     }
@@ -66,13 +57,6 @@ public abstract class Villain extends ImageView {
             villain.cooldownSO--;
         }
     }
-    public static void cooldownSODecrease(GameAsServer gameAsServer)
-    {
-        for(Villain villain:gameAsServer.villains)
-        {
-            villain.cooldownSO--;
-        }
-    }
     Double getSpeed()
     {
         return speed;
@@ -88,20 +72,8 @@ public abstract class Villain extends ImageView {
                 }
             }
         }
-    static void checkHitVillains(GameAsServer gameAsServer){
-        Iterator<Weapon> x=gameAsServer.weaponsHero.iterator();
-        while(x.hasNext()){
-            Node currentWeapon=x.next();
-            Iterator<Villain> y=gameAsServer.villains.iterator();
-            while(y.hasNext()){
-                Villain currentVillain=y.next();
-                currentVillain.checkHitVillainByWeapon( currentWeapon,y,x);
-            }
-        }
-    }
     public void checkHitVillainByWeapon(Node currentObject,Iterator<Villain> y,Iterator<?> x)
     {
-        if (!Server.serverCreated) {
             if (currentObject.getBoundsInParent().intersects(getBoundsInParent())) {
                 hp();
                 changeHpBar();
@@ -130,36 +102,6 @@ public abstract class Villain extends ImageView {
                     }
                 }
             }
-        } else {
-            if (currentObject.getBoundsInParent().intersects(getBoundsInParent())) {
-                hp();
-                changeHpBar();
-                GameAsServer.game.pane.getChildren().remove(currentObject);
-                x.remove();
-                if (!isAlive()) {
-                    int i = GameAsServer.randomizer.nextInt(20);
-                    if (i < 4) {
-                        Box newBox = Box.getNewBox(i);
-                        newBox.relocate(getLayoutX(), getLayoutY());
-                        GameAsServer.game.boxes.add(newBox);
-                        GameAsServer.game.pane.getChildren().add(newBox);
-                    }
-                    GameAsServer.game.pane.getChildren().remove(hpBar);
-                    GameAsServer.game.pane.getChildren().remove(this);
-                    check(id);
-                    y.remove();
-                    GameAsServer.game.score++;
-                    GameAsServer.game.counter++;
-                    GameAsServer.game.scoreText.setText("Score: " + GameAsServer.game.score);
-                    if (isShooting(this)) {
-                        GameAsServer.game.shootingVillains.remove();
-                        if (randomize.nextInt(2) == 1) {
-                            shout();
-                        }
-                    }
-                }
-            }
-        }
     }
     public void checkHitVillainBySpecialO(Node currentObject,Iterator<Villain> y,boolean boomCheck)
     {
@@ -251,31 +193,6 @@ public abstract class Villain extends ImageView {
             }
             game.villains.add(newVillain);
             Game.game.board.getChildren().add(newVillain);
-            if(newVillain instanceof ShootingVillains)
-            {
-                game.shootingVillains.add(newVillain);
-            }
-        }
-    }
-    public static void newVillain(GameAsServer game, boolean z)
-    {
-        if (game.villainCounter % game.modifier == 0) {
-            Villain newVillain = game.villainFactory.produce(game.randomizer.nextInt((z) ? 10 : 7),game.game.mode);
-            int r = Game.randomizer.nextInt(4);
-            switch (r) {
-                case 0 -> {
-                    newVillain.relocate(Game.W -30d, Math.random() * (Game.H - newVillain.getBoundsInLocal().getHeight()));
-                    game.modifier--;
-                }
-                case 1 -> {
-                    newVillain.relocate(0, Math.random() * (Game.H - newVillain.getBoundsInLocal().getHeight()));
-                    game.modifier--;
-                }
-                case 2 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), Game.H - 30);
-                case 3 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), 0);
-            }
-            game.villains.add(newVillain);
-            game.pane.getChildren().add(newVillain);
             if(newVillain instanceof ShootingVillains)
             {
                 game.shootingVillains.add(newVillain);

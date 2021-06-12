@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 
 import java.util.Iterator;
 
-public abstract class SpecialObject extends ImageView {
+public abstract class SpecialObject extends Background {
     int lifetime;
     SpecialObject(Image img)
     {
@@ -15,12 +15,6 @@ public abstract class SpecialObject extends ImageView {
     public static void specialObjectsSkills()
     {
         Game.game.specialObjects.removeIf(SpecialObject::skill);
-    }
-    public static void specialObjectsSkills(GameAsServer gameAsServer)
-    {
-        for (SpecialObject specialObject : gameAsServer.specialObjects) {
-            specialObject.skill();
-        }
     }
 }
 class PoisonCloud extends SpecialObject {
@@ -100,8 +94,9 @@ class TNT extends SpecialObject {
                      {
                          if(hero.SObjInvulnerability<0)
                          {
-                             hero.checkHitBySObj(this);
-                             hero.SObjInvulnerability=50;
+                             if(hero.checkHitBySObj(this)) {
+                                 hero.SObjInvulnerability = 50;
+                             }
                          }
                      }
              }
@@ -114,7 +109,7 @@ class SpiderWeb extends SpecialObject
 {
     SpiderWeb()
     {
-        super(new Image("resources/Images/SpecialObjects/SpiderWeb.png"));
+        super(new Image("resources/Images/SpecialObjects/SpiderWebMini.png"));
     }
     @Override
     public boolean skill()
@@ -124,13 +119,14 @@ class SpiderWeb extends SpecialObject
             if(!hero.slow && hero.getBoundsInParent().intersects(this.getBoundsInParent()))
             {
                 hero.slow=true;
-                //here slow Hero
+                hero.speed-=0.75D;
                 hero.slowDuration=0;
             }
             else if(hero.slow)
             {
                 if(hero.slowDuration>500)
                 {
+                    hero.speed+=0.75D;
                     hero.slow=false;
                 }
                 else
@@ -146,7 +142,7 @@ class Swamp extends SpecialObject
 {
     Swamp()
     {
-        super(new Image("resources/Images/SpecialObjects/SpiderWeb.png"));
+        super(new Image("resources/Images/SpecialObjects/SpiderWebMini.png"));
     }
     @Override
     public boolean skill()
@@ -156,7 +152,7 @@ class Swamp extends SpecialObject
             if(!hero.slow && hero.getBoundsInParent().intersects(this.getBoundsInParent()))
             {
                 hero.slow=true;
-                //here slow Hero
+                hero.speed-=1D;
                 hero.slowDuration=0;
             }
             else if(hero.slow)
@@ -164,6 +160,7 @@ class Swamp extends SpecialObject
                 if(hero.slowDuration>500)
                 {
                     hero.slow=false;
+                    hero.speed+=1D;
                 }
                 else
                 {
@@ -178,7 +175,7 @@ class SpeedUp extends SpecialObject
 {
     SpeedUp()
     {
-        super(new Image("resources/Images/SpecialObjects/SpiderWeb.png"));
+        super(new Image("resources/Images/SpecialObjects/SpiderWebBig.png"));
     }
     @Override
     public boolean skill()
@@ -188,7 +185,7 @@ class SpeedUp extends SpecialObject
             if(!hero.speedUp && hero.getBoundsInParent().intersects(this.getBoundsInParent()))
             {
                 hero.speedUp=true;
-                //here speedup Hero
+                hero.speed+=1D;
             }
         }
         return false;
@@ -213,8 +210,9 @@ class Fire extends SpecialObject {
         {
             if(hero.SObjInvulnerability<0)
             {
-                hero.checkHitBySObj(this);
-                hero.SObjInvulnerability=50;
+                if(hero.checkHitBySObj(this)) {
+                    hero.SObjInvulnerability = 50;
+                }
             }
         }
         return false;
@@ -282,8 +280,9 @@ class Bomb extends SpecialObject {
                     {
                         if(hero.SObjInvulnerability<0)
                         {
-                            hero.checkHitBySObj(this);
-                            hero.SObjInvulnerability=50;
+                            if(hero.checkHitBySObj(this)) {
+                                hero.SObjInvulnerability = 50;
+                            }
                         }
                     }
             }
@@ -319,8 +318,9 @@ class ShockWave extends SpecialObject {
             {
                 if(hero.SObjInvulnerability<0)
                 {
-                    hero.checkHitBySObj(this);
-                    hero.SObjInvulnerability=50;
+                    if(hero.checkHitBySObj(this)) {
+                        hero.SObjInvulnerability = 50;
+                    }
                 }
             }
         }
