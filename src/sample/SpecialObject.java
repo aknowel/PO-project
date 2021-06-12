@@ -48,7 +48,7 @@ class PoisonCloud extends SpecialObject {
 }
 class TNT extends SpecialObject {
     int duration=0;
-    ImageView boom=new ImageView("resources/Images/Boxes/Barrier.png");
+    ImageView boom=new ImageView("resources/Images/SpecialObjects/ExplosionSmall.png");
     TNT()
     {
         super(new Image("resources/Images/SpecialObjects/Tnt.png"));
@@ -65,18 +65,20 @@ class TNT extends SpecialObject {
         {
             if(duration==0)
             {
-                boom.relocate(this.getLayoutX(),this.getLayoutY());
+                boom.relocate(this.getLayoutX()-5,this.getLayoutY()-8);
                 Game.game.board.getChildren().add(boom);
                 Game.game.board.getChildren().remove(this);
             }
              else if(duration==75)
             {
-                boom.setImage(new Image("resources/Images/Other/cake.png"));
+                boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionBig.png"));
+                boom.relocate(boom.getLayoutX()-10, boom.getLayoutY()-6);
             }
 
             else if(duration==150)
             {
                 boom.setImage(new Image("resources/Images/SpecialObjects/Fire.png"));
+                boom.relocate(boom.getLayoutX()+10, boom.getLayoutY());
             }
             else if(duration==200)
              {

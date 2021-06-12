@@ -30,7 +30,7 @@ public abstract class Box extends ImageView {
             if (currentBox.getBoundsInParent().intersects(game.heroes.get(0).getBoundsInParent())){
                 switch(currentBox.i)
                 {
-                    case 1->game.upgrade=50;
+                    case 1->game.game.heroes.get(0).upgrade=50;
                     case 2-> {
                         if(game.heroes.get(0).hp<game.heroes.get(0).maxHp) {
                             game.heroes.get(0).hp += 1;

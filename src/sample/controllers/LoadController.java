@@ -292,7 +292,7 @@ public class LoadController {
             game.villainCounter = Integer.parseInt(scanner.next());
             game.score = Integer.parseInt(scanner.next());
             game.isBoss = Boolean.parseBoolean(scanner.next());
-            game.upgrade = Integer.parseInt(scanner.next());
+            //game.upgrade = Integer.parseInt(scanner.next());
             game.time = Integer.parseInt(scanner.next());
             game.play(stage);
         }

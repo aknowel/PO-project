@@ -38,7 +38,7 @@ public class Game {
     public int modifier = 150, villainCounter = modifier - 1, score = 0, livesMax = 10;
     public boolean isBoss = false;
     public boolean pause = false, stop = false;
-    public int time = 0, upgrade = 0;
+    public int time = 0; //upgrade = 0;
     public final int round;
     public Double mode;
     AnchorPane root;
@@ -106,7 +106,7 @@ public class Game {
             else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = true;
             else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = true;
             else if (event.getCode().equals(KeyBinds.UP)) heroes.get(1).goNorth = true;
-            else if(event.getCode().equals(KeyBinds.SPACE)) heroes.get(0).heroSkill=true;
+            else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(0).skillCooldown<=0) heroes.get(0).heroSkill = true;
             else if (event.getCode().equals(KeyBinds.DOWN)) heroes.get(1).goSouth = true;
             else if (event.getCode().equals(KeyBinds.LEFT)) heroes.get(1).goWest = true;
             else if (event.getCode().equals(KeyBinds.RIGHT)) heroes.get(1).goEast = true;

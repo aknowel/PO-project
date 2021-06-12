@@ -24,6 +24,7 @@ public abstract class Hero extends ImageView {
     boolean top;
     boolean barrierCheck=false;
     int barrierTime=0;
+    int upgrade=0;
     int skillCooldown=0;
     boolean heroSkill=false;
     ImageView barrier;
@@ -111,11 +112,11 @@ public abstract class Hero extends ImageView {
         public void newWeapon(MouseEvent event)
         {
             Weapon newWeapon;
-            if (Game.game.upgrade <= 0) {
+            if (Game.game.heroes.get(0).upgrade <= 0) {
                 newWeapon = new Hammer(event.getSceneX() - Game.game.heroes.get(0).getLayoutX(), event.getSceneY() - Game.game.heroes.get(0).getLayoutY());
             } else {
                 newWeapon = new SuperHammer(event.getSceneX() - Game.game.heroes.get(0).getLayoutX(), event.getSceneY() - Game.game.heroes.get(0).getLayoutY());
-                Game.game.upgrade--;
+                Game.game.heroes.get(0).upgrade--;
             }
             newWeapon.relocate(
                     Game.game.heroes.get(0).getLayoutX() + Game.game.heroes.get(0).getBoundsInLocal().getWidth(), Game.game.heroes.get(0).getLayoutY());
@@ -130,7 +131,7 @@ public abstract class Hero extends ImageView {
         @Override
         public void skill()
         {
-            if(heroSkill && skillCooldown==0) {
+            if(heroSkill) {
                 SpecialObject specialObject=new TNT();
                 Game.game.specialObjects.add(specialObject);
                 specialObject.relocate(pos_x,pos_y);
@@ -138,7 +139,7 @@ public abstract class Hero extends ImageView {
                 skillCooldown=150;
                 heroSkill=false;
             }
-            else if(heroSkill)
+            else
             {
                 skillCooldown--;
             }
@@ -190,7 +191,7 @@ public abstract class Hero extends ImageView {
         }
         @Override
         public void skill() {
-            if(heroSkill && (skillCooldown==0||Game.game.upgrade>0)) {
+            if(heroSkill && (skillCooldown==0||Game.game.heroes.get(0).upgrade>0)) {
                 Weapon newWeapon;
                 newWeapon = new Axe(Mouse.x - Game.game.heroes.get(0).getLayoutX(), Mouse.y - Game.game.heroes.get(0).getLayoutY());
                 newWeapon.relocate(
@@ -202,9 +203,9 @@ public abstract class Hero extends ImageView {
                 if (randomize.nextInt(5) == 1) {
                     Game.game.heroes.get(0).shout();
                 }
-                if(Game.game.upgrade>0)
+                if(Game.game.heroes.get(0).upgrade>0)
                 {
-                    Game.game.upgrade--;
+                    Game.game.heroes.get(0).upgrade--;
                 }
                 else{
                     skillCooldown = 45;
@@ -312,14 +313,14 @@ public abstract class Hero extends ImageView {
         @Override
         public void skill()
         {
-            if(heroSkill && (skillCooldown==0||(Game.game.upgrade>0 && Game.game.upgrade%10==0))) {
+            if(heroSkill && (skillCooldown==0||(Game.game.heroes.get(0).upgrade>0 && Game.game.heroes.get(0).upgrade%10==0))) {
                 SpecialObject specialObject=new PoisonCloud();
                 Game.game.specialObjects.add(specialObject);
                 specialObject.relocate(pos_x,pos_y);
                 Game.game.board.getChildren().add(specialObject);
-                if(Game.game.upgrade>0)
+                if(Game.game.heroes.get(0).upgrade>0)
                 {
-                    Game.game.upgrade=Game.game.upgrade-5;
+                    Game.game.heroes.get(0).upgrade=Game.game.heroes.get(0).upgrade-5;
                 }
                 else {
                     skillCooldown = 150;

@@ -28,10 +28,10 @@ public interface PlotStrings {
     String forth= """
             WHAT?!
             Turns out that the whole tournament was some sort of nasty plot
-            devised by Loki
+            devised by Loki.
             He made a fool out of you and what's worse:
             THE CAKE IS A LIE!
-            This unacceptable. Loki is gonna pay.
+            This is unacceptable. Loki is gonna pay.
             Just you wait Loki!
             Your destiny is coming!""";
 }

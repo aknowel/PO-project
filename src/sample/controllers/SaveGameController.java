@@ -147,7 +147,7 @@ public class SaveGameController {
             writer.println(Game.game.villainCounter);
             writer.println(Game.game.score);
             writer.println(Game.game.isBoss);
-            writer.println(Game.game.upgrade);
+            //writer.println(Game.game.upgrade);
             writer.println(Game.game.time);
             writer.close();
         } catch (IOException ex) {
