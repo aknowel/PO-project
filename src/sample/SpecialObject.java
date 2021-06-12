@@ -22,7 +22,7 @@ public abstract class SpecialObject extends ImageView {
 class PoisonCloud extends SpecialObject {
     PoisonCloud()
     {
-        super(new Image("resources/Images/PoisonCloud.png"));
+        super(new Image("resources/Images/SpecialObjects/PoisonCloud.png"));
         lifetime=1000;
     }
     @Override
@@ -48,10 +48,10 @@ class PoisonCloud extends SpecialObject {
 }
 class TNT extends SpecialObject {
     int duration=0;
-    ImageView boom=new ImageView("resources/Images/Barrier.png");
+    ImageView boom=new ImageView("resources/Images/Boxes/Barrier.png");
     TNT()
     {
-        super(new Image("resources/Images/Tnt.png"));
+        super(new Image("resources/Images/SpecialObjects/Tnt.png"));
         lifetime=250;
     }
     @Override
@@ -76,7 +76,7 @@ class TNT extends SpecialObject {
 
             else if(duration==150)
             {
-                boom.setImage(new Image("resources/Images/Fire.png"));
+                boom.setImage(new Image("resources/Images/SpecialObjects/Fire.png"));
             }
             else if(duration==200)
              {

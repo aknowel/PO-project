@@ -23,7 +23,7 @@
         <Label layoutX="230.0" layoutY="100.0" prefHeight="23.0" prefWidth="129.0" styleClass="title" stylesheets="@../css/menu.css" text="The Cake is not a lie!" />
         <ImageView fitHeight="107.0" fitWidth="129.0" layoutX="236.0" layoutY="124.0" pickOnBounds="true">
             <image>
-                <Image url="@../Images/cake.png" />
+                <Image url="@../Images/Other/cake.png" />
             </image>
         </ImageView>
     </children>

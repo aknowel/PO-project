@@ -11,7 +11,7 @@
    <children>
       <ImageView blendMode="SRC_ATOP" cache="true" fitHeight="732.0" fitWidth="1289.0" layoutX="-3.0" layoutY="-6.0" pickOnBounds="true">
          <image>
-            <Image url="@../Images/image.jpg" />
+            <Image url="@../Images/Background/image.jpg" />
          </image>
          <cursor>
             <Cursor fx:constant="DEFAULT" />

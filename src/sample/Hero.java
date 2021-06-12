@@ -29,7 +29,7 @@ public abstract class Hero extends ImageView {
     ImageView barrier;
 
     Hero(double x,double y, int hp) {
-        super("resources/Images/Thor.png");
+        super("resources/Images/Heroes/Thor.png");
         goNorth = goSouth = goEast = goWest = false;
         pos_x = x;
         pos_y = y;
@@ -150,7 +150,7 @@ public abstract class Hero extends ImageView {
             super(x, y, hp);
             id=1;
             sword=new Sword();
-            this.setImage(new Image("resources/Images/Warrior.png"));
+            this.setImage(new Image("resources/Images/Heroes/Warrior.png"));
         }
         public void newWeapon(MouseEvent event)
         {
@@ -285,7 +285,7 @@ public abstract class Hero extends ImageView {
         {
             super(x, y, hp);
             id=3;
-            this.setImage(new Image("resources/Images/Assassin.png"));
+            this.setImage(new Image("resources/Images/Heroes/Assassin.png"));
         }
         @Override
         public void newWeapon(MouseEvent event)

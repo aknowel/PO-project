@@ -43,7 +43,7 @@ public abstract class Box extends ImageView {
                                 if(!game.heroes.get(0).barrierCheck)
                                 {
                                     game.heroes.get(0).barrierCheck = true;
-                                    game.heroes.get(0).barrier = new ImageView(new Image("resources/Images/Barrier.png"));
+                                    game.heroes.get(0).barrier = new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
                                     game.heroes.get(0).barrier.setOpacity(0.50);
                                     game.board.getChildren().add(game.heroes.get(0).barrier);
                                 }
@@ -85,7 +85,7 @@ class EmptyBox extends Box
 {
     EmptyBox()
     {
-        super(new Image("/resources/Images/Chest.png"));
+        super(new Image("/resources/Images/Boxes/Chest.png"));
         i=0;
     }
 }
@@ -93,7 +93,7 @@ class UpgradeBox extends Box
 {
     UpgradeBox()
     {
-        super(new Image("/resources/Images/Chest.png"));
+        super(new Image("/resources/Images/Boxes/Chest.png"));
         i=1;
     }
 }
@@ -101,7 +101,7 @@ class HeartBox extends Box
 {
     HeartBox()
     {
-        super(new Image("/resources/Images/heart.png"));
+        super(new Image("/resources/Images/Boxes/heart.png"));
         i=2;
     }
 }
@@ -109,7 +109,7 @@ class BarrierBox extends Box
 {
     BarrierBox()
     {
-        super(new Image("/resources/Images/Shield.png"));
+        super(new Image("/resources/Images/Boxes/Shield.png"));
         i=3;
     }
 }
