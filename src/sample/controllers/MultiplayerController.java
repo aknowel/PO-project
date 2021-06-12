@@ -25,8 +25,13 @@ public class MultiplayerController {
                 System.out.println("Server created");
                 Socket server = serverSocket.accept();
                 System.out.println("socket accepted");
+
                 DataInputStream in = new DataInputStream(server.getInputStream());
+                DataOutputStream out = new DataOutputStream(server.getOutputStream());
+
                 System.out.println(in.readUTF());
+                out.writeUTF("teraz ja coś mówię");
+
                 System.out.println("server exited");
             } catch (IOException e) {
                 System.out.println(e);
@@ -38,8 +43,13 @@ public class MultiplayerController {
     public void connect_to_server(ActionEvent event) throws IOException {
         Socket client = new Socket("localhost", 23456);
         System.out.println("client created");
+
+        DataInputStream in = new DataInputStream(client.getInputStream());
         DataOutputStream out = new DataOutputStream(client.getOutputStream());
+
         out.writeUTF("hello here");
+        System.out.println(in.readUTF());
+
         System.out.println("client exited");
     }
     public void key_typed() {
