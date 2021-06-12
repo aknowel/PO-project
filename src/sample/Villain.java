@@ -96,7 +96,6 @@ public abstract class Villain extends ImageView {
                     Game.game.scoreText.setText("Score: " + Game.game.score);
                     if (isShooting(this)) {
                         Game.game.shootingVillains.remove();
-                        shout();
                         if (randomize.nextInt(2) == 1) {
                             shout();
                         }
@@ -133,7 +132,6 @@ public abstract class Villain extends ImageView {
                     Game.game.scoreText.setText("Score: " + Game.game.score);
                     if (isShooting(this)) {
                         Game.game.shootingVillains.remove();
-                        shout();
                         if (randomize.nextInt(2) == 1) {
                             shout();
                         }
@@ -168,7 +166,6 @@ public abstract class Villain extends ImageView {
                     Game.game.scoreText.setText("Score: " + Game.game.score);
                     if (isShooting(currentVillain)) {
                         Game.game.shootingVillains.remove(currentVillain);
-                        currentVillain.shout();
                         if (randomize.nextInt(2) == 1) {
                             currentVillain.shout();
                         }

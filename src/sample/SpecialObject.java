@@ -71,7 +71,7 @@ class TNT extends SpecialObject {
             }
              else if(duration==75)
             {
-                boom.setImage(new Image("resources/Images/Cake.png"));
+                boom.setImage(new Image("resources/Images/Other/cake.png"));
             }
 
             else if(duration==150)
