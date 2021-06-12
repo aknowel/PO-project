@@ -289,15 +289,17 @@ class Bomb extends SpecialObject {
 class ShockWave extends SpecialObject {
     ShockWave() {
         super(new Image("resources/Images/SpecialObjects/BrownCircle.png"));
-        lifetime=200;
+        setOpacity(0.5);
+        lifetime=400;
     }
 
     @Override
     public boolean skill() {
-        if(lifetime==100)
+        if(lifetime==300)
         {
             double size=getBoundsInLocal().getWidth();
             this.setImage(new Image("resources/Images/SpecialObjects/BrownCircleBig.png"));
+            setOpacity(0.5);
             this.relocate(getLayoutX()+size/2-getBoundsInLocal().getWidth()/2,getLayoutY()+size/2-getBoundsInLocal().getHeight()/2);
         }
         else if(lifetime==0)
