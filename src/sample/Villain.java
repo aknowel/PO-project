@@ -110,7 +110,7 @@ public abstract class Villain extends ImageView {
                     Game.game.counter++;
                     Game.game.scoreText.setText("Score: " + Game.game.score);
                     if (isShooting(this)) {
-                        Game.game.shootingVillains.remove();
+                        Game.game.shootingVillains.remove(this);
                         if (randomize.nextInt(2) == 1) {
                             shout();
                         }

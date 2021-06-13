@@ -217,11 +217,11 @@ public class Game {
                     for (Hero hero : heroes) {
                         hero.checkHitHero();
                         hero.skill();
+                        if(Hero.isWarrior(hero) && Hero.counter%7==0) {
+                            Villain.swordCheck();
+                        }
                     }
                     Villain.checkHitVillains();
-                    if(Hero.isWarrior(heroes.get(0)) && Hero.counter%7==0) {
-                        Villain.swordCheck();
-                    }
                     Box.checkBox();
                     gameOver(this);
                 }
@@ -232,34 +232,39 @@ public class Game {
     }
 
     void gameOver(AnimationTimer timer) {
-        if (heroes.get(0).hp <= 0) {
-            timer.stop();
-            stop = true;
-            Sounds sounds = new Sounds();
-            sounds.playGameOver();
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            if(round>0) {
-                fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOver.fxml"));
-                try {
-                    root = fxmlLoader.load();
-                    root.setLayoutX(445);
-                    root.setLayoutY(193);
-                    board.getChildren().add(root);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        for(Hero hero:Game.game.heroes) {
+            if (hero.hp <= 0 && Game.game.heroes.size()==1) {
+                timer.stop();
+                stop = true;
+                Sounds sounds = new Sounds();
+                sounds.playGameOver();
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                if (round > 0) {
+                    fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOver.fxml"));
+                    try {
+                        root = fxmlLoader.load();
+                        root.setLayoutX(445);
+                        root.setLayoutY(193);
+                        board.getChildren().add(root);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOverSurvi.fxml"));
+                    try {
+                        root = fxmlLoader.load();
+                        root.setLayoutX(445);
+                        root.setLayoutY(193);
+                        board.getChildren().add(root);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            else
+            else if(hero.hp<=0 && Game.game.heroes.size()>1)
             {
-                fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOverSurvi.fxml"));
-                try {
-                    root = fxmlLoader.load();
-                    root.setLayoutX(445);
-                    root.setLayoutY(193);
-                    board.getChildren().add(root);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Game.game.board.getChildren().remove(hero);
+                Game.game.heroes.remove(hero);
             }
         }
     }
