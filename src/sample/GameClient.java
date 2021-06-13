@@ -40,7 +40,6 @@ public class GameClient extends Game {
 
 
     public void play(Stage stage) {
-        Hero.counter=0;
         Counter.games();
         Counter.thorGames();
         Game.game.mode = mode;

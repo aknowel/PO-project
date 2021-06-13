@@ -174,20 +174,20 @@ public abstract class Movement {
         if(!hero.side) {
             if(hero.top)
             {
-                hero.sword.relocate(hero.getLayoutX() + 4*Hero.counter / 15.0, hero.getLayoutY() +hero.getBoundsInLocal().getHeight());
+                hero.sword.relocate(hero.getLayoutX() + 4*hero.counter / 15.0, hero.getLayoutY() +hero.getBoundsInLocal().getHeight());
             }
             else {
-                hero.sword.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY() + 4 * Hero.counter / 15.0);
+                hero.sword.relocate(hero.getLayoutX() + hero.getBoundsInLocal().getWidth(), hero.getLayoutY() + 4 * hero.counter / 15.0);
             }
         }
         else
         {
             if(hero.top)
             {
-                hero.sword.relocate(hero.getLayoutX() - 4*Hero.counter / 15.0, hero.getLayoutY() - hero.sword.getBoundsInLocal().getHeight());
+                hero.sword.relocate(hero.getLayoutX() - 4*hero.counter / 15.0, hero.getLayoutY() - hero.sword.getBoundsInLocal().getHeight());
             }
             else {
-                hero.sword.relocate(hero.getLayoutX() - hero.sword.getBoundsInLocal().getWidth(), hero.getLayoutY() + 4 * Hero.counter / 15.0);
+                hero.sword.relocate(hero.getLayoutX() - hero.sword.getBoundsInLocal().getWidth(), hero.getLayoutY() + 4 * hero.counter / 15.0);
             }
         }
     }

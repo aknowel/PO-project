@@ -211,7 +211,7 @@ public class LoadController {
             h.dx=Double.parseDouble(scanner.next());
             h.dy=Double.parseDouble(scanner.next());
             h.swordCheck=Boolean.parseBoolean(scanner.next());
-            Hero.counter=Integer.parseInt(scanner.next());
+            h.counter =Integer.parseInt(scanner.next());
             h.side=Boolean.parseBoolean(scanner.next());
             h.top=Boolean.parseBoolean(scanner.next());
             h.barrierCheck=Boolean.parseBoolean(scanner.next());

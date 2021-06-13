@@ -104,13 +104,16 @@ public class Game {
     }
 
     public void play(Stage stage) {
-        Hero.counter=0;
         Counter.games();
         Game.game.mode = mode;
         scoreText = new Text(W / 2, 30, "Score: " + score);
         for (Hero hero : heroes) {
             board.getChildren().add(hero);
             hero.setBarrier();
+            if(Hero.isWarrior(hero))
+            {
+                hero.setSword();
+            }
         }
         scoreText.setFont(new Font(30));
         scoreText.relocate(W / 2 - scoreText.getBoundsInLocal().getWidth() / 2, 0);
@@ -251,7 +254,7 @@ public class Game {
                     for (Hero hero : heroes) {
                         hero.checkHitHero();
                         hero.skill();
-                        if(Hero.isWarrior(hero) && Hero.counter%7==0) {
+                        if(Hero.isWarrior(hero) && hero.counter%7==0) {
                             Villain.swordCheck();
                         }
                     }

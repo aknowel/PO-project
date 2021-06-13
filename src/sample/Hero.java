@@ -20,7 +20,7 @@ public abstract class Hero extends ImageView {
     public boolean swordCheck=false;
     final public int maxHp=10;
     public int id=2;
-    public static int counter=0;
+    public int counter;
     public boolean side;
     public boolean top;
     public boolean barrierCheck=false;
@@ -139,6 +139,82 @@ public abstract class Hero extends ImageView {
             i++;
         }
         return j;
+    }
+    public void setSword()
+    {
+        if (swordCheck) {
+            Game.game.board.getChildren().add(sword);
+            if (!side) {
+                if(top)
+                {
+                    if(counter<15) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword260.png"));
+                    }
+                    else if (counter < 30) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword290.png"));
+                    } else if (counter < 45) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword90.png"));
+                    } else if (counter < 60) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword60.png"));
+                    } else if (counter == 60) {
+                        Game.game.board.getChildren().remove(sword);
+                        counter = 0;
+                        swordCheck = false;
+                    }
+                }
+                else {
+                    if(counter<15) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword.png"));
+                    }
+                    else if (counter < 30) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword30.png"));
+                    } else if (counter < 45) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword60.png"));
+                    } else if (counter < 60) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword90.png"));
+                    } else if (counter == 60) {
+                        Game.game.board.getChildren().remove(sword);
+                        counter = 0;
+                        swordCheck = false;
+                    }
+                }
+            } else {
+                if(!top) {
+                    if(counter<15) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword2.png"));
+                    }
+                    if (counter < 30) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword230.png"));
+                    } else if (counter <45) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword260.png"));
+                    } else if (counter < 60) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword290.png"));
+                    } else if (counter == 60) {
+                        Game.game.board.getChildren().remove(sword);
+                        counter = 0;
+                        swordCheck = false;
+                    }
+                }
+                else
+                {
+                    if(counter<15) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword260.png"));
+                    }
+                    else if (counter < 30) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword.png"));
+                    } else if (counter < 45) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword2.png"));
+                    } else if (counter < 60) {
+                        sword.setImage(new Image("resources/Images/Melee/Sword230.png"));
+                    } else if (counter == 60) {
+                        Game.game.board.getChildren().remove(sword);
+                        counter = 0;
+                        swordCheck = false;
+                    }
+                }
+            }
+            counter++;
+        }
     }
     public String toString()
     {
@@ -275,7 +351,7 @@ public abstract class Hero extends ImageView {
                         } else if (counter == 45) {
                             sword.setImage(new Image("resources/Images/Melee/Sword60.png"));
                         } else if (counter == 60) {
-                            Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
+                            Game.game.board.getChildren().remove(sword);
                             counter = 0;
                             swordCheck = false;
                         }
@@ -288,7 +364,7 @@ public abstract class Hero extends ImageView {
                         } else if (counter == 45) {
                             sword.setImage(new Image("resources/Images/Melee/Sword90.png"));
                         } else if (counter == 60) {
-                            Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
+                            Game.game.board.getChildren().remove(sword);
                             counter = 0;
                             swordCheck = false;
                         }
@@ -302,7 +378,7 @@ public abstract class Hero extends ImageView {
                         } else if (counter == 45) {
                             sword.setImage(new Image("resources/Images/Melee/Sword290.png"));
                         } else if (counter == 60) {
-                            Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
+                            Game.game.board.getChildren().remove(sword);
                             counter = 0;
                            swordCheck = false;
                         }
@@ -316,7 +392,7 @@ public abstract class Hero extends ImageView {
                         } else if (counter == 45) {
                             sword.setImage(new Image("resources/Images/Melee/Sword230.png"));
                         } else if (counter == 60) {
-                            Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
+                            Game.game.board.getChildren().remove(sword);
                             counter = 0;
                             swordCheck = false;
                         }
