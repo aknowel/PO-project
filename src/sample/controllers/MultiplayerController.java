@@ -6,13 +6,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import sample.*;
 
-import java.util.Locale;
 import java.net.*;
 import java.io.*;
 
@@ -29,6 +30,9 @@ public class MultiplayerController {
     Stage stage;
     AnchorPane root;
     Scene scene;
+    @FXML
+    TextField address;
+    Alert alert;
     StringBuilder typed_address;
 
     private final String style="-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
@@ -58,7 +62,10 @@ public class MultiplayerController {
                     main.clients.add(client);
                     main.gameState.writeStaticElementsToStream(out);
                 }
-            } catch (IOException e) {
+            } catch (Throwable e) {
+                alert=new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Error! Cannot connect create server! Try again!");
+                alert.showAndWait();
                 System.out.println(e);
             }
         };
@@ -69,24 +76,33 @@ public class MultiplayerController {
         main.play(stage);
     }
     public void connect_to_server(ActionEvent event) throws IOException {
-        Socket socket = new Socket("172.16.15.19", 23456);
-        System.out.println("client created");
+        try {
+            Socket socket = new Socket(address.getText(), 23456);
+            System.out.println("client created");
 
-        DataInputStream in = new DataInputStream(socket.getInputStream());
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-        Server server = new Server();
-        server.socket = socket;
-        server.in = in;
-        server.out = out;
+            Server server = new Server();
+            server.socket = socket;
+            server.in = in;
+            server.out = out;
 
-        Pane pane = new Pane();
-        GameState gameState = new GameState();
-        gameState.loadStaticElementsFromStream(in);
-        GameClient main = new GameClient(pane, gameState, server);
+            Pane pane = new Pane();
+            GameState gameState = new GameState();
+            gameState.loadStaticElementsFromStream(in);
+            GameClient main = new GameClient(pane, gameState, server);
 
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        main.play(stage);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            main.play(stage);
+        }
+    catch (Throwable e)
+    {
+        alert=new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Error! Cannot connect to server! Try again!");
+        alert.showAndWait();
+        e.printStackTrace();
+    }
     }
     public void key_typed() {
         System.out.println("key_typed");

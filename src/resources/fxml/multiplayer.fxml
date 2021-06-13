@@ -18,11 +18,11 @@
         <Button layoutX="58.0" layoutY="335.0" mnemonicParsing="false" onAction="#create_server" prefHeight="50.0" prefWidth="328.0" stylesheets="@../css/menu.css" text="Create Server" />
         <Button layoutX="900.0" layoutY="336.0" mnemonicParsing="false" onAction="#connect_to_server" prefHeight="50.0" prefWidth="328.0" stylesheets="@../css/menu.css" text="Connect to Server" />
         <Button layoutX="545.0" layoutY="464.0" mnemonicParsing="false" onAction="#returnMenu" prefHeight="63.0" prefWidth="204.0" stylesheets="@../css/menu.css" text="MENU" />
-        <Label layoutX="521.0" layoutY="170.0" prefHeight="93.0" prefWidth="267.0" text="Options" textFill="#4f8c9c">
+        <Label  layoutX="521.0" layoutY="170.0" prefHeight="93.0" prefWidth="267.0" text="Options" textFill="#4f8c9c">
             <font>
                 <Font size="64.0" />
             </font>
         </Label>
-      <TextField layoutX="914.0" layoutY="277.0" onKeyTyped="#key_typed" prefHeight="43.0" prefWidth="301.0" promptText="address" />
+      <TextField fx:id="address" layoutX="914.0" layoutY="277.0" onKeyTyped="#key_typed" prefHeight="43.0" prefWidth="301.0" promptText="address" />
     </children>
 </AnchorPane>
