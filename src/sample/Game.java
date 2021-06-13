@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.controllers.MultiplayerController;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -150,11 +151,7 @@ public class Game {
             else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = true;
             else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = true;
             else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = true;
-            else if (event.getCode().equals(KeyBinds.UP)) heroes.get(1).goNorth = true;
             else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(0).skillCooldown<=0) heroes.get(0).heroSkill = true;
-            else if (event.getCode().equals(KeyBinds.DOWN)) heroes.get(1).goSouth = true;
-            else if (event.getCode().equals(KeyBinds.LEFT)) heroes.get(1).goWest = true;
-            else if (event.getCode().equals(KeyBinds.RIGHT)) heroes.get(1).goEast = true;
             else if (event.getCode().equals(KeyBinds.P)) {
                 if (!pause & !stop) {
                     timer.stop();
@@ -173,10 +170,6 @@ public class Game {
             else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = false;
             else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = false;
             else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = false;
-            else if (event.getCode().equals(KeyBinds.UP)) heroes.get(1).goNorth = false;
-            else if (event.getCode().equals(KeyBinds.DOWN)) heroes.get(1).goSouth = false;
-            else if (event.getCode().equals(KeyBinds.LEFT)) heroes.get(1).goWest = false;
-            else if (event.getCode().equals(KeyBinds.RIGHT)) heroes.get(1).goEast = false;
         });
         scene.setOnMouseClicked(event -> {
             if (!pause) {

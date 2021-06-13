@@ -8,6 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.EOFException;
 import java.io.IOException;
 
 public class GameClient extends Game {
@@ -71,7 +72,10 @@ public class GameClient extends Game {
             public void handle(long now) {
                 try {
                     gameState.loadDynamicElementsFromStream(server.in);
-                } catch (IOException e) {
+                } catch (EOFException e) {
+                    gameOver(timer);
+                }
+                catch (IOException e) {
                     e.printStackTrace();
                 }
             }

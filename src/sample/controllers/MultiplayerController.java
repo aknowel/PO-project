@@ -37,6 +37,7 @@ public class MultiplayerController {
     private final String style = "-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
     public static double mode = 0D;
     private static int chosenHero = 2;
+    public static Thread serverThread;
 
     @FXML
     public void initialize() throws FileNotFoundException {
@@ -48,7 +49,7 @@ public class MultiplayerController {
         Game main = new Game(board, mode, 0, 10, chosenHero);
         Game.isServerRunning = true;
 
-        Runnable serverThread = () -> {
+        Runnable serverRunnable = () -> {
             try {
                 ServerSocket serverSocket = new ServerSocket(23456);
                 System.out.println("Server created");
@@ -67,15 +68,16 @@ public class MultiplayerController {
                     main.clients.add(client);
                     main.gameState.writeStaticElementsToStream(out);
                 }
-            } catch (Throwable e) {
+            }
+            catch (IOException e) {
                 alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Error! Cannot connect create server! Try again!");
+                alert.setHeaderText("Error! Cannot create server! Try again!");
                 alert.showAndWait();
                 System.out.println(e);
             }
         };
-        Thread server_thread = new Thread(serverThread);
-        server_thread.start();
+        serverThread = new Thread(serverRunnable);
+        serverThread.start();
 
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         main.play(stage);

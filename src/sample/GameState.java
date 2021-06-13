@@ -37,12 +37,14 @@ public class GameState {
             out.writeDouble(hero.getLayoutX());
             out.writeDouble(hero.getLayoutY());
             out.writeBoolean(hero.barrierCheck);
+            out.writeInt(hero.hp);
         }
         out.writeInt(villains.size());
         for (Villain villain : villains) {
             out.writeInt(villain.id);
             out.writeDouble(villain.getLayoutX());
             out.writeDouble(villain.getLayoutY());
+            out.writeDouble(villain.HP);
         }
         out.writeInt(weaponsHeroes.size());
         for (Weapon weapon : weaponsHeroes) {
@@ -96,6 +98,7 @@ public class GameState {
             heroes.add(hero);
             GameClient.game.board.getChildren().add(hero);
             hero.setBarrier();
+            hero.hp = in.readInt();
         }
 
 
@@ -110,6 +113,7 @@ public class GameState {
             villain.setY(in.readDouble());
             villains.add(villain);
             GameClient.game.board.getChildren().add(villain);
+            villain.HP = in.readDouble();
         }
 
         for (Weapon weapon : weaponsHeroes) {
