@@ -87,6 +87,7 @@ public class GameState {
     public void loadDynamicElementsFromStream(DataInputStream in) throws IOException {
         for (Hero hero : heroes) {
             GameClient.game.board.getChildren().remove(hero);
+            GameClient.game.board.getChildren().remove(hero.hp);
         }
         heroes.clear();
         int heroesSize = in.readInt();
@@ -107,6 +108,7 @@ public class GameState {
 
         for (Villain villain : villains) {
             GameClient.game.board.getChildren().remove(villain);
+            GameClient.game.board.getChildren().remove(villain.hpBar);
         }
         villains.clear();
         int villainsSize = in.readInt();
