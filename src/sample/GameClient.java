@@ -129,8 +129,8 @@ public class GameClient extends Game {
                     server.out.writeInt(size);
                     for(int i=0;i<size;i++)
                     {
-                        server.out.writeDouble(newWeapons.get(i).getLayoutX());
-                        server.out.writeDouble(newWeapons.get(i).getLayoutY());
+                        server.out.writeDouble(newWeapons.get(i).x);
+                        server.out.writeDouble(newWeapons.get(i).y);
                     }
                     newWeapons.clear();
                     if(heroes.get(1).heroSkill)
