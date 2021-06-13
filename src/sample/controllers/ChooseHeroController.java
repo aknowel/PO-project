@@ -88,7 +88,7 @@ public class ChooseHeroController {
 
                     main.clients.add(client);
                     main.heroes.add(client.hero);
-                    main.modifier=main.modifier/4;
+                    main.modifier=main.modifier/3;
 
                     clientJoined = true;
                     newHero = client.hero;
