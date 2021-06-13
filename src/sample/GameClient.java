@@ -75,16 +75,6 @@ public class GameClient extends Game {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                for (Hero hero : heroes) {
-                    try {
-                        Movement.moveHeroTo(hero ,hero.pos_x, hero.pos_y);
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
         };
         timer.start();
