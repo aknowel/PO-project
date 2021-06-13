@@ -32,7 +32,7 @@ public class GameState {
         }
         out.writeInt(specialObjects.size());
         for (SpecialObject specialObject : specialObjects) {
-            out.writeInt(specialObject.id);
+            out.writeInt(specialObject.i);
             out.writeDouble(specialObject.getLayoutX());
             out.writeDouble(specialObject.getLayoutY());
         }
