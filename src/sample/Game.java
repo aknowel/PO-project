@@ -344,6 +344,7 @@ public class Game {
     }
 
     void gameOver(AnimationTimer timer) {
+        int i=0;
         for(Hero hero:Game.game.heroes) {
             if (hero.hp <= 0 && Game.game.heroes.size()==1) {
                 timer.stop();
@@ -379,7 +380,25 @@ public class Game {
                 Game.game.board.getChildren().remove(hero.hpBar);
                 Game.game.board.getChildren().remove(hp_texts.get(hero));
                 hero.deleted=true;
+                i++;
                 //Game.game.heroes.remove(hero);
+            }
+        }
+        if(i==2)
+        {
+            timer.stop();
+            stop = true;
+            Sounds sounds = new Sounds();
+            sounds.playGameOver();
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOverMulti.fxml"));
+            try {
+                root = fxmlLoader.load();
+                root.setLayoutX(445);
+                root.setLayoutY(193);
+                board.getChildren().add(root);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
