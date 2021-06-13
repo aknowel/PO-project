@@ -47,6 +47,7 @@ public abstract class Hero extends ImageView {
         pos_y = y;
         this.hp = hp;
         changeHpBar();
+        sword=new Sword();
     }
     public int getHeroId()
     {

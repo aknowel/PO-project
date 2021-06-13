@@ -1,6 +1,5 @@
 package sample.controllers;
 
-import com.sun.tools.javac.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +9,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.*;
 
@@ -86,10 +82,13 @@ public class ChooseHeroController {
                     client.socket = socket;
                     client.in = in;
                     client.out = out;
-                    client.hero = Hero.getNewHero(0, 0, 10, client.in.readInt());
+
+                    int id=client.in.readInt();
+                    client.hero = Hero.getNewHero(0, 0, 10, id);
 
                     main.clients.add(client);
                     main.heroes.add(client.hero);
+                    main.modifier=main.modifier/4;
 
                     clientJoined = true;
                     newHero = client.hero;

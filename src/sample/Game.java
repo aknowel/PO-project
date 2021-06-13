@@ -54,6 +54,7 @@ public class Game {
     public VillainFactory villainFactory;
     public int counter = 0;
     boolean clientResponse = false;
+    boolean gameOver=false;
 
     public GameState gameState = new GameState();
 
@@ -83,6 +84,7 @@ public class Game {
         gameState.specialObjects = specialObjects;
         gameState.weaponsHeroes = weaponsHero;
         gameState.weaponsVillains = weaponsVillain;
+        gameState.gameOver=gameOver;
     }
 
     public Game(Pane board, Double mode, int round, Hero h) {
@@ -384,6 +386,14 @@ public class Game {
         }
         if(i==2)
         {
+            try {
+                gameOver = true;
+                game.clients.get(0).out.writeBoolean(gameOver);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
             timer.stop();
             stop = true;
             Sounds sounds = new Sounds();

@@ -10,6 +10,7 @@ public class GameState {
 
     public int map_id;
     public LinkedList<Background> backgrounds = new LinkedList<>();
+    boolean gameOver;
 
     public Vector<Hero> heroes = new Vector<>();
     public LinkedList<Villain> villains = new LinkedList<>();
@@ -18,8 +19,6 @@ public class GameState {
     public LinkedList<SpecialObject> specialObjects = new LinkedList<>();
     public LinkedList<Weapon> weaponsHeroes = new LinkedList<>();
     public LinkedList<Weapon> weaponsVillains = new LinkedList<>();
-
-    boolean gameOver=false;
 
 
     public void writeStaticElementsToStream(DataOutputStream out) throws IOException {
@@ -33,6 +32,7 @@ public class GameState {
     }
 
     public void writeDynamicElementsToStream(DataOutputStream out) throws IOException {
+        out.writeBoolean(gameOver);
         out.writeInt(heroes.size());
         for (Hero hero : heroes) {
             out.writeInt(hero.id);

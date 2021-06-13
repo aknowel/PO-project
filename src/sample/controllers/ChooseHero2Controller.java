@@ -60,6 +60,7 @@ public class ChooseHero2Controller {
     public void play(ActionEvent event)
     {
         try {
+            System.out.println(MultiplayerController.ad);
             Socket socket = new Socket(MultiplayerController.ad, 23456);
             System.out.println("client created");
 
