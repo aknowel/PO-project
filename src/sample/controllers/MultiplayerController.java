@@ -66,7 +66,9 @@ public class MultiplayerController {
                     client.out = out;
 
                     main.clients.add(client);
-                    main.heroes.add(Hero.getNewHero(20, 100, 10, 2));
+                    Hero h = Hero.getNewHero(20, 100, 10, 2);
+                    main.heroes.add(h);
+                    main.board.getChildren().add(h);
                     main.gameState.writeStaticElementsToStream(out);
                 }
             }
