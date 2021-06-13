@@ -16,6 +16,20 @@ public abstract class SpecialObject extends Background {
     {
         Game.game.specialObjects.removeIf(SpecialObject::skill);
     }
+    public static SpecialObject getNewSpecialObject(int id)
+    {
+        return switch (id)
+                {
+                    case 0 -> new PoisonCloud();
+                    case 1 -> new TNT();
+                    case 2 -> new SpiderWeb();
+                    case 3 -> new Swamp();
+                    case 4 -> new SpeedUp();
+                    case 5 -> new Fire();
+                    case 7 -> new ShockWave();
+                    default -> throw new IllegalStateException("Unexpected value: " + id);
+                };
+    }
 }
 class PoisonCloud extends SpecialObject {
     PoisonCloud()

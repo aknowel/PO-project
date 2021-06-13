@@ -30,6 +30,12 @@ public class GameState {
             out.writeDouble(background.getLayoutX());
             out.writeDouble(background.getLayoutY());
         }
+        out.writeInt(specialObjects.size());
+        for (SpecialObject specialObject : specialObjects) {
+            out.writeInt(specialObject.id);
+            out.writeDouble(specialObject.getLayoutX());
+            out.writeDouble(specialObject.getLayoutY());
+        }
     }
 
     public void writeDynamicElementsToStream(DataOutputStream out) {
@@ -44,6 +50,14 @@ public class GameState {
             Background background = Background.newBackground(in.readInt());
             background.setX(in.readDouble());
             background.setY(in.readDouble());
+            backgrounds.add(background);
+        }
+        int specialObjectsSize = in.readInt();
+        for (int i = 0; i < specialObjectsSize; i += 1) {
+            SpecialObject specialObject = SpecialObject.getNewSpecialObject(in.readInt());
+            specialObject.setX(in.readDouble());
+            specialObject.setY(in.readDouble());
+            specialObjects.add(specialObject);
         }
     }
 

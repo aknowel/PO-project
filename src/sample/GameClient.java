@@ -27,6 +27,9 @@ public class GameClient extends Game {
         for (Background background : backgroundObjects) {
             game.board.getChildren().add(background);
         }
+        for (SpecialObject specialObject : specialObjects) {
+            game.board.getChildren().add(specialObject);
+        }
     }
 
 
