@@ -48,7 +48,7 @@ public abstract class Movement {
             Villain currentVillain = it.next();
             d = currentVillain.getSpeed();
             for(Hero hero:Game.game.heroes) {
-                if (hero.getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
+                if (hero.getBoundsInParent().intersects(currentVillain.getBoundsInParent()) & !hero.deleted) {
                     if (!hero.barrierCheck) {
                         hero.hp--;
                         Game.game.hp_texts.get(hero).setText("HP: " + hero.hp);
