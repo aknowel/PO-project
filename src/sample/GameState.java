@@ -36,6 +36,7 @@ public class GameState {
             out.writeInt(hero.id);
             out.writeDouble(hero.getLayoutX());
             out.writeDouble(hero.getLayoutY());
+            out.writeBoolean(hero.barrierCheck);
         }
         out.writeInt(villains.size());
         for (Villain villain : villains) {
@@ -91,8 +92,10 @@ public class GameState {
             Hero hero = Hero.getNewHero(0, 0, 10, in.readInt());
             hero.setX(in.readDouble());
             hero.setY(in.readDouble());
+            boolean barrierCheck = in.readBoolean();
             heroes.add(hero);
             GameClient.game.board.getChildren().add(hero);
+            hero.setBarrier();
         }
 
 
