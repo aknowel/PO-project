@@ -97,6 +97,11 @@ public class GameState {
             hero.setLayoutX(in.readDouble());
             hero.setLayoutY(in.readDouble());
             hero.barrierCheck = in.readBoolean();
+            if (heroes.size() <= i) {
+                heroes.add(hero);
+            } else {
+                heroes.set(i, hero);
+            }
             heroes.set(i,hero);
             GameClient.game.board.getChildren().add(hero);
             hero.setBarrier();
