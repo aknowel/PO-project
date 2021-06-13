@@ -88,6 +88,7 @@ public class GameState {
         for (Hero hero : heroes) {
             GameClient.game.board.getChildren().remove(hero);
             GameClient.game.board.getChildren().remove(hero.hpBar);
+            GameClient.game.board.getChildren().remove(hero.barrier);
         }
         heroes.clear();
         int heroesSize = in.readInt();
