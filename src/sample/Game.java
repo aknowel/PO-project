@@ -53,6 +53,7 @@ public class Game {
     static Random randomize = new Random();
     public VillainFactory villainFactory;
     public int counter = 0;
+    boolean clientResponse = false;
 
     public GameState gameState = new GameState();
 
@@ -256,14 +257,18 @@ public class Game {
                     if (isServerRunning) {
                         for (Client client : clients) {
                             try {
-                                gameState.writeDynamicElementsToStream(client.out);
-                                client.hero.dx = client.in.readDouble();
-                                client.hero.dy = client.in.readDouble();
-                                board.getChildren().remove(client.hero);
-                                board.getChildren().add(client.hero);
-                                client.hero.pos_x += client.hero.dx;
-                                client.hero.pos_y += client.hero.dy;
-                                client.hero.relocate(client.hero.pos_x, client.hero.pos_y);
+                                if (!clientResponse) {
+                                    gameState.writeDynamicElementsToStream(client.out);
+                                    clientResponse = true;
+                                } else {
+                                    client.hero.dx = client.in.readDouble();
+                                    client.hero.dy = client.in.readDouble();
+                                    System.out.println("Second hero dx: " + client.hero.dx);
+                                    System.out.println("Second hero dy: " + client.hero.dy);
+                                    board.getChildren().remove(client.hero);
+                                    board.getChildren().add(client.hero);
+                                    clientResponse = false;
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
