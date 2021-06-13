@@ -33,11 +33,15 @@ public class MultiplayerController {
     @FXML
     TextField address;
     Alert alert;
-    StringBuilder typed_address;
 
     private final String style = "-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
     public static double mode = 0D;
     private static int chosenHero = 2;
+
+    @FXML
+    public void initialize() throws FileNotFoundException {
+        address.setText("172.16.15.19");
+    }
 
     public void create_server(ActionEvent event) throws IOException {
         Pane board = new Pane();
