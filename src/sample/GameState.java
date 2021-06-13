@@ -44,6 +44,7 @@ public class GameState {
             Background background = Background.newBackground(in.readInt());
             background.setX(in.readDouble());
             background.setY(in.readDouble());
+            backgrounds.add(background);
         }
     }
 
