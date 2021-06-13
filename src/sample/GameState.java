@@ -11,15 +11,15 @@ import java.util.Vector;
 public class GameState {
 
     public int map_id;
-    public LinkedList<Background> backgrounds;
+    public LinkedList<Background> backgrounds = new LinkedList<>();
 
-    public Vector<Hero> heroes;
-    public LinkedList<Villain> villains;
-    public  LinkedList<Villain> shootingVillains;
-    public LinkedList<Box> boxes;
-    public LinkedList<SpecialObject> specialObjects;
-    public LinkedList<Weapon> weaponsHeroes;
-    public LinkedList<Weapon> weaponsVillains;
+    public Vector<Hero> heroes = new Vector<>();
+    public LinkedList<Villain> villains = new LinkedList<>();
+    public  LinkedList<Villain> shootingVillains = new LinkedList<>();
+    public LinkedList<Box> boxes = new LinkedList<>();
+    public LinkedList<SpecialObject> specialObjects = new LinkedList<>();
+    public LinkedList<Weapon> weaponsHeroes = new LinkedList<>();
+    public LinkedList<Weapon> weaponsVillains = new LinkedList<>();
 
 
     public void writeStaticElementsToStream(DataOutputStream out) throws IOException {

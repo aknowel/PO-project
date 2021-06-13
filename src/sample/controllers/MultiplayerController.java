@@ -35,12 +35,12 @@ public class MultiplayerController {
     Alert alert;
     StringBuilder typed_address;
 
-    private final String style="-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
-    public static double mode=0D;
-    private static int chosenHero=2;
+    private final String style = "-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
+    public static double mode = 0D;
+    private static int chosenHero = 2;
 
     public void create_server(ActionEvent event) throws IOException {
-        Pane board=new Pane();
+        Pane board = new Pane();
         Game main = new Game(board, mode, 0, 10, chosenHero);
 
         Runnable serverThread = () -> {
@@ -63,7 +63,7 @@ public class MultiplayerController {
                     main.gameState.writeStaticElementsToStream(out);
                 }
             } catch (Throwable e) {
-                alert=new Alert(Alert.AlertType.ERROR);
+                alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText("Error! Cannot connect create server! Try again!");
                 alert.showAndWait();
                 System.out.println(e);
@@ -72,9 +72,10 @@ public class MultiplayerController {
         Thread server_thread = new Thread(serverThread);
         server_thread.start();
 
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         main.play(stage);
     }
+
     public void connect_to_server(ActionEvent event) throws IOException {
         try {
             Socket socket = new Socket(address.getText(), 23456);
@@ -95,31 +96,28 @@ public class MultiplayerController {
 
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             main.play(stage);
+        } catch (Throwable e) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error! Cannot connect to server! Try again!");
+            alert.showAndWait();
+            e.printStackTrace();
         }
-    catch (Throwable e)
-    {
-        alert=new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("Error! Cannot connect to server! Try again!");
-        alert.showAndWait();
-        e.printStackTrace();
     }
-    }
+
     public void key_typed() {
         System.out.println("key_typed");
     }
-    public void returnMenu(ActionEvent event)
-    {
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader=new FXMLLoader();
+
+    public void returnMenu(ActionEvent event) {
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/resources/fxml/menu.fxml"));
         try {
             root = fxmlLoader.load();
             scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("Menu");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         stage.show();
