@@ -1,5 +1,6 @@
 package sample.controllers;
 
+import com.sun.tools.javac.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import sample.Client;
-import sample.Counter;
-import sample.Game;
-import sample.Hero;
+import sample.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -86,6 +84,7 @@ public class ChooseHeroController {
                     main.clients.add(client);
                     main.heroes.add(client.hero);
                     main.gameState.writeStaticElementsToStream(out);
+                    Menu.screen_refresh_divisor = 1;
                 }
             }
             catch (IOException e) {

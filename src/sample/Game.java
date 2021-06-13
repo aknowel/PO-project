@@ -263,8 +263,6 @@ public class Game {
                                 } else {
                                     client.hero.dx = client.in.readDouble();
                                     client.hero.dy = client.in.readDouble();
-                                    System.out.println("Second hero dx: " + client.hero.dx);
-                                    System.out.println("Second hero dy: " + client.hero.dy);
                                     board.getChildren().remove(client.hero);
                                     board.getChildren().add(client.hero);
 
