@@ -279,7 +279,12 @@ public class Game {
                                     client.hero.dx *= heroes.get(1).speed;
                                     client.hero.dy *= heroes.get(1).speed;
                                     board.getChildren().remove(client.hero);
+                                    board.getChildren().remove(client.hero.hpBar);
                                     board.getChildren().add(client.hero);
+                                    client.hero.setHpBar();
+                                    client.hero.setHpBar();
+                                    client.hero.changeHpBar();
+                                    board.getChildren().add(client.hero.hpBar);
 
                                     int size=client.in.readInt();
                                     Weapon newWeapon;
