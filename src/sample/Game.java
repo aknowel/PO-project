@@ -120,6 +120,7 @@ public class Game {
         scoreText.setFont(new Font(30));
         scoreText.relocate(W / 2 - scoreText.getBoundsInLocal().getWidth() / 2, 0);
 
+
         for (int i = 0; i < heroes.size(); i += 1) {
             hp_texts.put(heroes.get(i), new Text(170, 10, "HP: " + heroes.get(i).hp));
             hp_texts.get(heroes.get(i)).setFont(new Font(30));
@@ -263,6 +264,8 @@ public class Game {
                                 } else {
                                     client.hero.dx = client.in.readDouble();
                                     client.hero.dy = client.in.readDouble();
+                                    client.hero.dx *= heroes.get(1).speed;
+                                    client.hero.dy *= heroes.get(1).speed;
                                     board.getChildren().remove(client.hero);
                                     board.getChildren().add(client.hero);
 
@@ -277,6 +280,7 @@ public class Game {
                                                 if(heroes.get(1).upgrade>0)
                                                 {
                                                     newWeapon=new SuperHammer(client.in.readDouble(),client.in.readDouble());
+                                                    heroes.get(1).upgrade--;
                                                 }
                                                 else
                                                 {

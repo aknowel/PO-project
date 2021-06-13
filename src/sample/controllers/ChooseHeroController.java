@@ -10,6 +10,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.*;
 
@@ -83,6 +86,11 @@ public class ChooseHeroController {
 
                     main.clients.add(client);
                     main.heroes.add(client.hero);
+                    main.hp_texts.put(client.hero, new Text(170, 10, "HP: " + client.hero.hp));
+                    main.hp_texts.get(client.hero).setFont(new Font(30));
+                    main.hp_texts.get(client.hero).setFill(Color.RED);
+                    main.hp_texts.get(client.hero).relocate(10 + 150, 0);
+                    board.getChildren().add(main.hp_texts.get(client.hero));
                     main.gameState.writeStaticElementsToStream(out);
                     Menu.screen_refresh_divisor = 1;
                 }

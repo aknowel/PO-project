@@ -122,8 +122,6 @@ public class GameClient extends Game {
                     if (length > 0) {
                         dx /= length;
                         dy /= length;
-                        dx *= 3;
-                        dy *= 3;
                     }
                     server.out.writeDouble(dx);
                     server.out.writeDouble(dy);
