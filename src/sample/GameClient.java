@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.util.LinkedList;
 
 public class GameClient extends Game {
 
@@ -19,6 +20,8 @@ public class GameClient extends Game {
     boolean goSouth = false;
     boolean goWest = false;
     boolean goEast = false;
+
+    LinkedList<Weapon> newWeapons=new LinkedList<>();
 
     public GameClient(Pane pane, GameState gameState, Server server) {
         super(pane);
@@ -79,8 +82,8 @@ public class GameClient extends Game {
             else if (event.getCode().equals(KeyBinds.S)) goSouth = true;
             else if (event.getCode().equals(KeyBinds.A)) goWest = true;
             else if (event.getCode().equals(KeyBinds.D)) goEast = true;
-//            else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(1).skillCooldown<=1) heroes.get(1).heroSkill = true;
-            else if (event.getCode().equals(KeyBinds.P)) {
+            else if(event.getCode().equals(KeyBinds.SPACE)) heroes.get(1).heroSkill = true;
+            /*else if (event.getCode().equals(KeyBinds.P)) {
                 if (!pause & !stop) {
                     timer.stop();
                     pause = true;
@@ -89,7 +92,7 @@ public class GameClient extends Game {
                     pause = false;
                     timer.start();
                 }
-            }
+            }*/
         });
 
         scene.setOnKeyReleased(event -> {
@@ -99,9 +102,8 @@ public class GameClient extends Game {
             else if (event.getCode().equals(KeyBinds.D)) goEast = false;
         });
         scene.setOnMouseClicked(event -> {
-            if (!pause) {
-                heroes.get(1).newWeapon(event);
-            }
+            Weapon newWeapon = new Hammer(event.getSceneX() - heroes.get(1).getLayoutX(), event.getSceneY() - heroes.get(1).getLayoutY());
+            newWeapons.add(newWeapon);
         });
 
        timer = new AnimationTimer() {
@@ -125,6 +127,23 @@ public class GameClient extends Game {
                     }
                     server.out.writeDouble(dx);
                     server.out.writeDouble(dy);
+                    int size=newWeapons.size();
+                    server.out.writeInt(size);
+                    for(int i=0;i<size;i++)
+                    {
+                        server.out.writeDouble(newWeapons.get(i).getLayoutX());
+                        server.out.writeDouble(newWeapons.get(i).getLayoutY());
+                    }
+                    newWeapons.clear();
+                    if(heroes.get(1).heroSkill)
+                    {
+                        server.out.writeBoolean(true);
+                        heroes.get(1).heroSkill=false;
+                    }
+                    else
+                    {
+                        server.out.writeBoolean(false);
+                    }
                 } catch (EOFException e) {
                     gameOver(timer);
                 }

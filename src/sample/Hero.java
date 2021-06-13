@@ -412,6 +412,7 @@ public abstract class Hero extends ImageView {
         {
             super(x, y, hp);
             id=3;
+            counter=0;
             this.setImage(new Image("resources/Images/Heroes/Assassin.png"));
         }
         @Override

@@ -154,11 +154,11 @@ public class Game {
             else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = true;
             else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(0).skillCooldown<=0) heroes.get(0).heroSkill = true;
             else if (event.getCode().equals(KeyBinds.P)) {
-                if (!pause & !stop) {
+                if (!pause & !stop & !isServerRunning) {
                     timer.stop();
                     pause();
                     pause = true;
-                } else if (!stop) {
+                } else if (!stop & !isServerRunning) {
                     board.getChildren().remove(root);
                     pause = false;
                     timer.start();
@@ -267,6 +267,49 @@ public class Game {
                                     System.out.println("Second hero dy: " + client.hero.dy);
                                     board.getChildren().remove(client.hero);
                                     board.getChildren().add(client.hero);
+
+                                    int size=client.in.readInt();
+                                    Weapon newWeapon;
+                                    for(int i=0;i<size;i++)
+                                    {
+                                        switch (heroes.get(1).id)
+                                        {
+                                            case 1 -> newWeapon=new Axe(client.in.readDouble(),client.in.readDouble());
+                                            case 2 ->{
+                                                if(heroes.get(1).upgrade>0)
+                                                {
+                                                    newWeapon=new SuperHammer(client.in.readDouble(),client.in.readDouble());
+                                                }
+                                                else
+                                                {
+                                                    newWeapon=new Hammer(client.in.readDouble(),client.in.readDouble());
+                                                }
+                                            }
+                                            case 3 -> {
+                                                if(heroes.get(1).counter==2) {
+                                                    newWeapon = new Shuriken(client.in.readDouble(), client.in.readDouble());
+                                                    heroes.get(1).counter=0;
+                                                }
+                                                else
+                                                    {
+                                                        heroes.get(1).counter++;
+                                                        continue;
+                                                    }
+                                            }
+                                            default -> newWeapon=new Hammer(client.in.readDouble(),client.in.readDouble());
+                                        }
+                                        newWeapon.relocate(
+                                                heroes.get(1).getLayoutX() + heroes.get(1).getBoundsInLocal().getWidth(), heroes.get(1).getLayoutY());
+                                        weaponsHero.add(newWeapon);
+                                        board.getChildren().add(newWeapon);
+                                    }
+
+                                    boolean heroSkill=client.in.readBoolean();
+                                    if(heroSkill && heroes.get(1).skillCooldown<=0)
+                                    {
+                                        heroes.get(1).heroSkill=true;
+                                    }
+
                                     clientResponse = false;
                                 }
                             } catch (IOException e) {
