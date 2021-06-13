@@ -92,7 +92,7 @@ public class GameState {
             Hero hero = Hero.getNewHero(0, 0, 10, in.readInt());
             hero.setX(in.readDouble());
             hero.setY(in.readDouble());
-            boolean barrierCheck = in.readBoolean();
+            hero.barrierCheck = in.readBoolean();
             heroes.add(hero);
             GameClient.game.board.getChildren().add(hero);
             hero.setBarrier();
