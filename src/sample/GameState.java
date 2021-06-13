@@ -80,7 +80,7 @@ public class GameState {
             Background background = Background.newBackground(in.readInt());
             background.setLayoutX(in.readDouble());
             background.setLayoutY(in.readDouble());
-            //backgrounds.add(background);
+            backgrounds.add(background);
         }
     }
 
