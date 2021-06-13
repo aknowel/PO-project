@@ -46,6 +46,7 @@ public class MultiplayerController {
     public void create_server(ActionEvent event) throws IOException {
         Pane board = new Pane();
         Game main = new Game(board, mode, 0, 10, chosenHero);
+        Game.isServerRunning = true;
 
         Runnable serverThread = () -> {
             try {

@@ -67,8 +67,6 @@ public class GameClient extends Game {
         stage.setTitle("Ragnarok");
         stage.show();
 
-
-
        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
