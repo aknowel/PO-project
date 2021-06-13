@@ -15,6 +15,11 @@ public class GameClient extends Game {
 
     public Server server;
 
+    boolean goNorth = false;
+    boolean goSouth = false;
+    boolean goWest = false;
+    boolean goEast = false;
+
     public GameClient(Pane pane, GameState gameState, Server server) {
         super(pane);
         this.gameState = gameState;
@@ -70,11 +75,11 @@ public class GameClient extends Game {
         scene.setOnMouseMoved(event -> {Mouse.x=event.getSceneX();
             Mouse.y=event.getSceneY();});
         scene.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyBinds.W)) heroes.get(1).goNorth = true;
-            else if (event.getCode().equals(KeyBinds.S)) heroes.get(1).goSouth = true;
-            else if (event.getCode().equals(KeyBinds.A)) heroes.get(1).goWest = true;
-            else if (event.getCode().equals(KeyBinds.D)) heroes.get(1).goEast = true;
-            else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(1).skillCooldown<=1) heroes.get(1).heroSkill = true;
+            if (event.getCode().equals(KeyBinds.W)) goNorth = true;
+            else if (event.getCode().equals(KeyBinds.S)) goSouth = true;
+            else if (event.getCode().equals(KeyBinds.A)) goWest = true;
+            else if (event.getCode().equals(KeyBinds.D)) goEast = true;
+//            else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(1).skillCooldown<=1) heroes.get(1).heroSkill = true;
             else if (event.getCode().equals(KeyBinds.P)) {
                 if (!pause & !stop) {
                     timer.stop();
@@ -88,10 +93,10 @@ public class GameClient extends Game {
         });
 
         scene.setOnKeyReleased(event -> {
-            if (event.getCode().equals(KeyBinds.W)) heroes.get(1).goNorth = false;
-            else if (event.getCode().equals(KeyBinds.S)) heroes.get(1).goSouth = false;
-            else if (event.getCode().equals(KeyBinds.A)) heroes.get(1).goWest = false;
-            else if (event.getCode().equals(KeyBinds.D)) heroes.get(1).goEast = false;
+            if (event.getCode().equals(KeyBinds.W)) goNorth = false;
+            else if (event.getCode().equals(KeyBinds.S)) goSouth = false;
+            else if (event.getCode().equals(KeyBinds.A)) goWest = false;
+            else if (event.getCode().equals(KeyBinds.D)) goEast = false;
         });
         scene.setOnMouseClicked(event -> {
             if (!pause) {
@@ -104,22 +109,22 @@ public class GameClient extends Game {
             public void handle(long now) {
                 try {
                     gameState.loadDynamicElementsFromStream(server.in);
-                    Hero h = heroes.get(1);
-                    h.dx = 0;
-                    h.dy = 0;
-                    if (h.goNorth) h.dy -= 1;
-                    if (h.goSouth) h.dy += 1;
-                    if (h.goEast) h.dx += 1;
-                    if (h.goWest) h.dx -= 1;
-                    double length = Math.sqrt(Math.pow(h.dx, 2) + Math.pow(h.dy, 2));
+
+                    int dx = 0;
+                    int dy = 0;
+                    if (goNorth) dy -= 1;
+                    if (goSouth) dy += 1;
+                    if (goEast) dx += 1;
+                    if (goWest) dx -= 1;
+                    double length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
                     if (length > 0) {
-                        h.dx /= length;
-                        h.dy /= length;
-                        h.dx *= h.speed;
-                        h.dy *= h.speed;
+                        dx /= length;
+                        dy /= length;
+                        dx *= 3;
+                        dy *= 3;
                     }
-                    server.out.writeDouble(h.dx);
-                    server.out.writeDouble(h.dy);
+                    server.out.writeDouble(dx);
+                    server.out.writeDouble(dy);
                 } catch (EOFException e) {
                     gameOver(timer);
                 }
