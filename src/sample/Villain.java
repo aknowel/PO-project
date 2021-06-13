@@ -53,6 +53,31 @@ public abstract class Villain extends ImageView {
     {
         return new OgreBoss(mode);
     }
+    public static Villain getNewVillain(int id)
+    {
+        Villain villain;
+        switch (id) {
+            case 0 -> villain=Villain.newSkull(0D);
+            case 1 -> {
+                villain=Villain.newPredator(0D);
+                Game.game.shootingVillains.add(villain);
+            }
+            case 2 -> villain=Villain.newSpider(0D);
+            case 4 -> villain=Villain.newZombie(0D);
+            case 5 -> {
+                villain = Villain.newWizard(0D);
+                Game.game.shootingVillains.add(villain);
+            }
+            case 6 ->villain=Villain.newVampire(0D);
+            case 7 -> villain=Villain.newOrc(0D);
+            case 8 -> villain=Villain.newOgre(0D);
+            case 9 -> villain=Villain.newMummy(0D);
+            case 10 -> villain=Villain.newBat(0D);
+            case 16 -> villain=Villain.newSpider2(0D);
+            default -> throw new IllegalStateException("Unexpected value: " + id);
+        };
+        return villain;
+    }
     public boolean isAlive()
     {
         return HP>0;
