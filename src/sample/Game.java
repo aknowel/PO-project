@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
@@ -18,6 +19,8 @@ import java.util.Vector;
 public class Game {
 
     static final double W = 1280, H = 720;
+
+    public static boolean isServerRunning = false;
 
 
     static final Random randomizer = new Random();
@@ -254,6 +257,15 @@ public class Game {
                     Villain.checkHitVillains();
                     Box.checkBox();
                     gameOver(this);
+                    if (isServerRunning) {
+                        for (Client client : clients) {
+                            try {
+                                gameState.writeDynamicElementsToStream(client.out);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 }
                 cnt += 1;
             }

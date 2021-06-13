@@ -8,6 +8,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class GameClient extends Game {
 
     public Server server;
@@ -66,10 +68,28 @@ public class GameClient extends Game {
         stage.show();
 
 
-        while (true) {
-            gameState.loadDynamicElementsFromStream(server.in);
 
-        }
+       timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                try {
+                    gameState.loadDynamicElementsFromStream(server.in);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                for (Hero hero : heroes) {
+                    try {
+                        Movement.moveHeroTo(hero ,hero.pos_x, hero.pos_y);
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        timer.start();
 
 
     }

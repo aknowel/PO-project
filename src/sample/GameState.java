@@ -44,8 +44,13 @@ public class GameState {
         }
     }
 
-    public void writeDynamicElementsToStream(DataOutputStream out) {
-
+    public void writeDynamicElementsToStream(DataOutputStream out) throws IOException {
+        out.writeInt(heroes.size());
+        for (Hero hero : heroes) {
+            out.writeInt(hero.id);
+            out.writeDouble(hero.getLayoutX());
+            out.writeDouble(hero.getLayoutY());
+        }
     }
 
 
@@ -74,8 +79,14 @@ public class GameState {
         }
     }
 
-    public void loadDynamicElementsFromStream(DataInputStream in) {
-
+    public void loadDynamicElementsFromStream(DataInputStream in) throws IOException {
+        int heroesSize = in.readInt();
+        for (int i = 0; i < heroesSize; i += 1) {
+            Hero hero = Hero.getNewHero(0, 0, 10, in.readInt());
+            hero.pos_x = in.readDouble();
+            hero.pos_y = in.readDouble();
+            heroes.add(hero);
+        }
     }
 
 }
