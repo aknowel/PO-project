@@ -8,4 +8,6 @@ public class Client {
     public Socket socket;
     public DataInputStream in;
     public DataOutputStream out;
+
+    public Hero hero;
 }

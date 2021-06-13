@@ -15,6 +15,11 @@ public class GameClient extends Game {
 
     public Server server;
 
+    boolean goNorth = false;
+    boolean goSouth = false;
+    boolean goWest = false;
+    boolean goEast = false;
+
     public GameClient(Pane pane, GameState gameState, Server server) {
         super(pane);
         this.gameState = gameState;
@@ -67,11 +72,59 @@ public class GameClient extends Game {
         stage.setTitle("Ragnarok");
         stage.show();
 
+        scene.setOnMouseMoved(event -> {Mouse.x=event.getSceneX();
+            Mouse.y=event.getSceneY();});
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyBinds.W)) goNorth = true;
+            else if (event.getCode().equals(KeyBinds.S)) goSouth = true;
+            else if (event.getCode().equals(KeyBinds.A)) goWest = true;
+            else if (event.getCode().equals(KeyBinds.D)) goEast = true;
+//            else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(1).skillCooldown<=1) heroes.get(1).heroSkill = true;
+            else if (event.getCode().equals(KeyBinds.P)) {
+                if (!pause & !stop) {
+                    timer.stop();
+                    pause = true;
+                } else if (!stop) {
+                    board.getChildren().remove(root);
+                    pause = false;
+                    timer.start();
+                }
+            }
+        });
+
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode().equals(KeyBinds.W)) goNorth = false;
+            else if (event.getCode().equals(KeyBinds.S)) goSouth = false;
+            else if (event.getCode().equals(KeyBinds.A)) goWest = false;
+            else if (event.getCode().equals(KeyBinds.D)) goEast = false;
+        });
+        scene.setOnMouseClicked(event -> {
+            if (!pause) {
+                heroes.get(1).newWeapon(event);
+            }
+        });
+
        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 try {
                     gameState.loadDynamicElementsFromStream(server.in);
+
+                    int dx = 0;
+                    int dy = 0;
+                    if (goNorth) dy -= 1;
+                    if (goSouth) dy += 1;
+                    if (goEast) dx += 1;
+                    if (goWest) dx -= 1;
+                    double length = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+                    if (length > 0) {
+                        dx /= length;
+                        dy /= length;
+                        dx *= 3;
+                        dy *= 3;
+                    }
+                    server.out.writeDouble(dx);
+                    server.out.writeDouble(dy);
                 } catch (EOFException e) {
                     gameOver(timer);
                 }
