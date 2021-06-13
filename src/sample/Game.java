@@ -376,7 +376,8 @@ public class Game {
             else if(hero.hp<=0 && Game.game.heroes.size()>1)
             {
                 Game.game.board.getChildren().remove(hero);
-                Game.game.heroes.remove(hero);
+                hero.deleted=true;
+                //Game.game.heroes.remove(hero);
             }
         }
     }

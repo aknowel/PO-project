@@ -33,6 +33,7 @@ public abstract class Hero extends ImageView {
     public double speed=3;
     public int slowDuration=0;
     public int SObjInvulnerability=0;
+    public boolean deleted=false;
     ImageView barrier=new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
 
     Hero(double x,double y, int hp) {
@@ -136,7 +137,7 @@ public abstract class Hero extends ImageView {
         for(Hero hero:Game.game.heroes)
         {
             double dd=Math.sqrt((hero.getLayoutX()-obj.getLayoutX())*((hero.getLayoutX()-obj.getLayoutX()))+(hero.getLayoutY()-obj.getLayoutY())*(hero.getLayoutY()-obj.getLayoutY()));
-            if(m==-1 || dd<m)
+            if((m==-1 || dd<m)& !hero.deleted)
             {
                 j=i;
                 m=dd;
