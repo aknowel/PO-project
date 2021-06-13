@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.controllers.ChooseHeroController;
 import sample.controllers.MultiplayerController;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class Game {
@@ -39,7 +41,7 @@ public class Game {
     public Pane board;
     public AnimationTimer timer;
     public Text scoreText;
-    public HashMap<Hero, Text> hp_texts = new HashMap<>();
+    public ConcurrentHashMap<Hero, Text> hp_texts = new ConcurrentHashMap<>();
     public final int dWeapon = 10;
     public int modifier = 150, villainCounter = modifier - 1, score = 0, livesMax = 10;
     public boolean isBoss = false;
@@ -184,6 +186,16 @@ public class Game {
             @Override
             public void handle(long now) {
                 if (cnt >= Menu.screen_refresh_divisor) {
+
+                    if (ChooseHeroController.clientJoined) {
+                        ChooseHeroController.clientJoined = false;
+                        hp_texts.put(ChooseHeroController.newHero, new Text(170, 10, "HP: " + ChooseHeroController.newHero.hp));
+                        hp_texts.get(ChooseHeroController.newHero).setFont(new Font(30));
+                        hp_texts.get(ChooseHeroController.newHero).setFill(Color.RED);
+                        hp_texts.get(ChooseHeroController.newHero).relocate(10 + 150, 0);
+                        board.getChildren().add(hp_texts.get(ChooseHeroController.newHero));
+                    }
+
                     cnt = 0;
                     Hero h = heroes.get(0);
                     h.dx = 0;

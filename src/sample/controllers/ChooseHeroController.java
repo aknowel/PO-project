@@ -39,6 +39,10 @@ public class ChooseHeroController {
     public static double mode=0D;
     private static int chosenHero=2;
     public static Thread serverThread;
+
+    public static boolean clientJoined = false;
+    public static Hero newHero = null;
+
     static int getHeroId()
     {
         return chosenHero;
@@ -86,11 +90,10 @@ public class ChooseHeroController {
 
                     main.clients.add(client);
                     main.heroes.add(client.hero);
-                    main.hp_texts.put(client.hero, new Text(170, 10, "HP: " + client.hero.hp));
-                    main.hp_texts.get(client.hero).setFont(new Font(30));
-                    main.hp_texts.get(client.hero).setFill(Color.RED);
-                    main.hp_texts.get(client.hero).relocate(10 + 150, 0);
-                    board.getChildren().add(main.hp_texts.get(client.hero));
+
+                    clientJoined = true;
+                    newHero = client.hero;
+
                     main.gameState.writeStaticElementsToStream(out);
                     Menu.screen_refresh_divisor = 1;
                 }
