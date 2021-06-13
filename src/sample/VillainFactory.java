@@ -70,6 +70,21 @@ public interface VillainFactory {
         @Override
         public Villain produce(int i, Double mode) {
             return switch (i) {
+                case 0, 1, 2 -> new Mummy(mode);
+                case 3, 4, 5 -> new Zombie(mode);
+                default -> new Wizard(mode);
+            };
+        }
+        @Override
+        public Boss produceBoss( Double mode)
+        {
+            return new Bombman(mode);
+        }
+    }
+    class Round6VillainFactory implements VillainFactory {
+        @Override
+        public Villain produce(int i, Double mode) {
+            return switch (i) {
                 case 0, 1, 2 -> new Zombie(mode);
                 case 3, 4, 5 -> new Predator(mode);
                 default -> new Wizard(mode);
@@ -81,21 +96,6 @@ public interface VillainFactory {
             Boss boss=new Loki(mode);
             Game.game.shootingVillains.add(boss);
             return boss;
-        }
-    }
-    class Round6VillainFactory implements VillainFactory {
-        @Override
-        public Villain produce(int i, Double mode) {
-            return switch (i) {
-                case 0, 1, 2 -> new Mummy(mode);
-                case 3, 4, 5 -> new Zombie(mode);
-                default -> new Wizard(mode);
-            };
-        }
-        @Override
-        public Boss produceBoss( Double mode)
-        {
-            return new Bombman(mode);
         }
     }
     class AllVillainFactory implements  VillainFactory {

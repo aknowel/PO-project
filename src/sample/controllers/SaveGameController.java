@@ -143,12 +143,18 @@ public class SaveGameController {
             {
                 writer.println(obj);
             }
+            writer.println(Game.game.specialObjects.size());
+            for(Background obj:Game.game.specialObjects)
+            {
+                writer.println(obj);
+            }
             writer.println(Game.game.modifier);
             writer.println(Game.game.villainCounter);
             writer.println(Game.game.score);
             writer.println(Game.game.isBoss);
             //writer.println(Game.game.upgrade);
             writer.println(Game.game.time);
+            writer.println(Game.game.counter);
             writer.close();
         } catch (IOException ex) {
             ex.printStackTrace();

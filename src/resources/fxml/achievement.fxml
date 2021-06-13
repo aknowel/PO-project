@@ -11,7 +11,7 @@
    <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true">
       <Image url="@../Images/Background/image.jpg" />
    </ImageView>
-   <ScrollPane layoutX="355.0" layoutY="205.0" prefHeight="310.0" prefWidth="552.0" vvalue="1.0">
+   <ScrollPane layoutX="355.0" layoutY="205.0" prefHeight="310.0" prefWidth="552.0">
       <AnchorPane prefHeight="603.0" prefWidth="405.0" style="-fx-background-color: yellow;">
          <Label fx:id="l1" alignment="CENTER" layoutX="71.0" prefHeight="73.0" prefWidth="334.0" text=" You have splashed . spiders">
 
@@ -53,7 +53,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l4" alignment="CENTER" layoutX="71.0" layoutY="200.0" text="You have defeated . bosses">
+         <Label fx:id="l4" alignment="CENTER" layoutX="71.0" layoutY="200.0" text="Bat.">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -63,7 +63,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l5" alignment="CENTER" layoutX="71.0" layoutY="265.0" prefHeight="74.0" prefWidth="355.0" text="You have thrown . hammers">
+         <Label fx:id="l5" alignment="CENTER" layoutX="71.0" layoutY="265.0" prefHeight="74.0" prefWidth="355.0" text="Mummy.">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -73,7 +73,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l6" alignment="CENTER" layoutX="71.0" layoutY="331.0" prefHeight="74.0" prefWidth="463.0" text="You have played . perfect games">
+         <Label fx:id="l6" alignment="CENTER" layoutX="71.0" layoutY="331.0" prefHeight="74.0" prefWidth="463.0" text="Ogre.">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -83,7 +83,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l7" alignment="CENTER" layoutX="71.0" layoutY="395.0" prefHeight="74.0" prefWidth="465.0" text="You have chosen Thor . times">
+         <Label fx:id="l7" alignment="CENTER" layoutX="71.0" layoutY="395.0" prefHeight="74.0" prefWidth="465.0" text="Orc.">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -93,7 +93,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l8" alignment="CENTER" layoutX="71.0" layoutY="463.0" prefHeight="74.0" prefWidth="463.0" text="You have played our game . times">
+         <Label fx:id="l8" alignment="CENTER" layoutX="71.0" layoutY="463.0" prefHeight="74.0" prefWidth="463.0" text="Vampire.">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -103,7 +103,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l9" alignment="CENTER" layoutX="71.0" layoutY="530.0" text="Nice! You have won . times">
+         <Label fx:id="l9" alignment="CENTER" layoutX="71.0" layoutY="530.0" text="Wizard.">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -117,22 +117,190 @@
             <Image url="@../Images/Villains/Skull.png" />
          </ImageView>
          <ImageView fitHeight="69.0" fitWidth="74.0" layoutX="-2.0" layoutY="200.0" pickOnBounds="true">
-            <Image url="@../Images/Villains/PredatorBoss.png" />
+            <Image url="@../Images/Villains/Bat.png" />
          </ImageView>
          <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="1.0" layoutY="265.0" pickOnBounds="true">
-            <Image url="@../Images/Weapons/SuperHammer.png" />
+            <Image url="@../Images/Villains/Mummy.png" />
          </ImageView>
          <ImageView fitHeight="69.0" fitWidth="75.0" layoutX="-1.0" layoutY="331.0" pickOnBounds="true">
-            <Image url="@../Images/Boxes/heart.png" />
+            <Image url="@../Images/Villains/ogre.png" />
          </ImageView>
          <ImageView fitHeight="70.0" fitWidth="71.0" layoutY="397.0" pickOnBounds="true">
-            <Image url="@../Images/Heroes/Thor.png" />
+            <Image url="@../Images/Villains/orc.png" />
          </ImageView>
          <ImageView fitHeight="69.0" fitWidth="75.0" layoutX="-2.0" layoutY="464.0" pickOnBounds="true">
-            <Image url="@../Images/Other/new.png" />
+            <Image url="@../Images/Villains/vampireMini.png" />
          </ImageView>
          <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="-1.0" layoutY="531.0" pickOnBounds="true">
-            <Image url="@../Images/Other/win.png" />
+            <Image url="@../Images/Villains/wizard.png" />
+         </ImageView>
+         <Label fx:id="l10" alignment="CENTER" layoutX="71.0" layoutY="603.0" prefHeight="87.0" prefWidth="468.0" text="Zombie." textOverrun="WORD_ELLIPSIS">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="image" />
+               <String fx:value="textfield" />
+            </styleClass></Label>
+         <Label fx:id="l11" alignment="CENTER" layoutX="71.0" layoutY="670.0" text="You have defeated . bosses">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="textfield" />
+               <String fx:value="image" />
+            </styleClass></Label>
+         <Label fx:id="l12" alignment="CENTER" layoutX="71.0" layoutY="743.0" text="You have thrown . hammers">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="textfield" />
+               <String fx:value="image" />
+            </styleClass></Label>
+         <Label fx:id="l13" alignment="CENTER" layoutX="71.0" layoutY="815.0" text="Sword.">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="textfield" />
+               <String fx:value="image" />
+            </styleClass></Label>
+         <Label fx:id="l14" alignment="CENTER" layoutX="71.0" layoutY="887.0" text="You have thrown . shuricens">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="textfield" />
+               <String fx:value="image" />
+            </styleClass></Label>
+         <Label fx:id="l15" alignment="CENTER" layoutX="71.0" layoutY="960.0" text="You have chosen Thor . times">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="textfield" />
+               <String fx:value="image" />
+            </styleClass></Label>
+         <Label fx:id="l16" alignment="CENTER" layoutX="71.0" layoutY="1033.0" prefHeight="0.0" prefWidth="28.0" text="You have chosen Warrior . times">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="textfield" />
+               <String fx:value="image" />
+            </styleClass></Label>
+         <Label fx:id="l17" alignment="CENTER" layoutX="71.0" layoutY="1106.0" text="You have chosen Assasin . times">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="image" />
+               <String fx:value="textfield" />
+            </styleClass></Label>
+         <Label fx:id="l18" alignment="CENTER" layoutX="71.0" layoutY="1179.0" text="You have played . perfect games">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="textfield" />
+               <String fx:value="image" />
+            </styleClass>
+         </Label>
+         <Label fx:id="l19" alignment="CENTER" layoutX="71.0" layoutY="1252.0" text="You have played our game . times">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="textfield" />
+               <String fx:value="image" />
+            </styleClass>
+         </Label>
+         <Label fx:id="l20" alignment="CENTER" layoutX="71.0" layoutY="1325.0" prefHeight="330.0" prefWidth="28.0" text="boxes.">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="image" />
+               <String fx:value="textfield" />
+            </styleClass>
+         </Label>
+         <ImageView fitHeight="72.0" fitWidth="75.0" layoutX="-3.0" layoutY="601.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Villains/Zombie.png" />
+            </image></ImageView>
+         <ImageView fitHeight="80.0" fitWidth="78.0" layoutX="-4.0" layoutY="1027.0" pickOnBounds="true">
+            <image>
+               <Image url="@../Images/Heroes/Warrior.png" />
+            </image></ImageView>
+         <ImageView fitHeight="78.0" fitWidth="72.0" layoutX="1.0" layoutY="955.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Heroes/Thor.png" />
+            </image></ImageView>
+         <ImageView fitHeight="79.0" fitWidth="70.0" layoutX="1.0" layoutY="812.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Melee/Sword.png" />
+            </image></ImageView>
+         <ImageView fitHeight="70.0" fitWidth="72.0" layoutX="1.0" layoutY="672.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Villains/PredatorBoss.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="74.0" fitWidth="71.0" layoutX="1.0" layoutY="742.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Weapons/SuperHammer.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="74.0" fitWidth="71.0" layoutX="1.0" layoutY="884.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Weapons/Shuriken.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="74.0" fitWidth="79.0" layoutX="-5.0" layoutY="1107.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Heroes/Assassin.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="73.0" fitWidth="72.0" layoutX="1.0" layoutY="1179.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Boxes/heart.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="72.0" fitWidth="78.0" layoutX="-4.0" layoutY="1253.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Other/new.png" />
+            </image>
+         </ImageView>
+         <Label fx:id="l21" alignment="CENTER" layoutX="71.0" layoutY="1398.0" prefHeight="76.0" prefWidth="28.0" text="Nice! You have won . times">
+            <stylesheets>
+               <URL value="@../css/textFieldAchievement.css" />
+               <URL value="@../css/border.css" />
+            </stylesheets>
+            <styleClass>
+               <String fx:value="textfield" />
+               <String fx:value="image" />
+            </styleClass>
+         </Label>
+         <ImageView fitHeight="73.0" fitWidth="72.0" layoutX="1.0" layoutY="1398.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../Images/Other/win.png" />
+            </image>
+         </ImageView>
+         <ImageView fitHeight="74.0" fitWidth="69.0" layoutX="1.0" layoutY="1325.0" pickOnBounds="true">
+            <image>
+               <Image url="@../Images/Boxes/Chest.png" />
+            </image>
          </ImageView>
       </AnchorPane>
    </ScrollPane>

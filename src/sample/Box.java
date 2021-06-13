@@ -22,40 +22,39 @@ public abstract class Box extends ImageView {
             default -> new BarrierBox();
         };
     }
-    static void checkBox(Game game)
+    static void checkBox()
     {
-        Iterator<Box> x=game.boxes.iterator();
+        Iterator<Box> x=Game.game.boxes.iterator();
         while(x.hasNext()){
             Box currentBox=x.next();
-            if (currentBox.getBoundsInParent().intersects(game.heroes.get(0).getBoundsInParent())){
-                switch(currentBox.i)
-                {
-                    case 1->game.game.heroes.get(0).upgrade=50;
-                    case 2-> {
-                        if(game.heroes.get(0).hp<game.heroes.get(0).maxHp) {
-                            game.heroes.get(0).hp += 1;
-                            game.heroes.get(0).changeHpBar();
-                            game.hp_texts.get(game.heroes.get(0)).setText("HP: " + game.heroes.get(0).hp);
+            for(Hero hero: Game.game.heroes) {
+                if (currentBox.getBoundsInParent().intersects(hero.getBoundsInParent())) {
+                    Counter.checkedBoxes();
+                    switch (currentBox.i) {
+                        case 1 -> hero.upgrade = 50;
+                        case 2 -> {
+                            if (hero.hp < hero.maxHp) {
+                                hero.hp += 1;
+                                hero.changeHpBar();
+                                Game.game.hp_texts.get(hero).setText("HP: " + hero.hp);
+                            }
+                        }
+                        case 3 -> {
+                            if (!hero.barrierCheck) {
+                                hero.barrierCheck = true;
+                                hero.barrier = new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
+                                hero.barrier.setOpacity(0.50);
+                                Game.game.board.getChildren().add(hero.barrier);
+                            }
+                            hero.barrierTime = 0;
                         }
                     }
-                    case 3 ->
-                            {
-                                if(!game.heroes.get(0).barrierCheck)
-                                {
-                                    game.heroes.get(0).barrierCheck = true;
-                                    game.heroes.get(0).barrier = new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
-                                    game.heroes.get(0).barrier.setOpacity(0.50);
-                                    game.board.getChildren().add(game.heroes.get(0).barrier);
-                                }
-                                game.heroes.get(0).barrierTime=0;
-                            }
+                    if (randomize.nextInt(3) == 1) {
+                        currentBox.openChest();
+                    }
+                    Game.game.board.getChildren().remove(currentBox);
+                    x.remove();
                 }
-                if(randomize.nextInt(3)==1)
-                {
-                    currentBox.openChest();
-                }
-                Game.game.board.getChildren().remove(currentBox);
-                x.remove();
             }
         }
     }
@@ -75,6 +74,10 @@ public abstract class Box extends ImageView {
     public static HeartBox newHeartBox()
     {
         return new HeartBox();
+    }
+    public static BarrierBox newBarrierBox()
+    {
+        return new BarrierBox();
     }
     public String toString()
     {

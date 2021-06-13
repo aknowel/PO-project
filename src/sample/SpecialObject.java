@@ -6,7 +6,9 @@ import javafx.scene.image.ImageView;
 import java.util.Iterator;
 
 public abstract class SpecialObject extends Background {
-    int lifetime;
+    int i;
+    protected int lifetime;
+    protected int duration;
     SpecialObject(Image img)
     {
         super(img);
@@ -16,12 +18,47 @@ public abstract class SpecialObject extends Background {
     {
         Game.game.specialObjects.removeIf(SpecialObject::skill);
     }
+    public void setLifetime(int lifetime)
+    {
+        this.lifetime=lifetime;
+    }
+    public void setDuration(int duration)
+    {
+        this.duration=duration;
+    }
+    public static Bomb getNewBomb(double x,double y)
+    {
+        return new Bomb(x,y);
+    }
+    public static SpecialObject getNewSpecialObject(int id)
+    {
+        return switch (id)
+                {
+                    case 0 -> new PoisonCloud();
+                    case 1 -> new TNT();
+                    case 2 -> new SpiderWeb();
+                    case 3 -> new Swamp();
+                    case 4 -> new SpeedUp();
+                    case 5 -> new Fire();
+                    case 7 -> new ShockWave();
+                    default -> throw new IllegalStateException("Unexpected value: " + id);
+                };
+    }
+    public void setImage()
+    {
+
+    }
+    public String toString()
+    {
+        return this.i+" "+lifetime+" "+duration+" "+this.getLayoutX()+ " " + this.getLayoutY();
+    }
 }
 class PoisonCloud extends SpecialObject {
     PoisonCloud()
     {
         super(new Image("resources/Images/SpecialObjects/PoisonCloud.png"));
         lifetime=1000;
+        i=0;
     }
     @Override
     public boolean skill()
@@ -45,12 +82,12 @@ class PoisonCloud extends SpecialObject {
     }
 }
 class TNT extends SpecialObject {
-    int duration=0;
     ImageView boom=new ImageView("resources/Images/SpecialObjects/ExplosionSmall.png");
     TNT()
     {
         super(new Image("resources/Images/SpecialObjects/Tnt.png"));
         lifetime=250;
+        i=1;
     }
     @Override
     public boolean skill()
@@ -104,12 +141,32 @@ class TNT extends SpecialObject {
         }
         return false;
     }
+    @Override
+    public void setImage()
+    {
+        if(lifetime<=0)
+        {
+            if(duration<75)
+            {
+                boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionSmall.png"));
+            }
+            else if(duration<150)
+            {
+                boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionBig.png"));
+            }
+            else
+            {
+                boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionGiga.png"));
+            }
+        }
+    }
 }
 class SpiderWeb extends SpecialObject
 {
     SpiderWeb()
     {
         super(new Image("resources/Images/SpecialObjects/SpiderWebMini.png"));
+        i=2;
     }
     @Override
     public boolean skill()
@@ -143,6 +200,7 @@ class Swamp extends SpecialObject
     Swamp()
     {
         super(new Image("resources/Images/SpecialObjects/SpiderWebMini.png"));
+        i=3;
     }
     @Override
     public boolean skill()
@@ -176,6 +234,7 @@ class SpeedUp extends SpecialObject
     SpeedUp()
     {
         super(new Image("resources/Images/SpecialObjects/SpiderWebBig.png"));
+        i=4;
     }
     @Override
     public boolean skill()
@@ -196,6 +255,7 @@ class Fire extends SpecialObject {
     Fire()
     {
         super(new Image("resources/Images/SpecialObjects/Fire.png"));
+        i=5;
     }
     @Override
     public boolean skill()
@@ -221,13 +281,13 @@ class Fire extends SpecialObject {
 class Bomb extends SpecialObject {
     double x;
     double y;
-    int duration=0;
     ImageView boom=new ImageView("resources/Images/SpecialObjects/ExplosionSmall.png");
     Bomb(double x, double y) {
         super(new Image("resources/Images/SpecialObjects/Bomb.png"));
         this.x = x;
         this.y = y;
         lifetime=80;
+        i=6;
     }
 
     @Override
@@ -290,12 +350,32 @@ class Bomb extends SpecialObject {
         }
         return false;
     }
+    @Override
+    public void setImage()
+    {
+        if(lifetime<=0)
+        {
+            if(duration<50)
+            {
+                boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionSmall.png"));
+            }
+            else
+            {
+                boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionBig.png"));
+            }
+        }
+    }
+    public String toString()
+    {
+        return this.i+" "+x+" "+y+" "+lifetime+" "+duration+" "+this.getLayoutX()+ " " + this.getLayoutY();
+    }
 }
 class ShockWave extends SpecialObject {
     ShockWave() {
         super(new Image("resources/Images/SpecialObjects/BrownCircle.png"));
         setOpacity(0.5);
         lifetime=400;
+        i=7;
     }
 
     @Override
@@ -326,5 +406,13 @@ class ShockWave extends SpecialObject {
         }
         lifetime--;
         return false;
+    }
+    @Override
+    public void setImage()
+    {
+        if(lifetime<=300)
+        {
+            this.setImage(new Image("resources/Images/SpecialObjects/BrownCircleBig.png"));
+        }
     }
 }

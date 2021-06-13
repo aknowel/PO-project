@@ -131,7 +131,7 @@ public class MenuController {
             file.delete();
             file.createNewFile();
             writer=new PrintWriter(file);
-            if(list.size()==9) {
+            if(list.size()==21) {
                 for (int i = 0; i < list.size(); i++) {
                     Integer x = Integer.parseInt(list.get(i)) + Counter.list.get(i);
                     writer.println(x);
@@ -139,24 +139,23 @@ public class MenuController {
             }
             else
             {
-                for (int i = 0; i < list.size(); i++) {
+                for (int i = 0; i < Counter.list.size(); i++) {
                     Integer x = Counter.list.get(i);
                     writer.println(x);
                 }
             }
-            writer.close();
         }
         else
         {
             file.createNewFile();
             writer=new PrintWriter(file);
-            for (int i = 0; i < list.size(); i++) {
+            for (int i = 0; i < Counter.list.size(); i++) {
                 Integer x = Counter.list.get(i);
                 writer.println(x);
             }
-            writer.close();
         }
-        Counter.list= Arrays.asList(0,0,0,0,0,0,0,0,0);
+        writer.close();
+        Counter.list= Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
     }
 
 }

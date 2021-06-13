@@ -11,28 +11,29 @@ import java.util.Random;
 public abstract class Hero extends ImageView {
     boolean goNorth, goSouth, goEast, goWest;
     HpBar hpBar=new HpBar();
-    double pos_x;
-    double pos_y;
-    double dx;
-    double dy;
+    public double pos_x;
+    public double pos_y;
+    public double dx;
+    public double dy;
     public int hp;
     Sword sword;
+    public boolean swordCheck=false;
     final public int maxHp=10;
-    protected int id=2;
-    static int counter=0;
-    boolean side;
-    boolean top;
-    boolean barrierCheck=false;
-    int barrierTime=0;
-    int upgrade=0;
-    int skillCooldown=0;
-    boolean heroSkill=false;
-    boolean slow=false;
-    boolean speedUp=false;
-    double speed=3;
-    int slowDuration=0;
-    int SObjInvulnerability=0;
-    ImageView barrier;
+    public int id=2;
+    public static int counter=0;
+    public boolean side;
+    public boolean top;
+    public boolean barrierCheck=false;
+    public int barrierTime=0;
+    public int upgrade=0;
+    public int skillCooldown=0;
+    public boolean heroSkill=false;
+    public boolean slow=false;
+    public boolean speedUp=false;
+    public double speed=3;
+    public int slowDuration=0;
+    public int SObjInvulnerability=0;
+    ImageView barrier=new ImageView(new Image("resources/Images/Boxes/Barrier.png"));;
 
     Hero(double x,double y, int hp) {
         super("resources/Images/Heroes/Thor.png");
@@ -46,16 +47,16 @@ public abstract class Hero extends ImageView {
     {
         return id;
     }
-    void checkHitHero(Game game)
+    void checkHitHero()
     {
-        Iterator<Weapon> x=game.weaponsVillain.iterator();
+        Iterator<Weapon> x=Game.game.weaponsVillain.iterator();
         while(x.hasNext()){
             Node currentWeapon=x.next();
             if (currentWeapon.getBoundsInParent().intersects(getBoundsInParent())){
                 if(!barrierCheck) {
                     hp -= 1;
                     changeHpBar();
-                    game.hp_texts.get(this).setText("HP: " + hp);
+                    Game.game.hp_texts.get(this).setText("HP: " + hp);
                 }else
                 {
                     barrierCheck=false;
@@ -129,7 +130,8 @@ public abstract class Hero extends ImageView {
     }
     public String toString()
     {
-        return getLayoutX()+ " " + getLayoutY() + " " + hp + " " + id;
+        return getLayoutX()+ " " + getLayoutY() + " " + hp + " " + id+" "+dx+" "+dy+" "+swordCheck+" "+counter+" "+side+" "+top+" "+barrierCheck+ " "
+                + barrierTime+ " " + upgrade + " "+ skillCooldown+ " "+ heroSkill+ " "+ slow+ " "+ speedUp+ " "+speed+ " "+ slowDuration+ " "+SObjInvulnerability;
     }
     public static class Thor extends Hero{
         public Thor(double x,double y, int hp)
@@ -186,9 +188,9 @@ public abstract class Hero extends ImageView {
         }
         public void newWeapon(MouseEvent event)
         {
-            if(!Game.game.sword)
+            if(!swordCheck)
             {
-                Game.game.sword=true;
+                swordCheck=true;
                 side= !(event.getSceneX() >= this.getLayoutX() + this.getBoundsInLocal().getWidth() / 2);
                 top= (event.getSceneX() - this.getLayoutX() <= 100) && (this.getLayoutX() - event.getSceneX() <= 75);
                 if(!top) {
@@ -222,14 +224,14 @@ public abstract class Hero extends ImageView {
         }
         @Override
         public void skill() {
-            if(heroSkill && (skillCooldown==0||Game.game.heroes.get(0).upgrade>0)) {
+            if(heroSkill && (skillCooldown<=0||Game.game.heroes.get(0).upgrade>0)) {
                 Weapon newWeapon;
                 newWeapon = new Axe(Mouse.x - Game.game.heroes.get(0).getLayoutX(), Mouse.y - Game.game.heroes.get(0).getLayoutY());
                 newWeapon.relocate(
                         Game.game.heroes.get(0).getLayoutX() + Game.game.heroes.get(0).getBoundsInLocal().getWidth(), Game.game.heroes.get(0).getLayoutY());
                 Game.game.weaponsHero.add(newWeapon);
                 Game.game.board.getChildren().add(newWeapon);
-                Counter.thrownWeapon();
+                Counter.useSword();
                 Random randomize = new Random();
                 if (randomize.nextInt(5) == 1) {
                     Game.game.heroes.get(0).shout();
@@ -250,7 +252,7 @@ public abstract class Hero extends ImageView {
         }
         void moveSword()
         {
-            if (Game.game.sword) {
+            if (swordCheck) {
                 if (!side) {
                     if(top)
                     {
@@ -263,7 +265,7 @@ public abstract class Hero extends ImageView {
                         } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
                             counter = 0;
-                            Game.game.sword = false;
+                            swordCheck = false;
                         }
                     }
                     else {
@@ -276,7 +278,7 @@ public abstract class Hero extends ImageView {
                         } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
                             counter = 0;
-                            Game.game.sword = false;
+                            swordCheck = false;
                         }
                     }
                 } else {
@@ -290,7 +292,7 @@ public abstract class Hero extends ImageView {
                         } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
                             counter = 0;
-                            Game.game.sword = false;
+                           swordCheck = false;
                         }
                     }
                     else
@@ -304,7 +306,7 @@ public abstract class Hero extends ImageView {
                         } else if (counter == 60) {
                             Game.game.board.getChildren().remove(Game.game.heroes.get(0).sword);
                             counter = 0;
-                            Game.game.sword = false;
+                            swordCheck = false;
                         }
                     }
                 }
@@ -329,7 +331,7 @@ public abstract class Hero extends ImageView {
                         Game.game.heroes.get(0).getLayoutX() + Game.game.heroes.get(0).getBoundsInLocal().getWidth(), Game.game.heroes.get(0).getLayoutY());
                 Game.game.weaponsHero.add(newWeapon);
                 Game.game.board.getChildren().add(newWeapon);
-                Counter.thrownWeapon();
+                Counter.thrownShuriken();
                 Random randomize = new Random();
                 if (randomize.nextInt(5) == 1) {
                     Game.game.heroes.get(0).shout();
@@ -344,7 +346,7 @@ public abstract class Hero extends ImageView {
         @Override
         public void skill()
         {
-            if(heroSkill && (skillCooldown==0||(Game.game.heroes.get(0).upgrade>0 && Game.game.heroes.get(0).upgrade%10==0))) {
+            if(heroSkill && (skillCooldown<=0||(Game.game.heroes.get(0).upgrade>0 && Game.game.heroes.get(0).upgrade%10==0))) {
                 SpecialObject specialObject=new PoisonCloud();
                 Game.game.specialObjects.add(specialObject);
                 specialObject.relocate(pos_x,pos_y);
