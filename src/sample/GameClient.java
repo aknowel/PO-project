@@ -70,11 +70,11 @@ public class GameClient extends Game {
         scene.setOnMouseMoved(event -> {Mouse.x=event.getSceneX();
             Mouse.y=event.getSceneY();});
         scene.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyBinds.W)) heroes.get(0).goNorth = true;
-            else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = true;
-            else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = true;
-            else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = true;
-            else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(0).skillCooldown<=0) heroes.get(0).heroSkill = true;
+            if (event.getCode().equals(KeyBinds.W)) heroes.get(1).goNorth = true;
+            else if (event.getCode().equals(KeyBinds.S)) heroes.get(1).goSouth = true;
+            else if (event.getCode().equals(KeyBinds.A)) heroes.get(1).goWest = true;
+            else if (event.getCode().equals(KeyBinds.D)) heroes.get(1).goEast = true;
+            else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(1).skillCooldown<=1) heroes.get(1).heroSkill = true;
             else if (event.getCode().equals(KeyBinds.P)) {
                 if (!pause & !stop) {
                     timer.stop();
@@ -88,14 +88,14 @@ public class GameClient extends Game {
         });
 
         scene.setOnKeyReleased(event -> {
-            if (event.getCode().equals(KeyBinds.W)) heroes.get(0).goNorth = false;
-            else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = false;
-            else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = false;
-            else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = false;
+            if (event.getCode().equals(KeyBinds.W)) heroes.get(1).goNorth = false;
+            else if (event.getCode().equals(KeyBinds.S)) heroes.get(1).goSouth = false;
+            else if (event.getCode().equals(KeyBinds.A)) heroes.get(1).goWest = false;
+            else if (event.getCode().equals(KeyBinds.D)) heroes.get(1).goEast = false;
         });
         scene.setOnMouseClicked(event -> {
             if (!pause) {
-                heroes.get(0).newWeapon(event);
+                heroes.get(1).newWeapon(event);
             }
         });
 

@@ -257,8 +257,13 @@ public class Game {
                         for (Client client : clients) {
                             try {
                                 gameState.writeDynamicElementsToStream(client.out);
-                                client.dx = client.in.readDouble();
-                                client.dy = client.in.readDouble();
+                                client.hero.dx = client.in.readDouble();
+                                client.hero.dy = client.in.readDouble();
+                                board.getChildren().remove(client.hero);
+                                board.getChildren().add(client.hero);
+                                client.hero.pos_x += client.hero.dx;
+                                client.hero.pos_y += client.hero.dy;
+                                client.hero.relocate(client.hero.pos_x, client.hero.pos_y);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

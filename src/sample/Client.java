@@ -9,6 +9,5 @@ public class Client {
     public DataInputStream in;
     public DataOutputStream out;
 
-    double dx;
-    double dy;
+    public Hero hero;
 }
