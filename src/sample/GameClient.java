@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.animation.AnimationTimer;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -20,6 +21,8 @@ public class GameClient extends Game {
     boolean goSouth = false;
     boolean goWest = false;
     boolean goEast = false;
+
+    boolean sth = false;
 
     LinkedList<Weapon> newWeapons=new LinkedList<>();
 
@@ -82,7 +85,7 @@ public class GameClient extends Game {
             else if (event.getCode().equals(KeyBinds.S)) goSouth = true;
             else if (event.getCode().equals(KeyBinds.A)) goWest = true;
             else if (event.getCode().equals(KeyBinds.D)) goEast = true;
-            else if(event.getCode().equals(KeyBinds.SPACE)) heroes.get(1).heroSkill = true;
+            else if(event.getCode().equals(KeyBinds.SPACE)) sth=true;
             /*else if (event.getCode().equals(KeyBinds.P)) {
                 if (!pause & !stop) {
                     timer.stop();
@@ -112,6 +115,23 @@ public class GameClient extends Game {
                 try {
                     gameState.loadDynamicElementsFromStream(server.in);
 
+                    if(gameState.gameOver)
+                    {
+                        timer.stop();
+                        stop = true;
+                        Sounds sounds = new Sounds();
+                        sounds.playGameOver();
+                        FXMLLoader fxmlLoader = new FXMLLoader();
+                        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOverMulti.fxml"));
+                        try {
+                            root = fxmlLoader.load();
+                            root.setLayoutX(445);
+                            root.setLayoutY(193);
+                            board.getChildren().add(root);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                     int dx = 0;
                     int dy = 0;
                     if (goNorth) dy -= 1;
@@ -133,10 +153,10 @@ public class GameClient extends Game {
                         server.out.writeDouble(newWeapons.get(i).y);
                     }
                     newWeapons.clear();
-                    if(heroes.get(1).heroSkill)
+                    if(sth)
                     {
                         server.out.writeBoolean(true);
-                        heroes.get(1).heroSkill=false;
+                        sth=false;
                     }
                     else
                     {

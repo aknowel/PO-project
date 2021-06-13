@@ -9,10 +9,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.controllers.ChooseHeroController;
-import sample.controllers.MultiplayerController;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Vector;
@@ -305,15 +303,15 @@ public class Game {
                                                 }
                                             }
                                             case 3 -> {
-                                                if(heroes.get(1).counter==2) {
+                                                //if(heroes.get(1).counter==1) {
                                                     newWeapon = new Shuriken(client.in.readDouble(), client.in.readDouble());
                                                     heroes.get(1).counter=0;
-                                                }
+                                                /*}
                                                 else
                                                     {
                                                         heroes.get(1).counter++;
                                                         continue;
-                                                    }
+                                                    }*/
                                             }
                                             default -> newWeapon=new Hammer(client.in.readDouble(),client.in.readDouble());
                                         }

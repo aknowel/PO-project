@@ -19,6 +19,8 @@ public class GameState {
     public LinkedList<Weapon> weaponsHeroes = new LinkedList<>();
     public LinkedList<Weapon> weaponsVillains = new LinkedList<>();
 
+    boolean gameOver=false;
+
 
     public void writeStaticElementsToStream(DataOutputStream out) throws IOException {
         out.writeInt(map_id);
@@ -85,12 +87,16 @@ public class GameState {
     }
 
     public void loadDynamicElementsFromStream(DataInputStream in) throws IOException {
+        gameOver=in.readBoolean();
+        if(gameOver)
+            return;
         for (Hero hero : heroes) {
             GameClient.game.board.getChildren().remove(hero);
             GameClient.game.board.getChildren().remove(hero.hpBar);
             GameClient.game.board.getChildren().remove(hero.barrier);
         }
         //heroes.clear();
+
         int heroesSize = in.readInt();
         for (int i = 0; i < heroesSize; i += 1) {
             Hero hero = Hero.getNewHero(0, 0, 10, in.readInt());
