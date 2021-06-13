@@ -9,8 +9,8 @@ public interface VillainFactory {
         public Villain produce(int i, Double mode) {
             return switch (i) {
                 case 0, 1, 2 -> new Ogre(mode);
-                case 3, 4, 5 -> new Orc(mode);
-                default -> new Mummy(mode);
+                case 3, 4, 5 -> new Skull(mode);
+                default -> new Orc(mode);
             };
         }
         @Override
@@ -38,7 +38,7 @@ public interface VillainFactory {
         @Override
         public Villain produce(int i, Double mode) {
             return switch (i) {
-                case 0, 1, 2 -> new Skull(mode);
+                case 0, 1, 2 -> new Mummy(mode);
                 case 3, 4, 5 -> new Spider(mode);
                 default -> new Predator(mode);
             };

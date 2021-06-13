@@ -244,7 +244,12 @@ class SpeedUp extends SpecialObject
             if(!hero.speedUp && hero.getBoundsInParent().intersects(this.getBoundsInParent()))
             {
                 hero.speedUp=true;
-                hero.speed+=1D;
+                hero.speed+=3D;
+            }
+            else if (hero.speedUp)
+            {
+                hero.speedUp=false;
+                hero.speed-=3D;
             }
         }
         return false;

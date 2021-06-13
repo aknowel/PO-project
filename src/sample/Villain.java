@@ -701,7 +701,7 @@ class Bombman extends Boss
 {
     Bombman(Double mode)
     {
-        super(new Image("/resources/Images/Villains/VampireBig.png"));
+        super(new Image("/resources/Images/Villains/Bomber.png"));
         this.HP=25*(mode+1);
         this.speed=-0.5D;
         this.id=14;
@@ -743,7 +743,7 @@ class OgreBoss extends Boss
 {
     OgreBoss(Double mode)
     {
-        super(new Image("/resources/Images/Villains/VampireBig.png"));
+        super(new Image("/resources/Images/Villains/OgreBoss.png"));
         this.HP=70*(mode+1);
         this.speed=-1.2D;
         this.id=15;
