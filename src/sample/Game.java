@@ -183,20 +183,19 @@ public class Game {
             public void handle(long now) {
                 if (cnt >= Menu.screen_refresh_divisor) {
                     cnt = 0;
-                    for (Hero hero : heroes) {
-                        hero.dx = 0;
-                        hero.dy = 0;
-                        if (hero.goNorth) hero.dy -= 1;
-                        if (hero.goSouth) hero.dy += 1;
-                        if (hero.goEast) hero.dx += 1;
-                        if (hero.goWest) hero.dx -= 1;
-                        double length = Math.sqrt(Math.pow(hero.dx, 2) + Math.pow(hero.dy, 2));
-                        if (length > 0) {
-                            hero.dx /= length;
-                            hero.dy /= length;
-                            hero.dx *= hero.speed;
-                            hero.dy *= hero.speed;
-                        }
+                    Hero h = heroes.get(0);
+                    h.dx = 0;
+                    h.dy = 0;
+                    if (h.goNorth) h.dy -= 1;
+                    if (h.goSouth) h.dy += 1;
+                    if (h.goEast) h.dx += 1;
+                    if (h.goWest) h.dx -= 1;
+                    double length = Math.sqrt(Math.pow(h.dx, 2) + Math.pow(h.dy, 2));
+                    if (length > 0) {
+                        h.dx /= length;
+                        h.dy /= length;
+                        h.dx *= h.speed;
+                        h.dy *= h.speed;
                     }
 
                     if (counter < 2 || round==0) {
@@ -258,6 +257,8 @@ public class Game {
                         for (Client client : clients) {
                             try {
                                 gameState.writeDynamicElementsToStream(client.out);
+                                client.dx = client.in.readDouble();
+                                client.dy = client.in.readDouble();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }

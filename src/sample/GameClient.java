@@ -67,11 +67,59 @@ public class GameClient extends Game {
         stage.setTitle("Ragnarok");
         stage.show();
 
+        scene.setOnMouseMoved(event -> {Mouse.x=event.getSceneX();
+            Mouse.y=event.getSceneY();});
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyBinds.W)) heroes.get(0).goNorth = true;
+            else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = true;
+            else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = true;
+            else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = true;
+            else if(event.getCode().equals(KeyBinds.SPACE) && heroes.get(0).skillCooldown<=0) heroes.get(0).heroSkill = true;
+            else if (event.getCode().equals(KeyBinds.P)) {
+                if (!pause & !stop) {
+                    timer.stop();
+                    pause = true;
+                } else if (!stop) {
+                    board.getChildren().remove(root);
+                    pause = false;
+                    timer.start();
+                }
+            }
+        });
+
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode().equals(KeyBinds.W)) heroes.get(0).goNorth = false;
+            else if (event.getCode().equals(KeyBinds.S)) heroes.get(0).goSouth = false;
+            else if (event.getCode().equals(KeyBinds.A)) heroes.get(0).goWest = false;
+            else if (event.getCode().equals(KeyBinds.D)) heroes.get(0).goEast = false;
+        });
+        scene.setOnMouseClicked(event -> {
+            if (!pause) {
+                heroes.get(0).newWeapon(event);
+            }
+        });
+
        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 try {
                     gameState.loadDynamicElementsFromStream(server.in);
+                    Hero h = heroes.get(1);
+                    h.dx = 0;
+                    h.dy = 0;
+                    if (h.goNorth) h.dy -= 1;
+                    if (h.goSouth) h.dy += 1;
+                    if (h.goEast) h.dx += 1;
+                    if (h.goWest) h.dx -= 1;
+                    double length = Math.sqrt(Math.pow(h.dx, 2) + Math.pow(h.dy, 2));
+                    if (length > 0) {
+                        h.dx /= length;
+                        h.dy /= length;
+                        h.dx *= h.speed;
+                        h.dy *= h.speed;
+                    }
+                    server.out.writeDouble(h.dx);
+                    server.out.writeDouble(h.dy);
                 } catch (EOFException e) {
                     gameOver(timer);
                 }

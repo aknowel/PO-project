@@ -8,4 +8,7 @@ public class Client {
     public Socket socket;
     public DataInputStream in;
     public DataOutputStream out;
+
+    double dx;
+    double dy;
 }
