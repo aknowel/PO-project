@@ -47,6 +47,12 @@ public class GameState {
             out.writeDouble(hero.getLayoutX());
             out.writeDouble(hero.getLayoutY());
         }
+        out.writeInt(villains.size());
+        for (Villain villain : villains) {
+            out.writeInt(villain.id);
+            out.writeDouble(villain.getLayoutX());
+            out.writeDouble(villain.getLayoutY());
+        }
     }
 
 
@@ -80,6 +86,20 @@ public class GameState {
             hero.pos_x = in.readDouble();
             hero.pos_y = in.readDouble();
         }
+
+        for (Villain villain : villains) {
+            GameClient.game.board.getChildren().remove(villain);
+        }
+        villains.clear();
+        int villainsSize = in.readInt();
+        for (int i = 0; i < villainsSize; i += 1) {
+            Villain villain = Villain.getNewVillain(in.readInt());
+            villain.setX(in.readDouble());
+            villain.setY(in.readDouble());
+            villains.add(villain);
+            GameClient.game.board.getChildren().add(villain);
+        }
+
     }
 
 }
