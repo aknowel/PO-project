@@ -47,6 +47,10 @@ public abstract class Hero extends ImageView {
     {
         return id;
     }
+    public void setHpBar()
+    {
+        hpBar.relocate(getLayoutX() + getBoundsInLocal().getWidth()/2-hpBar.getBoundsInLocal().getWidth()/2, getLayoutY() - hpBar.getBoundsInLocal().getHeight()-3);
+    }
     void checkHitHero()
     {
         Iterator<Weapon> x=Game.game.weaponsVillain.iterator();

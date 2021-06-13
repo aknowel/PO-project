@@ -83,6 +83,10 @@ public abstract class Villain extends ImageView {
         return HP>0;
     }
     public abstract void changeHpBar();
+    public void setHpBar()
+    {
+        hpBar.relocate(getLayoutX() + getBoundsInLocal().getWidth()/2-hpBar.getBoundsInLocal().getWidth()/2, getLayoutY() - hpBar.getBoundsInLocal().getHeight()-3);
+    }
     public void setSpawn(int spawn)
     {
         if(this instanceof Boss) {
