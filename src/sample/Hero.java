@@ -72,6 +72,7 @@ public abstract class Hero extends ImageView {
         if(barrierCheck) {
             barrier = new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
             barrier.setOpacity(0.50);
+            barrier.relocate(getLayoutX()-4.5,getLayoutY()-4);
             Game.game.board.getChildren().add(barrier);
         }
         else
