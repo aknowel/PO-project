@@ -36,6 +36,12 @@ public class GameState {
             out.writeDouble(specialObject.getLayoutX());
             out.writeDouble(specialObject.getLayoutY());
         }
+        out.writeInt(heroes.size());
+        for (Hero hero : heroes) {
+            out.writeInt(hero.id);
+            out.writeDouble(hero.getLayoutX());
+            out.writeDouble(hero.getLayoutY());
+        }
     }
 
     public void writeDynamicElementsToStream(DataOutputStream out) {
@@ -58,6 +64,13 @@ public class GameState {
             specialObject.setX(in.readDouble());
             specialObject.setY(in.readDouble());
             specialObjects.add(specialObject);
+        }
+        int heroesSize = in.readInt();
+        for (int i = 0; i < heroesSize; i += 1) {
+            Hero hero = Hero.getNewHero(0, 0, 10, in.readInt());
+            hero.setX(in.readDouble());
+            hero.setY(in.readDouble());
+            heroes.add(hero);
         }
     }
 

@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -9,9 +10,12 @@ import javafx.stage.Stage;
 
 public class GameClient extends Game {
 
+    public Server server;
+
     public GameClient(Pane pane, GameState gameState, Server server) {
         super(pane);
         this.gameState = gameState;
+        this.server = server;
 
         round = gameState.map_id;
         backgroundObjects = gameState.backgrounds;
@@ -60,5 +64,13 @@ public class GameClient extends Game {
         stage.setScene(scene);
         stage.setTitle("Ragnarok");
         stage.show();
+
+
+        while (true) {
+            gameState.loadDynamicElementsFromStream(server.in);
+
+        }
+
+
     }
 }
