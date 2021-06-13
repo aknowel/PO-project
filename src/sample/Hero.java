@@ -35,6 +35,10 @@ public abstract class Hero extends ImageView {
     public int SObjInvulnerability=0;
     public boolean deleted=false;
     ImageView barrier=new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
+    private static final String hpFull="resources/Images/HpBars/HpBarFull",
+    hp23="resources/Images/HpBars/HpBar23",
+    hp13="resources/Images/HpBars/HpBar13",
+    hpCrit="resources/Images/HpBars/HpBarCritic";
 
     Hero(double x,double y, int hp) {
         super("resources/Images/Heroes/Thor.png");
@@ -104,13 +108,13 @@ public abstract class Hero extends ImageView {
     protected void changeHpBar()
     {
         if(hp<=1)
-            hpBar.setImage(new Image("resources/Images/HpBars/HpBarCritic.png"));
+            hpBar.setImage(new Image((upgrade<=0) ? hpCrit +".png" : hpCrit + "Up.png"));
         else if(hp<=4)
-            hpBar.setImage(new Image("resources/Images/HpBars/HpBar13.png"));
+            hpBar.setImage(new Image((upgrade<=0) ? hp13 +".png" : hp13 + "Up.png"));
         else if(hp<=7)
-            hpBar.setImage(new Image("resources/Images/HpBars/HpBar23.png"));
+            hpBar.setImage(new Image((upgrade<=0) ? hp23 +".png" : hp23 + "Up.png"));
         else
-            hpBar.setImage(new Image("resources/Images/HpBars/HpBarFull.png"));
+            hpBar.setImage(new Image((upgrade<=0) ? hpFull +".png" : hpFull + "Up.png"));
     }
     public static void decreaseVulnerability()
     {
@@ -243,6 +247,8 @@ public abstract class Hero extends ImageView {
             } else {
                 newWeapon = new SuperHammer(event.getSceneX() - getLayoutX(), event.getSceneY() - getLayoutY());
                 upgrade--;
+                if(upgrade <=0)
+                    changeHpBar();
             }
             newWeapon.relocate(
                     getLayoutX() + getBoundsInLocal().getWidth(), getLayoutY());
@@ -419,7 +425,7 @@ public abstract class Hero extends ImageView {
         @Override
         public void newWeapon(MouseEvent event)
         {
-            if(counter==2) {
+            if(counter==1) {
                 Weapon newWeapon;
                 newWeapon = new Shuriken(event.getSceneX() - getLayoutX(), event.getSceneY() - getLayoutY());
                 newWeapon.relocate(

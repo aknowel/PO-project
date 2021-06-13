@@ -4,10 +4,10 @@ public interface PlotStrings {
     String first= """
             In the ancient times, when Earth was still flat, the god Loki
             organised a tournament.
-            The first one to hunt down three legendary beasts
+            The first one to hunt down five legendary beasts
             would be rewarded with equally legendary The Cake.
             The greatest warriors have gathered and among them are you.
-            Your task begins in the desolate lands of an unknown desert.
+            Your task begins in the desolate lands of an abandoned kingdom.
             You feel an evil presence, lurking in the distance, waiting for you...
             The time has come, the tournament begins...""";
     String second= """
@@ -17,15 +17,33 @@ public interface PlotStrings {
             Looks like we're onto some good, old dungeon-crawling.
             Off we go!""";
     String third= """
-            Now is the time for your final, third battle.
-            This time the monster is (it actually happens?) clever.
-            It hides deep within the wildlands,
-            inhabited by all sorts of creatures.
-            Orcs, goblins - another classic stuff.
-            Well, no time to waste!
-            The price awaits!
+            Up to now the task seem easy.
+            But it won't be such for long.
+            Your next target is rumoured to be a seasoned predator,
+            whose today's hunting ground is a vast desert.
+            And you hate sand. It gets everywhere.
+            Let's get it over with quickly,
+            before you loose your patience.
             """;
     String forth= """
+            The perilous task is now finally done.
+            Your next target is an old Vampire Lord.
+            Great!
+            Years of reading low-quality horror books
+            are now going to pay off.
+            You stock on garlic and wooden stakes.
+            This is going to be easy.
+            """;
+    String fifth= """
+            Little is known about your last target.
+            Some say it's an oversized goblin,
+            others that something far more worse.
+            All agree that it is a horrible creature.
+            Anyway, there's no time to waste.
+            The fabulous price awaits you.
+            Let's get moving!
+            """;
+    String sixth="""
             WHAT?!
             Turns out that the whole tournament was some sort of nasty plot
             devised by Loki.
@@ -34,6 +52,4 @@ public interface PlotStrings {
             This is unacceptable. Loki is gonna pay.
             Just you wait Loki!
             Your destiny is coming!""";
-    String fifth="";
-    String sixth="";
 }
