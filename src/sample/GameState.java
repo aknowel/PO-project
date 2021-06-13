@@ -37,14 +37,14 @@ public class GameState {
             out.writeDouble(hero.getLayoutX());
             out.writeDouble(hero.getLayoutY());
             out.writeBoolean(hero.barrierCheck);
-            out.writeInt(hero.hp);
+//            out.writeInt(hero.hp);
         }
         out.writeInt(villains.size());
         for (Villain villain : villains) {
             out.writeInt(villain.id);
             out.writeDouble(villain.getLayoutX());
             out.writeDouble(villain.getLayoutY());
-            out.writeDouble(villain.HP);
+//            out.writeDouble(villain.HP);
         }
         out.writeInt(weaponsHeroes.size());
         for (Weapon weapon : weaponsHeroes) {
@@ -87,7 +87,7 @@ public class GameState {
     public void loadDynamicElementsFromStream(DataInputStream in) throws IOException {
         for (Hero hero : heroes) {
             GameClient.game.board.getChildren().remove(hero);
-            GameClient.game.board.getChildren().remove(hero.hp);
+//            GameClient.game.board.getChildren().remove(hero.hp);
         }
         heroes.clear();
         int heroesSize = in.readInt();
@@ -99,16 +99,16 @@ public class GameState {
             heroes.add(hero);
             GameClient.game.board.getChildren().add(hero);
             hero.setBarrier();
-            hero.hp = in.readInt();
-            hero.setHpBar();
-            hero.changeHpBar();
-            GameClient.game.board.getChildren().add(hero.hpBar);
+//            hero.hp = in.readInt();
+//            hero.setHpBar();
+//            hero.changeHpBar();
+//            GameClient.game.board.getChildren().add(hero.hpBar);
         }
 
 
         for (Villain villain : villains) {
             GameClient.game.board.getChildren().remove(villain);
-            GameClient.game.board.getChildren().remove(villain.hpBar);
+//            GameClient.game.board.getChildren().remove(villain.hpBar);
         }
         villains.clear();
         int villainsSize = in.readInt();
@@ -118,10 +118,10 @@ public class GameState {
             villain.setY(in.readDouble());
             villains.add(villain);
             GameClient.game.board.getChildren().add(villain);
-            villain.HP = in.readDouble();
-            villain.setHpBar();
-            villain.changeHpBar();
-            GameClient.game.board.getChildren().add(villain.hpBar);
+//            villain.HP = in.readDouble();
+//            villain.setHpBar();
+//            villain.changeHpBar();
+//            GameClient.game.board.getChildren().add(villain.hpBar);
         }
 
         for (Weapon weapon : weaponsHeroes) {
