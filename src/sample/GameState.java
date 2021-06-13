@@ -73,6 +73,12 @@ public class GameState {
             out.writeDouble(specialObject.getLayoutX());
             out.writeDouble(specialObject.getLayoutY());
         }
+        out.writeInt(boxes.size());
+        for (Box box : boxes) {
+            out.writeInt(box.i);
+            out.writeDouble(box.getLayoutX());
+            out.writeDouble(box.getLayoutY());
+        }
     }
 
 
@@ -166,6 +172,19 @@ public class GameState {
             specialObject.setY(in.readDouble());
             specialObjects.add(specialObject);
             GameClient.game.board.getChildren().add(specialObject);
+        }
+
+        for (Box box : boxes) {
+            GameClient.game.board.getChildren().remove(box);
+        }
+        boxes.clear();
+        int boxesSize = in.readInt();
+        for (int i = 0; i < boxesSize; i += 1) {
+            Box box = Box.getNewBox(in.readInt());
+            box.setX(in.readDouble());
+            box.setY(in.readDouble());
+            boxes.add(box);
+            GameClient.game.board.getChildren().add(box);
         }
     }
 }
