@@ -67,6 +67,12 @@ public class GameState {
             out.writeDouble(weapon.getLayoutX());
             out.writeDouble(weapon.getLayoutY());
         }
+        out.writeInt(specialObjects.size());
+        for (SpecialObject specialObject : specialObjects) {
+            out.writeInt(specialObject.i);
+            out.writeDouble(specialObject.getLayoutX());
+            out.writeDouble(specialObject.getLayoutY());
+        }
     }
 
 
@@ -147,6 +153,19 @@ public class GameState {
             weapon.setY(in.readDouble());
             weaponsVillains.add(weapon);
             GameClient.game.board.getChildren().add(weapon);
+        }
+
+        for (SpecialObject specialObject : specialObjects) {
+            GameClient.game.board.getChildren().remove(specialObject);
+        }
+        specialObjects.clear();
+        int specialObjectsSize = in.readInt();
+        for (int i = 0; i < specialObjectsSize; i += 1) {
+            SpecialObject specialObject = SpecialObject.getNewSpecialObject(in.readInt());
+            specialObject.setX(in.readDouble());
+            specialObject.setY(in.readDouble());
+            specialObjects.add(specialObject);
+            GameClient.game.board.getChildren().add(specialObject);
         }
     }
 }
