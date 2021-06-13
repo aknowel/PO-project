@@ -43,6 +43,7 @@ public class GameState {
     }
 
     public void writeDynamicElementsToStream(DataOutputStream out) throws IOException {
+        out.writeInt(heroes.size());
         for (Hero hero : heroes) {
             out.writeDouble(hero.getLayoutX());
             out.writeDouble(hero.getLayoutY());
@@ -108,7 +109,5 @@ public class GameState {
             villains.add(villain);
             GameClient.game.board.getChildren().add(villain);
         }
-
     }
-
 }
