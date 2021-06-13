@@ -44,7 +44,7 @@ public class GameState {
             out.writeInt(villain.id);
             out.writeDouble(villain.getLayoutX());
             out.writeDouble(villain.getLayoutY());
-//            out.writeDouble(villain.HP);
+            out.writeDouble(villain.HP);
         }
         out.writeInt(weaponsHeroes.size());
         for (Weapon weapon : weaponsHeroes) {
