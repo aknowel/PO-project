@@ -110,6 +110,7 @@ public class Game {
         scoreText = new Text(W / 2, 30, "Score: " + score);
         for (Hero hero : heroes) {
             board.getChildren().add(hero);
+            hero.setBarrier();
         }
         scoreText.setFont(new Font(30));
         scoreText.relocate(W / 2 - scoreText.getBoundsInLocal().getWidth() / 2, 0);

@@ -67,6 +67,18 @@ public abstract class Hero extends ImageView {
             }
         }
     }
+    public void setBarrier()
+    {
+        if(barrierCheck) {
+            barrier = new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
+            barrier.setOpacity(0.50);
+            Game.game.board.getChildren().add(barrier);
+        }
+        else
+        {
+            Game.game.board.getChildren().remove(barrier);
+        }
+    }
     boolean checkHitBySObj(Node specialObj)
     {
         if (specialObj.getBoundsInParent().intersects(getBoundsInParent())){
