@@ -28,18 +28,6 @@ public class GameState {
             out.writeDouble(background.getLayoutX());
             out.writeDouble(background.getLayoutY());
         }
-        out.writeInt(specialObjects.size());
-        for (SpecialObject specialObject : specialObjects) {
-            out.writeInt(specialObject.i);
-            out.writeDouble(specialObject.getLayoutX());
-            out.writeDouble(specialObject.getLayoutY());
-        }
-        out.writeInt(heroes.size());
-        for (Hero hero : heroes) {
-            out.writeInt(hero.id);
-            out.writeDouble(hero.getLayoutX());
-            out.writeDouble(hero.getLayoutY());
-        }
     }
 
     public void writeDynamicElementsToStream(DataOutputStream out) throws IOException {
@@ -90,20 +78,6 @@ public class GameState {
             background.setX(in.readDouble());
             background.setY(in.readDouble());
             backgrounds.add(background);
-        }
-        int specialObjectsSize = in.readInt();
-        for (int i = 0; i < specialObjectsSize; i += 1) {
-            SpecialObject specialObject = SpecialObject.getNewSpecialObject(in.readInt());
-            specialObject.setX(in.readDouble());
-            specialObject.setY(in.readDouble());
-            specialObjects.add(specialObject);
-        }
-        int heroesSize = in.readInt();
-        for (int i = 0; i < heroesSize; i += 1) {
-            Hero hero = Hero.getNewHero(0, 0, 10, in.readInt());
-            hero.setX(in.readDouble());
-            hero.setY(in.readDouble());
-            heroes.add(hero);
         }
     }
 
