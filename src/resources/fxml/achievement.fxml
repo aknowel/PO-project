@@ -53,7 +53,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l4" alignment="CENTER" layoutX="71.0" layoutY="200.0" text="Bat.">
+         <Label fx:id="l4" alignment="CENTER" layoutX="71.0" layoutY="200.0" text="You have killed . bats">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -63,7 +63,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l5" alignment="CENTER" layoutX="71.0" layoutY="265.0" prefHeight="74.0" prefWidth="355.0" text="Mummy.">
+         <Label fx:id="l5" alignment="CENTER" layoutX="71.0" layoutY="265.0" prefHeight="74.0" prefWidth="355.0" text="You have unwraped . mummies">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -73,7 +73,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l6" alignment="CENTER" layoutX="71.0" layoutY="331.0" prefHeight="74.0" prefWidth="463.0" text="Ogre.">
+         <Label fx:id="l6" alignment="CENTER" layoutX="71.0" layoutY="331.0" prefHeight="74.0" prefWidth="463.0" text="You have killed . ogres">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -83,7 +83,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l7" alignment="CENTER" layoutX="71.0" layoutY="395.0" prefHeight="74.0" prefWidth="465.0" text="Orc.">
+         <Label fx:id="l7" alignment="CENTER" layoutX="71.0" layoutY="395.0" prefHeight="74.0" prefWidth="465.0" text="You have killed . orcs">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -93,7 +93,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l8" alignment="CENTER" layoutX="71.0" layoutY="463.0" prefHeight="74.0" prefWidth="463.0" text="Vampire.">
+         <Label fx:id="l8" alignment="CENTER" layoutX="71.0" layoutY="463.0" prefHeight="74.0" prefWidth="463.0" text="You have defeated . vampires">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -103,7 +103,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l9" alignment="CENTER" layoutX="71.0" layoutY="530.0" text="Wizard.">
+         <Label fx:id="l9" alignment="CENTER" layoutX="71.0" layoutY="530.0" text="You have killed . wizards">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -134,7 +134,7 @@
          <ImageView fitHeight="72.0" fitWidth="72.0" layoutX="-1.0" layoutY="531.0" pickOnBounds="true">
             <Image url="@../Images/Villains/wizard.png" />
          </ImageView>
-         <Label fx:id="l10" alignment="CENTER" layoutX="71.0" layoutY="603.0" prefHeight="87.0" prefWidth="468.0" text="Zombie." textOverrun="WORD_ELLIPSIS">
+         <Label fx:id="l10" alignment="CENTER" layoutX="71.0" layoutY="603.0" prefHeight="87.0" prefWidth="468.0" text="You have slain . zombies" textOverrun="WORD_ELLIPSIS">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -161,7 +161,7 @@
                <String fx:value="textfield" />
                <String fx:value="image" />
             </styleClass></Label>
-         <Label fx:id="l13" alignment="CENTER" layoutX="71.0" layoutY="815.0" text="Sword.">
+         <Label fx:id="l13" alignment="CENTER" layoutX="71.0" layoutY="815.0" text="You have swung your sword . times">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
@@ -226,7 +226,7 @@
                <String fx:value="image" />
             </styleClass>
          </Label>
-         <Label fx:id="l20" alignment="CENTER" layoutX="71.0" layoutY="1325.0" prefHeight="330.0" prefWidth="28.0" text="boxes.">
+         <Label fx:id="l20" alignment="CENTER" layoutX="71.0" layoutY="1325.0" prefHeight="330.0" prefWidth="28.0" text="You have picked up . boxes">
             <stylesheets>
                <URL value="@../css/textFieldAchievement.css" />
                <URL value="@../css/border.css" />
