@@ -243,6 +243,10 @@ public abstract class Villain extends ImageView {
             {
                 Game.game.shootingVillains.add(newVillain);
             }
+            if(Game.game.modifier<5)
+            {
+                Game.game.modifier++;
+            }
         }
     }
     public void setHP(double HP)
