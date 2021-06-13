@@ -165,7 +165,7 @@ class SpiderWeb extends SpecialObject
 {
     SpiderWeb()
     {
-        super(new Image("resources/Images/SpecialObjects/SpiderWebMini.png"));
+        super(new Image("resources/Images/SpecialObjects/SpiderWebBig.png"));
         i=2;
     }
     @Override
@@ -181,7 +181,7 @@ class SpiderWeb extends SpecialObject
             }
             else if(hero.slow)
             {
-                if(hero.slowDuration>500)
+                if(hero.slowDuration>350)
                 {
                     hero.speed+=0.75D;
                     hero.slow=false;
@@ -199,7 +199,7 @@ class Swamp extends SpecialObject
 {
     Swamp()
     {
-        super(new Image("resources/Images/SpecialObjects/SpiderWebMini.png"));
+        super(new Image("resources/Images/SpecialObjects/Trap.png"));
         i=3;
     }
     @Override
@@ -215,7 +215,7 @@ class Swamp extends SpecialObject
             }
             else if(hero.slow)
             {
-                if(hero.slowDuration>500)
+                if(hero.slowDuration>350)
                 {
                     hero.slow=false;
                     hero.speed+=1D;
@@ -233,7 +233,7 @@ class SpeedUp extends SpecialObject
 {
     SpeedUp()
     {
-        super(new Image("resources/Images/SpecialObjects/SpiderWebBig.png"));
+        super(new Image("resources/Images/SpecialObjects/Butterflies.png"));
         i=4;
     }
     @Override

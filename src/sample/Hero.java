@@ -33,7 +33,7 @@ public abstract class Hero extends ImageView {
     public double speed=3;
     public int slowDuration=0;
     public int SObjInvulnerability=0;
-    ImageView barrier=new ImageView(new Image("resources/Images/Boxes/Barrier.png"));;
+    ImageView barrier=new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
 
     Hero(double x,double y, int hp) {
         super("resources/Images/Heroes/Thor.png");
