@@ -32,6 +32,7 @@ public class MultiplayerController {
     Scene scene;
     @FXML
     TextField address;
+    static String ad="";
     Alert alert;
 
     private final String style = "-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
@@ -45,72 +46,34 @@ public class MultiplayerController {
     }
 
     public void create_server(ActionEvent event) throws IOException {
-        Pane board = new Pane();
-        Game main = new Game(board, mode, 0, 10, chosenHero);
-        Game.isServerRunning = true;
-
-        Runnable serverRunnable = () -> {
-            try {
-                ServerSocket serverSocket = new ServerSocket(23456);
-                System.out.println("Server created");
-                while (true) {
-                    Socket socket = serverSocket.accept();
-                    System.out.println("socket accepted");
-
-                    DataInputStream in = new DataInputStream(socket.getInputStream());
-                    DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-
-                    Client client = new Client();
-                    client.socket = socket;
-                    client.in = in;
-                    client.out = out;
-                    client.hero = Hero.getNewHero(0, 0, 10, 2);
-
-                    main.clients.add(client);
-                    main.heroes.add(client.hero);
-                    main.gameState.writeStaticElementsToStream(out);
-                }
-            }
-            catch (IOException e) {
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Error! Cannot create server! Try again!");
-                alert.showAndWait();
-                System.out.println(e);
-            }
-        };
-        serverThread = new Thread(serverRunnable);
-        serverThread.start();
-
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        main.play(stage);
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/chooseHero.fxml"));
+        try {
+            root = fxmlLoader.load();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Choose Hero");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stage.show();
     }
 
     public void connect_to_server(ActionEvent event) throws IOException {
+        ad=address.getText();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/resources/fxml/chooseHero2.fxml"));
         try {
-            Socket socket = new Socket(address.getText(), 23456);
-            System.out.println("client created");
-
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-
-            Server server = new Server();
-            server.socket = socket;
-            server.in = in;
-            server.out = out;
-
-            Pane pane = new Pane();
-            GameState gameState = new GameState();
-            gameState.loadStaticElementsFromStream(in);
-            GameClient main = new GameClient(pane, gameState, server);
-
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            main.play(stage);
-        } catch (Throwable e) {
-            alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Error! Cannot connect to server! Try again!");
-            alert.showAndWait();
+            root = fxmlLoader.load();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Choose Hero");
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        stage.show();
     }
 
     public void key_typed() {

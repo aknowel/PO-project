@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.ChooseHeroController">
+   <children>
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true">
+         <image>
+            <Image url="@../Images/Background/image.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="586.0" layoutY="154.0" styleClass="title2" stylesheets="@../css/menu.css" text="Thor">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="314.0" layoutY="154.0" styleClass="title2" stylesheets="@../css/menu.css" text="Warrior">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="781.0" layoutY="154.0" styleClass="title2" stylesheets="@../css/menu.css" text="Assassin">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Button layoutX="596.0" layoutY="471.0" mnemonicParsing="false" onAction="#play" stylesheets="@../css/menu.css" text="Play" />
+      <Button layoutX="583.0" layoutY="534.0" mnemonicParsing="false" onAction="#returnMenu" stylesheets="@../css/menu.css" text="MENU" />
+      <Label layoutX="351.0" layoutY="50.0" styleClass="title" stylesheets="@../css/menu.css" text="Choose your hero" textAlignment="CENTER">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
+      <StackPane fx:id="hero1" layoutX="311.0" layoutY="210.0" onMouseClicked="#chooseWarrior" prefHeight="130.0" prefWidth="150.0" styleClass="image" stylesheets="@../css/image.css">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/Background/WarriorBig.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <StackPane fx:id="hero2" layoutX="554.0" layoutY="210.0" onMouseClicked="#chooseThor" prefHeight="150.0" prefWidth="130.0" styleClass="image" stylesheets="@../css/image.css">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/Background/ThorBig.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <StackPane fx:id="hero3" layoutX="778.0" layoutY="210.0" onMouseClicked="#chooseAssassin" prefHeight="150.0" prefWidth="130.0" styleClass="image" stylesheets="@../css/image.css">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/Background/AssassinBig.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>
