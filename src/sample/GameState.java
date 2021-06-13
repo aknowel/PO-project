@@ -136,6 +136,9 @@ public class GameState {
             GameClient.game.board.getChildren().add(weapon);
         }
 
+        for (Weapon weapon : weaponsVillains) {
+            GameClient.game.board.getChildren().remove(weapon);
+        }
         weaponsVillains.clear();
         int weaponsVillainsSize = in.readInt();
         for (int i = 0; i < weaponsVillainsSize; i += 1) {
