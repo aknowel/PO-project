@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import sample.Counter;
 import sample.Game;
 
 public class ChooseModeController {
@@ -53,6 +54,7 @@ public class ChooseModeController {
     {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/resources/fxml/plotStart.fxml"));
+        gamesCounter();
         try
         {
             root = fxmlLoader.load();
@@ -72,6 +74,7 @@ public class ChooseModeController {
     {
         Pane board=new Pane();
         Game main=new Game(board, mode, 0, 10, chosenHero);
+        gamesCounter();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         main.play(stage);
     }
@@ -97,6 +100,15 @@ public class ChooseModeController {
         resetStyle(hero1);
         resetStyle(hero2);
         resetStyle(hero3);
+    }
+    private void gamesCounter()
+    {
+        switch (chosenHero)
+        {
+            case 1 -> Counter.warriorGames();
+            case 2 -> Counter.thorGames();
+            case 3 -> Counter.assassinGames();
+        }
     }
     private void resetStyle(Node node)
     {

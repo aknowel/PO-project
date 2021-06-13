@@ -43,13 +43,37 @@ public class AchievementController {
     Label l8;
     @FXML
     Label l9;
+    @FXML
+    Label l10;
+    @FXML
+    Label l11;
+    @FXML
+    Label l12;
+    @FXML
+    Label l13;
+    @FXML
+    Label l14;
+    @FXML
+    Label l15;
+    @FXML
+    Label l16;
+    @FXML
+    Label l17;
+    @FXML
+    Label l18;
+    @FXML
+    Label l19;
+    @FXML
+    Label l20;
+    @FXML
+    Label l21;
     File file;
     Scanner scanner;
     Alert alert;
     @FXML
     public void initialize() throws FileNotFoundException {
         file=new File("src/resources/other/achievement.txt");
-        list=Arrays.asList(l1,l2,l3,l4,l5,l6,l7,l8,l9);
+        list=Arrays.asList(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21);
         slist=new ArrayList<>();
         if(file.exists()) {
             scanner = new Scanner(file);
@@ -58,7 +82,7 @@ public class AchievementController {
             }
             scanner.close();
         }
-        if(file.exists() && slist.size()==9) {
+        if(file.exists() && slist.size()==21) {
             for (int i = 0; i < list.size(); i++) {
                 String text = list.get(i).getText();
                 list.get(i).setText(text.replace(".",slist.get(i)));

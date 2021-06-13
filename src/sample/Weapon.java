@@ -11,14 +11,14 @@ public abstract class Weapon extends ImageView {
     Weapon(Image img){
         super(img);
     }
-    static void newEnemyWeapon(Game game)
+    static void newEnemyWeapon()
     {
-        for (Villain currentVillain : game.shootingVillains) {
+        for (Villain currentVillain : Game.game.shootingVillains) {
             double x = currentVillain.getLayoutX();
             double y = currentVillain.getLayoutY();
             int i=Hero.minDistance(currentVillain);
-            double z = game.heroes.get(i).getLayoutX();
-            double v = game.heroes.get(i).getLayoutY();
+            double z = Game.game.heroes.get(i).getLayoutX();
+            double v = Game.game.heroes.get(i).getLayoutY();
             Weapon newWeapon;
             if (currentVillain.getVillainId() == 1||currentVillain.getVillainId() == 3) {
                 newWeapon = new RedBall(z - x, v - y);
@@ -27,8 +27,8 @@ public abstract class Weapon extends ImageView {
                 newWeapon = new Star(z - x, v - y);
             }
             newWeapon.relocate(currentVillain.getLayoutX() , currentVillain.getLayoutY() );
-            game.weaponsVillain.add(newWeapon);
-            game.board.getChildren().add(newWeapon);
+            Game.game.weaponsVillain.add(newWeapon);
+            Game.game.board.getChildren().add(newWeapon);
         }
     }
     public static Hammer newHammer(double x,double y)
@@ -42,6 +42,18 @@ public abstract class Weapon extends ImageView {
     public static RedBall newRedBall(double x,double y)
     {
         return new RedBall(x,y);
+    }
+    public static Star newStar(double x,double y)
+    {
+        return new Star(x,y);
+    }
+    public static Shuriken newShuriken(double x,double y)
+    {
+        return new Shuriken(x,y);
+    }
+    public static Axe newAxe(double x,double y)
+    {
+        return new Axe(x,y);
     }
     public String toString()
     {
@@ -117,14 +129,13 @@ class Shuriken extends Weapon
     Shuriken()
     {
         super(new Image("resources/Images/Weapons/Shuriken.png"));
-        this.id=6;
     }
     Shuriken(double x,double y)
     {
         super(new Image("resources/Images/Weapons/Shuriken.png"));
         this.x=x;
         this.y=y;
-        this.id=5;
+        this.id=6;
     }
 }
 class Axe extends Weapon
@@ -132,13 +143,12 @@ class Axe extends Weapon
     Axe()
     {
         super(new Image("resources/Images/Weapons/Axe.png"));
-        this.id=6;
     }
     Axe(double x,double y)
     {
         super(new Image("resources/Images/Weapons/Axe.png"));
         this.x=x;
         this.y=y;
-        this.id=5;
+        this.id=7;
     }
 }

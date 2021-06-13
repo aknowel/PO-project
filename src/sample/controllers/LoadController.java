@@ -189,11 +189,10 @@ public class LoadController {
     }
     private void dateEmpty(int i)
     {
-        switch (i)
-        {
-            case 1: save1.setText(""); break;
-            case 2: save2.setText(""); break;
-            case 3: save3.setText(""); break;
+        switch (i) {
+            case 1 -> save1.setText("");
+            case 2 -> save2.setText("");
+            case 3 -> save3.setText("");
         }
         deleted=false;
     }
@@ -209,15 +208,32 @@ public class LoadController {
             int heroHp=Integer.parseInt(scanner.next());
             int heroId=Integer.parseInt(scanner.next());
             Hero h=Hero.getNewHero(x, y, heroHp, heroId);
+            h.dx=Double.parseDouble(scanner.next());
+            h.dy=Double.parseDouble(scanner.next());
+            h.swordCheck=Boolean.parseBoolean(scanner.next());
+            Hero.counter=Integer.parseInt(scanner.next());
+            h.side=Boolean.parseBoolean(scanner.next());
+            h.top=Boolean.parseBoolean(scanner.next());
+            h.barrierCheck=Boolean.parseBoolean(scanner.next());
+            h.barrierTime=Integer.parseInt(scanner.next());
+            h.upgrade=Integer.parseInt(scanner.next());
+            h.skillCooldown=Integer.parseInt(scanner.next());
+            h.heroSkill=Boolean.parseBoolean(scanner.next());
+            h.slow=Boolean.parseBoolean(scanner.next());
+            h.speedUp=Boolean.parseBoolean(scanner.next());
+            h.speed=Double.parseDouble(scanner.next());
+            h.slowDuration=Integer.parseInt(scanner.next());
+            h.SObjInvulnerability=Integer.parseInt(scanner.next());
             game = new Game(board, mode, round, h);
             Weapon weapon;
             int length = Integer.parseInt(scanner.next());
             for (int i = 0; i < length; i++) {
                 int id = Integer.parseInt(scanner.next());
-                if (id == 1) {
-                    weapon = Weapon.newHammer(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
-                } else {
-                    weapon = Weapon.newSuperHammer(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                switch(id) {
+                    case 1 -> weapon = Weapon.newHammer(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                    case 2 -> weapon = Weapon.newSuperHammer(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                    case 6 -> weapon = Weapon.newShuriken(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                    default -> weapon = Weapon.newAxe(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
                 }
                 weapon.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
                 game.weaponsHero.add(weapon);
@@ -226,7 +242,13 @@ public class LoadController {
             length = Integer.parseInt(scanner.next());
             for (int i = 0; i < length; i++) {
                 int id = Integer.parseInt(scanner.next());
-                weapon = Weapon.newRedBall(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                if(id==3) {
+                    weapon = Weapon.newRedBall(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                }
+                else
+                {
+                    weapon = Weapon.newStar(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                }
                 weapon.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
                 game.weaponsVillain.add(weapon);
                 board.getChildren().add(weapon);
@@ -234,6 +256,7 @@ public class LoadController {
             Villain villain;
             length = Integer.parseInt(scanner.next());
             for (int i = 0; i < length; i++) {
+                boolean t=false;
                 int id = Integer.parseInt(scanner.next());
                 double hp = Double.parseDouble(scanner.next());
                 switch (id) {
@@ -244,22 +267,53 @@ public class LoadController {
                     }
                     case 2 -> villain = Villain.newSpider(mode);
                     case 3 -> {
-                        villain = Villain.getNewPredatorBoss(mode);
-                        game.boss= Villain.getNewPredatorBoss(mode);
+                        game.boss = Villain.getNewPredatorBoss(mode);
+                        villain=game.boss;
+                        t=true;
                     }
                     case 4 -> villain = Villain.newZombie(mode);
-                    case 5 -> villain = Villain.newWizard(mode);
+                    case 5 -> {
+                        villain = Villain.newWizard(mode);
+                        game.shootingVillains.add(villain);
+                    }
                     case 6 -> villain = Villain.newVampire(mode);
                     case 7 -> villain = Villain.newOrc(mode);
                     case 8 -> villain = Villain.newOgre(mode);
                     case 9 -> villain = Villain.newMummy(mode);
                     case 10 -> villain = Villain.newBat(mode);
-                    case 11 -> villain = Villain.getNewSpiderBoss(mode);
-                    case 12 -> villain = Villain.getNewVampireBoss(mode);
-                    case 13 -> villain = Villain.getNewLoki(mode);
+                    case 11 -> {
+                        game.boss = Villain.getNewSpiderBoss(mode);
+                        villain=game.boss;
+                        t=true;
+                    }
+                    case 12 -> {
+                        game.boss = Villain.getNewVampireBoss(mode);
+                        villain=game.boss;
+                        t=true;
+                    }
+                    case 13 -> {
+                        game.boss = Villain.getNewLoki(mode);
+                        villain=game.boss;
+                        t=true;
+                    }
+                    case 14 -> {
+                        game.boss = Villain.getNewBombman(mode);
+                        villain=game.boss;
+                        t=true;
+                    }
+                    case 15 -> {
+                        game.boss = Villain.getNewOgreBoss(mode);
+                        villain=game.boss;
+                        t=true;
+                    }
+                    case 16 -> villain=Villain.newSpider2(mode);
                     default -> throw new IllegalStateException("Unexpected value: " + id);
                 }
                 villain.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                villain.setCooldownSO(Integer.parseInt(scanner.next()));
+                if(t) {
+                    villain.setSpawn(Integer.parseInt(scanner.next()));
+                }
                 villain.setHP(hp);
                 game.villains.add(villain);
                 board.getChildren().add(villain);
@@ -273,6 +327,7 @@ public class LoadController {
                     case 0 -> box = Box.newEmptyBox();
                     case 1 -> box = Box.newUpgradeBox();
                     case 2 -> box = Box.newHeartBox();
+                    case 3 -> box= Box.newBarrierBox();
                     default -> throw new IllegalStateException("Unexpected value: " + id);
                 }
                 box.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
@@ -288,12 +343,30 @@ public class LoadController {
                 game.backgroundObjects.add(backgroundObj);
                 board.getChildren().add(backgroundObj);
             }
+            length = Integer.parseInt(scanner.next());
+            for (int i = 0; i < length; i++) {
+                int id = Integer.parseInt(scanner.next());
+                SpecialObject specialObject;
+                if(id!=6) {
+                    specialObject = SpecialObject.getNewSpecialObject(id);
+                }
+                else
+                {
+                    specialObject=SpecialObject.getNewBomb(Double.parseDouble(scanner.next()),Double.parseDouble(scanner.next()));
+                }
+                specialObject.setLifetime(Integer.parseInt(scanner.next()));
+                specialObject.setDuration(Integer.parseInt(scanner.next()));
+                specialObject.relocate(Double.parseDouble(scanner.next()), Double.parseDouble(scanner.next()));
+                game.specialObjects.add(specialObject);
+                board.getChildren().add(specialObject);
+            }
             game.modifier = Integer.parseInt(scanner.next());
             game.villainCounter = Integer.parseInt(scanner.next());
             game.score = Integer.parseInt(scanner.next());
             game.isBoss = Boolean.parseBoolean(scanner.next());
             //game.upgrade = Integer.parseInt(scanner.next());
             game.time = Integer.parseInt(scanner.next());
+            game.counter=Integer.parseInt(scanner.next());
             game.play(stage);
         }
         catch (Exception e)

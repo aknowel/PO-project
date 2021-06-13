@@ -45,11 +45,26 @@ public abstract class Villain extends ImageView {
     {
         return new VampireBoss(mode);
     }
+    public static Boss getNewBombman(Double mode)
+    {
+        return new Bombman(mode);
+    }
+    public static Boss getNewOgreBoss(Double mode)
+    {
+        return new OgreBoss(mode);
+    }
     public boolean isAlive()
     {
         return HP>0;
     }
     public abstract void changeHpBar();
+    public void setSpawn(int spawn)
+    {
+        if(this instanceof Boss) {
+            Boss boss = (Boss) this;
+            boss.spawn=spawn;
+        }
+    }
     public static void cooldownSODecrease()
     {
         for(Villain villain:Game.game.villains)
@@ -95,7 +110,7 @@ public abstract class Villain extends ImageView {
                     Game.game.counter++;
                     Game.game.scoreText.setText("Score: " + Game.game.score);
                     if (isShooting(this)) {
-                        Game.game.shootingVillains.remove();
+                        Game.game.shootingVillains.remove(this);
                         if (randomize.nextInt(2) == 1) {
                             shout();
                         }
@@ -146,56 +161,58 @@ public abstract class Villain extends ImageView {
         Iterator<Villain> y=Game.game.villains.iterator();
         while(y.hasNext()) {
             Villain currentVillain = y.next();
-            if (Game.game.heroes.get(0).sword.getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
-                currentVillain.hp();
-                currentVillain.changeHpBar();
-                if (!currentVillain.isAlive()) {
-                    int i = Game.randomizer.nextInt(20);
-                    if (i < 3) {
-                        Box newBox = Box.getNewBox(i);
-                        newBox.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY());
-                        Game.game.boxes.add(newBox);
-                        Game.game.board.getChildren().add(newBox);
-                    }
-                    Game.game.board.getChildren().remove(currentVillain.hpBar);
-                    Game.game.board.getChildren().remove(currentVillain);
-                    check(currentVillain.id);
-                    y.remove();
-                    Game.game.score++;
-                    Game.game.counter++;
-                    Game.game.scoreText.setText("Score: " + Game.game.score);
-                    if (isShooting(currentVillain)) {
-                        Game.game.shootingVillains.remove(currentVillain);
-                        if (randomize.nextInt(2) == 1) {
-                            currentVillain.shout();
+            for(Hero hero: Game.game.heroes) {
+                if (hero.sword.getBoundsInParent().intersects(currentVillain.getBoundsInParent())) {
+                    currentVillain.hp();
+                    currentVillain.changeHpBar();
+                    if (!currentVillain.isAlive()) {
+                        int i = Game.randomizer.nextInt(20);
+                        if (i < 3) {
+                            Box newBox = Box.getNewBox(i);
+                            newBox.relocate(currentVillain.getLayoutX(), currentVillain.getLayoutY());
+                            Game.game.boxes.add(newBox);
+                            Game.game.board.getChildren().add(newBox);
+                        }
+                        Game.game.board.getChildren().remove(currentVillain.hpBar);
+                        Game.game.board.getChildren().remove(currentVillain);
+                        check(currentVillain.id);
+                        y.remove();
+                        Game.game.score++;
+                        Game.game.counter++;
+                        Game.game.scoreText.setText("Score: " + Game.game.score);
+                        if (isShooting(currentVillain)) {
+                            Game.game.shootingVillains.remove(currentVillain);
+                            if (randomize.nextInt(2) == 1) {
+                                currentVillain.shout();
+                            }
                         }
                     }
                 }
             }
         }
     }
-    public static void newVillain(Game game, boolean z)
+    public static void newVillain(boolean z)
     {
-        if (game.villainCounter % game.modifier == 0) {
-            Villain newVillain = game.villainFactory.produce(Game.randomizer.nextInt((z) ? 10 : 7),Game.game.mode);
+        if (Game.game.villainCounter % Game.game.modifier == 0) {
+            Villain newVillain = Game.game.villainFactory.produce(Game.randomizer.nextInt((z) ? 10 : 7),Game.game.mode);
             int r = Game.randomizer.nextInt(4);
             switch (r) {
                 case 0 -> {
                     newVillain.relocate(Game.W -30d, Math.random() * (Game.H - newVillain.getBoundsInLocal().getHeight()));
-                    game.modifier--;
+                    Game.game.modifier--;
                 }
                 case 1 -> {
                     newVillain.relocate(0, Math.random() * (Game.H - newVillain.getBoundsInLocal().getHeight()));
-                    game.modifier--;
+                    Game.game.modifier--;
                 }
                 case 2 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), Game.H - 30);
                 case 3 -> newVillain.relocate(Math.random() * (Game.W - newVillain.getBoundsInLocal().getWidth()), 0);
             }
-            game.villains.add(newVillain);
+            Game.game.villains.add(newVillain);
             Game.game.board.getChildren().add(newVillain);
             if(newVillain instanceof ShootingVillains)
             {
-                game.shootingVillains.add(newVillain);
+                Game.game.shootingVillains.add(newVillain);
             }
         }
     }
@@ -243,9 +260,16 @@ public abstract class Villain extends ImageView {
     {
         return new Zombie(mode);
     }
+    public static Spider2 newSpider2 (double mode) {
+        return new Spider2(mode);
+    }
     public static boolean isShooting(Villain villain)
     {
         return villain.id==1||villain.id==5;
+    }
+    public void setCooldownSO(int cooldownSO)
+    {
+        this.cooldownSO=cooldownSO;
     }
     public int getVillainId()
     {
@@ -262,6 +286,13 @@ public abstract class Villain extends ImageView {
             case 0 -> Counter.killedSkull();
             case 1 -> Counter.killedPredator();
             case 2 -> Counter.killedSpider();
+            case 10 -> Counter.killedBat();
+            case 9 -> Counter.killedMummy();
+            case 8 -> Counter.killedOgre();
+            case 7 -> Counter.killedOrc();
+            case 5 -> Counter.killedVampire();
+            case 6 -> Counter.killedWizard();
+            case 4 -> Counter.killedZombie();
         }
     }
     public void shout()
@@ -271,7 +302,7 @@ public abstract class Villain extends ImageView {
     }
     public String toString()
     {
-        return this.id + " "  + this.HP+ " "+ this.getLayoutX()+ " " + this.getLayoutY();
+        return this.id + " "  + this.HP+ " "+ this.getLayoutX()+ " " + this.getLayoutY()+ " " + cooldownSO;
     }
 }
 class Skull extends Villain{
@@ -508,6 +539,10 @@ abstract class Boss extends Villain
     {
 
     }
+    public String toString()
+    {
+        return this.id + " "  + this.HP+ " "+ this.getLayoutX()+ " " + this.getLayoutY()+ " " + cooldownSO+ " "+spawn;
+    }
 }
 abstract class ShootingVillains extends Villain
 {
@@ -666,7 +701,7 @@ class Bombman extends Boss
 {
     Bombman(Double mode)
     {
-        super(new Image("/resources/Images/Villains/VampireBig.png"));
+        super(new Image("/resources/Images/Villains/Bomber.png"));
         this.HP=25*(mode+1);
         this.speed=-0.5D;
         this.id=14;
@@ -708,7 +743,7 @@ class OgreBoss extends Boss
 {
     OgreBoss(Double mode)
     {
-        super(new Image("/resources/Images/Villains/VampireBig.png"));
+        super(new Image("/resources/Images/Villains/OgreBoss.png"));
         this.HP=70*(mode+1);
         this.speed=-1.2D;
         this.id=15;

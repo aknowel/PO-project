@@ -49,7 +49,6 @@ public class Game {
     static Random randomize = new Random();
     public VillainFactory villainFactory;
     public int counter = 0;
-    public boolean sword=false;
 
     public GameState gameState = new GameState();
 
@@ -104,7 +103,6 @@ public class Game {
     public void play(Stage stage) {
         Hero.counter=0;
         Counter.games();
-        Counter.thorGames();
         Game.game.mode = mode;
         scoreText = new Text(W / 2, 30, "Score: " + score);
         for (Hero hero : heroes) {
@@ -120,6 +118,16 @@ public class Game {
             hp_texts.get(heroes.get(i)).relocate(10 + 150 * i, 0);
             board.getChildren().add(hp_texts.get(heroes.get(i)));
             board.getChildren().add(heroes.get(i).hpBar);
+        }
+
+        for(Villain villain:villains)
+        {
+            villain.changeHpBar();
+        }
+
+        for (SpecialObject specialObject:specialObjects)
+        {
+            specialObject.setImage();
         }
 
         board.getChildren().add(scoreText);
@@ -193,7 +201,7 @@ public class Game {
 
                     if (counter < 2 || round==0) {
                         villainCounter++;
-                        Villain.newVillain(game, round==0);
+                        Villain.newVillain(round==0);
                     } else if (villains.size() == 0) {
                         if (!isBoss) {
                             isBoss = true;
@@ -231,20 +239,20 @@ public class Game {
                         e.printStackTrace();
                     }
                     if (time == 32 - 8 * mode) {
-                        Weapon.newEnemyWeapon(game);
+                        Weapon.newEnemyWeapon();
                         time = 0;
                     } else {
                         time++;
                     }
                     for (Hero hero : heroes) {
-                        hero.checkHitHero(game);
+                        hero.checkHitHero();
                         hero.skill();
+                        if(Hero.isWarrior(hero) && Hero.counter%7==0) {
+                            Villain.swordCheck();
+                        }
                     }
                     Villain.checkHitVillains();
-                    if(Hero.isWarrior(heroes.get(0)) && Hero.counter%7==0) {
-                        Villain.swordCheck();
-                    }
-                    Box.checkBox(game);
+                    Box.checkBox();
                     gameOver(this);
                 }
                 cnt += 1;
@@ -254,34 +262,39 @@ public class Game {
     }
 
     void gameOver(AnimationTimer timer) {
-        if (heroes.get(0).hp <= 0) {
-            timer.stop();
-            stop = true;
-            Sounds sounds = new Sounds();
-            sounds.playGameOver();
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            if(round>0) {
-                fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOver.fxml"));
-                try {
-                    root = fxmlLoader.load();
-                    root.setLayoutX(445);
-                    root.setLayoutY(193);
-                    board.getChildren().add(root);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        for(Hero hero:Game.game.heroes) {
+            if (hero.hp <= 0 && Game.game.heroes.size()==1) {
+                timer.stop();
+                stop = true;
+                Sounds sounds = new Sounds();
+                sounds.playGameOver();
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                if (round > 0) {
+                    fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOver.fxml"));
+                    try {
+                        root = fxmlLoader.load();
+                        root.setLayoutX(445);
+                        root.setLayoutY(193);
+                        board.getChildren().add(root);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOverSurvi.fxml"));
+                    try {
+                        root = fxmlLoader.load();
+                        root.setLayoutX(445);
+                        root.setLayoutY(193);
+                        board.getChildren().add(root);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            else
+            else if(hero.hp<=0 && Game.game.heroes.size()>1)
             {
-                fxmlLoader.setLocation(getClass().getResource("/resources/fxml/gameOverSurvi.fxml"));
-                try {
-                    root = fxmlLoader.load();
-                    root.setLayoutX(445);
-                    root.setLayoutY(193);
-                    board.getChildren().add(root);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Game.game.board.getChildren().remove(hero);
+                Game.game.heroes.remove(hero);
             }
         }
     }
