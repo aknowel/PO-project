@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -22,6 +23,7 @@ public class GameClient extends Game {
         specialObjects = gameState.specialObjects;
         weaponsHero = gameState.weaponsHeroes;
         weaponsVillain = game.weaponsVillain;
+        game = this;
 
         BackgroundSetter.setBackgroundObjects(gameState.map_id);
         BackgroundSetter.setBackground(gameState.map_id);
@@ -55,5 +57,7 @@ public class GameClient extends Game {
         stage.setScene(scene);
         stage.setTitle("Ragnarok");
         stage.show();
+        System.out.println("After show");
+
     }
 }
