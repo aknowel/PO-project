@@ -75,6 +75,7 @@ public class ChooseHero2Controller {
             GameState gameState = new GameState();
             gameState.loadStaticElementsFromStream(in);
             GameClient main = new GameClient(pane, gameState, server);
+            main.server.out.writeInt(chosenHero);
 
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             main.play(stage);

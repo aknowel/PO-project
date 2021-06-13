@@ -86,7 +86,7 @@ public class ChooseHeroController {
                     client.socket = socket;
                     client.in = in;
                     client.out = out;
-                    client.hero = Hero.getNewHero(0, 0, 10, 2);
+                    client.hero = Hero.getNewHero(0, 0, 10, client.in.readInt());
 
                     main.clients.add(client);
                     main.heroes.add(client.hero);
