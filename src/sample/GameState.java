@@ -78,8 +78,8 @@ public class GameState {
         int backgroundsSize = in.readInt();
         for (int i = 0; i < backgroundsSize; i += 1) {
             Background background = Background.newBackground(in.readInt());
-            background.setX(in.readDouble());
-            background.setY(in.readDouble());
+            background.setLayoutX(in.readDouble());
+            background.setLayoutY(in.readDouble());
             backgrounds.add(background);
         }
     }
@@ -93,8 +93,8 @@ public class GameState {
         int heroesSize = in.readInt();
         for (int i = 0; i < heroesSize; i += 1) {
             Hero hero = Hero.getNewHero(0, 0, 10, in.readInt());
-            hero.setX(in.readDouble());
-            hero.setY(in.readDouble());
+            hero.setLayoutX(in.readDouble());
+            hero.setLayoutY(in.readDouble());
             hero.barrierCheck = in.readBoolean();
             heroes.add(hero);
             GameClient.game.board.getChildren().add(hero);
@@ -114,8 +114,8 @@ public class GameState {
         int villainsSize = in.readInt();
         for (int i = 0; i < villainsSize; i += 1) {
             Villain villain = Villain.getNewVillain(in.readInt());
-            villain.setX(in.readDouble());
-            villain.setY(in.readDouble());
+            villain.setLayoutX(in.readDouble());
+            villain.setLayoutY(in.readDouble());
             villains.add(villain);
             GameClient.game.board.getChildren().add(villain);
 //            villain.HP = in.readDouble();
@@ -131,8 +131,8 @@ public class GameState {
         int weaponHeroesSize = in.readInt();
         for (int i = 0; i < weaponHeroesSize; i += 1) {
             Weapon weapon = Weapon.getNewWeapon(in.readInt());
-            weapon.setX(in.readDouble());
-            weapon.setY(in.readDouble());
+            weapon.setLayoutX(in.readDouble());
+            weapon.setLayoutY(in.readDouble());
             weaponsHeroes.add(weapon);
             GameClient.game.board.getChildren().add(weapon);
         }
@@ -144,8 +144,8 @@ public class GameState {
         int weaponsVillainsSize = in.readInt();
         for (int i = 0; i < weaponsVillainsSize; i += 1) {
             Weapon weapon = Weapon.getNewWeapon(in.readInt());
-            weapon.setX(in.readDouble());
-            weapon.setY(in.readDouble());
+            weapon.setLayoutX(in.readDouble());
+            weapon.setLayoutY(in.readDouble());
             weaponsVillains.add(weapon);
             GameClient.game.board.getChildren().add(weapon);
         }
@@ -157,8 +157,8 @@ public class GameState {
         int specialObjectsSize = in.readInt();
         for (int i = 0; i < specialObjectsSize; i += 1) {
             SpecialObject specialObject = SpecialObject.getNewSpecialObject(in.readInt());
-            specialObject.setX(in.readDouble());
-            specialObject.setY(in.readDouble());
+            specialObject.setLayoutX(in.readDouble());
+            specialObject.setLayoutY(in.readDouble());
             specialObjects.add(specialObject);
             GameClient.game.board.getChildren().add(specialObject);
         }
@@ -170,8 +170,8 @@ public class GameState {
         int boxesSize = in.readInt();
         for (int i = 0; i < boxesSize; i += 1) {
             Box box = Box.getNewBox(in.readInt());
-            box.setX(in.readDouble());
-            box.setY(in.readDouble());
+            box.setLayoutX(in.readDouble());
+            box.setLayoutY(in.readDouble());
             boxes.add(box);
             GameClient.game.board.getChildren().add(box);
         }
