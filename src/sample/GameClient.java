@@ -23,8 +23,10 @@ public class GameClient extends Game {
         weaponsHero = gameState.weaponsHeroes;
         weaponsVillain = game.weaponsVillain;
 
-        BackgroundSetter.setBackgroundObjects(gameState.map_id);
         BackgroundSetter.setBackground(gameState.map_id);
+        for (Background background : backgroundObjects) {
+            game.board.getChildren().add(background);
+        }
     }
 
 
