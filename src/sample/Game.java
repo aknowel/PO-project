@@ -22,14 +22,16 @@ public class Game {
 
     static final Random randomizer = new Random();
 
-    public final Vector<Hero> heroes = new Vector<>();
-    public final LinkedList<Weapon> weaponsHero = new LinkedList<>();
-    public final LinkedList<Weapon> weaponsVillain = new LinkedList<>();
-    public final LinkedList<Villain> villains = new LinkedList<>();
-    public final LinkedList<Villain> shootingVillains = new LinkedList<>();
-    public final LinkedList<Background> backgroundObjects = new LinkedList<>();
-    public final LinkedList<Box> boxes = new LinkedList<>();
-    public final LinkedList<SpecialObject> specialObjects = new LinkedList<>();
+    public LinkedList<Client> clients = new LinkedList<>();
+
+    public Vector<Hero> heroes = new Vector<>();
+    public LinkedList<Weapon> weaponsHero = new LinkedList<>();
+    public LinkedList<Weapon> weaponsVillain = new LinkedList<>();
+    public LinkedList<Villain> villains = new LinkedList<>();
+    public LinkedList<Villain> shootingVillains = new LinkedList<>();
+    public LinkedList<Background> backgroundObjects = new LinkedList<>();
+    public LinkedList<Box> boxes = new LinkedList<>();
+    public LinkedList<SpecialObject> specialObjects = new LinkedList<>();
     public Pane board;
     public AnimationTimer timer;
     public Text scoreText;
@@ -39,7 +41,7 @@ public class Game {
     public boolean isBoss = false;
     public boolean pause = false, stop = false;
     public int time = 0; //upgrade = 0;
-    public final int round;
+    public int round;
     public Double mode;
     AnchorPane root;
     public Boss boss = null;
@@ -48,6 +50,15 @@ public class Game {
     public VillainFactory villainFactory;
     public int counter = 0;
     public boolean sword=false;
+
+    public GameState gameState = new GameState();
+
+    public Game(Pane board) {
+        this.mode = 0D;
+        this.board = board;
+        this.round = 0;
+        game = this;
+    }
 
     public Game(Pane board, Double mode, int round, int hp, int heroId) {
         this.mode = mode;
@@ -59,6 +70,15 @@ public class Game {
         BackgroundSetter.setBackground(round);
         villainFactory = VillainFactory.getVillainFactory(round);
 
+        gameState.map_id = round;
+        gameState.backgrounds = backgroundObjects;
+        gameState.heroes = heroes;
+        gameState.villains = villains;
+        gameState.shootingVillains = shootingVillains;
+        gameState.boxes = boxes;
+        gameState.specialObjects = specialObjects;
+        gameState.weaponsHeroes = weaponsHero;
+        gameState.weaponsVillains = weaponsVillain;
     }
 
     public Game(Pane board, Double mode, int round, Hero h) {
@@ -69,6 +89,16 @@ public class Game {
         heroes.add(h);
         BackgroundSetter.setBackground(round);
         villainFactory = VillainFactory.getVillainFactory(round);
+
+        gameState.map_id = round;
+        gameState.backgrounds = backgroundObjects;
+        gameState.heroes = heroes;
+        gameState.villains = villains;
+        gameState.shootingVillains = shootingVillains;
+        gameState.boxes = boxes;
+        gameState.specialObjects = specialObjects;
+        gameState.weaponsHeroes = weaponsHero;
+        gameState.weaponsVillains = weaponsVillain;
     }
 
     public void play(Stage stage) {

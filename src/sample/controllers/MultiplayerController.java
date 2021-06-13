@@ -1,4 +1,4 @@
-/*package sample.controllers;
+package sample.controllers;
 
 
 import javafx.event.ActionEvent;
@@ -36,10 +36,8 @@ public class MultiplayerController {
     private static int chosenHero=2;
 
     public void create_server(ActionEvent event) throws IOException {
-        Server.serverCreated = true;
-        Pane pane = new Pane();
-        GameState gameState = new GameState();
-        GameAsServer main = new GameAsServer(pane, gameState);
+        Pane board=new Pane();
+        Game main = new Game(board, mode, 0, 10, chosenHero);
 
         Runnable serverThread = () -> {
             try {
@@ -58,7 +56,7 @@ public class MultiplayerController {
                     client.out = out;
 
                     main.clients.add(client);
-                    gameState.writeStaticElementsToStream(out);
+                    main.gameState.writeStaticElementsToStream(out);
                 }
             } catch (IOException e) {
                 System.out.println(e);
@@ -85,7 +83,7 @@ public class MultiplayerController {
         Pane pane = new Pane();
         GameState gameState = new GameState();
         gameState.loadStaticElementsFromStream(in);
-        GameAsClient main = new GameAsClient(pane, gameState, server);
+        GameClient main = new GameClient(pane, gameState, server);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         main.play(stage);
@@ -110,4 +108,4 @@ public class MultiplayerController {
         }
         stage.show();
     }
-}*/
+}
