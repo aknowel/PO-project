@@ -121,7 +121,6 @@ public class GameState {
             villain.HP = in.readDouble();
             villain.setHpBar();
             villain.changeHpBar();
-            GameClient.game.board.getChildren().add(villain.hpBar);
         }
 
         for (Weapon weapon : weaponsHeroes) {
