@@ -45,6 +45,7 @@ public class GameState {
     public void writeDynamicElementsToStream(DataOutputStream out) throws IOException {
         out.writeInt(heroes.size());
         for (Hero hero : heroes) {
+            out.writeInt(hero.id);
             out.writeDouble(hero.getLayoutX());
             out.writeDouble(hero.getLayoutY());
         }
