@@ -153,10 +153,12 @@ class TNT extends SpecialObject {
             else if(duration<150)
             {
                 boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionBig.png"));
+                boom.relocate(boom.getLayoutX()-10, boom.getLayoutY()-6);
             }
             else
             {
                 boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionGiga.png"));
+                boom.relocate(boom.getLayoutX()-7, boom.getLayoutY()-10);
             }
         }
     }
@@ -417,7 +419,9 @@ class ShockWave extends SpecialObject {
     {
         if(lifetime<=300)
         {
+            double size=getBoundsInLocal().getWidth();
             this.setImage(new Image("resources/Images/SpecialObjects/BrownCircleBig.png"));
+            this.relocate(getLayoutX()+size/2-getBoundsInLocal().getWidth()/2,getLayoutY()+size/2-getBoundsInLocal().getHeight()/2);
         }
     }
 }
