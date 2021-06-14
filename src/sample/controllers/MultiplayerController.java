@@ -6,26 +6,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import sample.*;
 
-import java.net.*;
-import java.io.*;
 
 public class MultiplayerController {
-    @FXML
-    AnchorPane pane;
-    @FXML
-    StackPane hero1;
-    @FXML
-    StackPane hero2;
-    @FXML
-    StackPane hero3;
 
     Stage stage;
     AnchorPane root;
@@ -33,19 +19,15 @@ public class MultiplayerController {
     @FXML
     TextField address;
     static String ad="";
-    Alert alert;
 
-    private final String style = "-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
     public static double mode = 0D;
-    private static int chosenHero = 2;
-    public static Thread serverThread;
 
     @FXML
-    public void initialize() throws FileNotFoundException {
+    public void initialize()  {
         address.setText("172.16.15.19");
     }
 
-    public void create_server(ActionEvent event) throws IOException {
+    public void create_server(ActionEvent event)  {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/resources/fxml/chooseHero.fxml"));
@@ -60,7 +42,7 @@ public class MultiplayerController {
         stage.show();
     }
 
-    public void connect_to_server(ActionEvent event) throws IOException {
+    public void connect_to_server(ActionEvent event)  {
         ad=address.getText();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();

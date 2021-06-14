@@ -12,11 +12,11 @@ public class OptionsController {
     Stage stage;
     AnchorPane root;
     Scene scene;
-    public void easyMode(ActionEvent event)
+    public void easyMode()
     {
         ChooseModeController.mode=0D;
     }
-    public void hardMode(ActionEvent event)
+    public void hardMode()
     {
         ChooseModeController.mode=1D;
     }

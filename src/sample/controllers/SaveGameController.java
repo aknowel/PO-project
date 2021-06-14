@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class SaveGameController {
     @FXML
     AnchorPane root;
@@ -72,7 +73,7 @@ public class SaveGameController {
     }
     public void setSave1() throws IOException {
         result=createAlert(1);
-        if(result.orElse(null).equals(ButtonType.YES)) {
+        if(ButtonType.YES.equals(result.orElse(null))) {
             save = new File("src/resources/other/save1.txt");
             date(0);
             save.delete();
@@ -82,7 +83,7 @@ public class SaveGameController {
     }
     public void setSave2() throws IOException {
         result=createAlert(2);
-        if(result.orElse(null).equals(ButtonType.YES)) {
+        if(ButtonType.YES.equals(result.orElse(null))) {
             save = new File("src/resources/other/save2.txt");
             date(1);
             save.delete();
@@ -92,7 +93,7 @@ public class SaveGameController {
     }
     public void setSave3() throws IOException {
         result=createAlert(3);
-        if(result.orElse(null).equals(ButtonType.YES)) {
+        if(ButtonType.YES.equals(result.orElse(null))) {
             save = new File("src/resources/other/save3.txt");
             date(2);
             save.delete();
@@ -104,11 +105,10 @@ public class SaveGameController {
     {
         alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure ?", ButtonType.YES,ButtonType.CANCEL);
         alert.setTitle("Save");
-        switch (i)
-        {
-            case 1: alert.setHeaderText("Save game to first slot ?"); break;
-            case 2: alert.setHeaderText("Save game to second slot ?"); break;
-            case 3: alert.setHeaderText("Save game to third slot ?"); break;
+        switch (i) {
+            case 1 -> alert.setHeaderText("Save game to first slot ?");
+            case 2 -> alert.setHeaderText("Save game to second slot ?");
+            case 3 -> alert.setHeaderText("Save game to third slot ?");
         }
         alert.setX(750);
         alert.setY(350);

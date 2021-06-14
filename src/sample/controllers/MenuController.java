@@ -6,11 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sample.Counter;
-import sample.Game;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -119,6 +116,7 @@ public class MenuController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void achievements() throws IOException {
         file=new File("src/resources/other/achievement.txt");
         list=new ArrayList<>();

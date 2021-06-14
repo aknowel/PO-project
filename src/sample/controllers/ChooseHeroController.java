@@ -39,10 +39,6 @@ public class ChooseHeroController {
     public static boolean clientJoined = false;
     public static Hero newHero = null;
 
-    static int getHeroId()
-    {
-        return chosenHero;
-    }
     public void chooseWarrior()
     {
         resetAll();
@@ -101,7 +97,6 @@ public class ChooseHeroController {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText("Error! Cannot create server! Try again!");
                 alert.showAndWait();
-                System.out.println(e);
             }
         };
         serverThread = new Thread(serverRunnable);
@@ -133,15 +128,7 @@ public class ChooseHeroController {
         resetStyle(hero2);
         resetStyle(hero3);
     }
-    private void gamesCounter()
-    {
-        switch (chosenHero)
-        {
-            case 1 -> Counter.warriorGames();
-            case 2 -> Counter.thorGames();
-            case 3 -> Counter.assassinGames();
-        }
-    }
+
     private void resetStyle(Node node)
     {
         node.setStyle("");

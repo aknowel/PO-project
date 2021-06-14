@@ -43,18 +43,7 @@ public abstract class Weapon extends ImageView {
             default -> throw new IllegalStateException("Unexpected value: " + id);
         };
     }
-    public static Weapon getNewWeapon(int id,double x,double y)
-    {
-        return switch(id) {
-            case 1 -> new Hammer(x,y);
-            case 2 -> new SuperHammer(x,y);
-            case 3 -> new RedBall(x,y);
-            case 4 -> new Star(x,y);
-            case 6 -> new Shuriken(x,y);
-            case 7 -> new Axe(x,y);
-            default -> throw new IllegalStateException("Unexpected value: " + id);
-        };
-    }
+
     public static Hammer newHammer(double x,double y)
     {
         return new Hammer(x,y);

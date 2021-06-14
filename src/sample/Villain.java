@@ -75,7 +75,7 @@ public abstract class Villain extends ImageView {
             case 10 -> villain=Villain.newBat(0D);
             case 16 -> villain=Villain.newSpider2(0D);
             default -> throw new IllegalStateException("Unexpected value: " + id);
-        };
+        }
         return villain;
     }
     public boolean isAlive()

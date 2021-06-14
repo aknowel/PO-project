@@ -50,7 +50,7 @@ public class ChooseModeController {
         hero3.setStyle(style);
         chosenHero=3;
     }
-    public void playStory(ActionEvent event)
+    public void playStory()
     {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/resources/fxml/plotStart.fxml"));

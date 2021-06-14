@@ -10,35 +10,41 @@ import java.util.Random;
 
 public abstract class Hero extends ImageView {
     boolean goNorth, goSouth, goEast, goWest;
-    HpBar hpBar=new HpBar();
     public double pos_x;
     public double pos_y;
     public double dx;
     public double dy;
     public int hp;
-    Sword sword;
-    public boolean swordCheck=false;
     final public int maxHp=10;
     public int id=2;
+
     public int counter;
-    public boolean side;
-    public boolean top;
-    public boolean barrierCheck=false;
-    public int barrierTime=0;
     public int upgrade=0;
+
     public int skillCooldown=0;
     public boolean heroSkill=false;
+
+    public double speed=3;
     public boolean slow=false;
     public boolean speedUp=false;
-    public double speed=3;
     public int slowDuration=0;
     public int SObjInvulnerability=0;
-    public boolean deleted=false;
+
+    public boolean side, top;
+    Sword sword;
+    public boolean swordCheck=false;
+
+    public boolean barrierCheck=false;
+    public int barrierTime=0;
     ImageView barrier=new ImageView(new Image("resources/Images/Boxes/Barrier.png"));
+
+    HpBar hpBar=new HpBar();
     private static final String hpFull="resources/Images/HpBars/HpBarFull",
     hp23="resources/Images/HpBars/HpBar23",
     hp13="resources/Images/HpBars/HpBar13",
     hpCrit="resources/Images/HpBars/HpBarCritic";
+
+    public boolean deleted=false;
 
     Hero(double x,double y, int hp) {
         super("resources/Images/Heroes/Thor.png");

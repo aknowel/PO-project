@@ -86,16 +86,6 @@ public class GameClient extends Game {
             else if (event.getCode().equals(KeyBinds.A)) goWest = true;
             else if (event.getCode().equals(KeyBinds.D)) goEast = true;
             else if(event.getCode().equals(KeyBinds.SPACE)) sth=true;
-            /*else if (event.getCode().equals(KeyBinds.P)) {
-                if (!pause & !stop) {
-                    timer.stop();
-                    pause = true;
-                } else if (!stop) {
-                    board.getChildren().remove(root);
-                    pause = false;
-                    timer.start();
-                }
-            }*/
         });
 
         scene.setOnKeyReleased(event -> {
@@ -147,10 +137,9 @@ public class GameClient extends Game {
                     server.out.writeDouble(dy);
                     int size=newWeapons.size();
                     server.out.writeInt(size);
-                    for(int i=0;i<size;i++)
-                    {
-                        server.out.writeDouble(newWeapons.get(i).x);
-                        server.out.writeDouble(newWeapons.get(i).y);
+                    for (Weapon newWeapon : newWeapons) {
+                        server.out.writeDouble(newWeapon.x);
+                        server.out.writeDouble(newWeapon.y);
                     }
                     newWeapons.clear();
                     if(sth)

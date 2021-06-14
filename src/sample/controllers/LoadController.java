@@ -182,7 +182,7 @@ public class LoadController {
         alert.setY(350);
         Optional<ButtonType> result=alert.showAndWait();
         LoadController.i =i;
-        if(result.orElse(null).equals(ButtonType.YES))
+        if(ButtonType.YES.equals(result.orElse(null)))
         {
             yes();
         }
@@ -389,6 +389,7 @@ public class LoadController {
         text.setStyle("-fx-background-color: lightblue;");
         text.relocate(873, y);
     }
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void yes()
     {
         switch (LoadController.i)

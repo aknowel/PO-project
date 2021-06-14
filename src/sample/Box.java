@@ -16,7 +16,7 @@ public abstract class Box extends ImageView {
     static Box getNewBox(int i)
     {
         return switch(i) {
-            case 0 -> new UpgradeBox();
+            case 0 -> new EmptyBox();
             case 1 -> new UpgradeBox();
             case 2 -> new HeartBox();
             default -> new BarrierBox();

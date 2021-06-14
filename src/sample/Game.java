@@ -21,12 +21,9 @@ public class Game {
 
     static final double W = 1280, H = 720;
 
-    public static boolean isServerRunning = false;
-
-
     static final Random randomizer = new Random();
+    static Random randomize = new Random();
 
-    public LinkedList<Client> clients = new LinkedList<>();
 
     public Vector<Hero> heroes = new Vector<>();
     public LinkedList<Weapon> weaponsHero = new LinkedList<>();
@@ -36,24 +33,28 @@ public class Game {
     public LinkedList<Background> backgroundObjects = new LinkedList<>();
     public LinkedList<Box> boxes = new LinkedList<>();
     public LinkedList<SpecialObject> specialObjects = new LinkedList<>();
+    public ConcurrentHashMap<Hero, Text> hp_texts = new ConcurrentHashMap<>();
+
     public Pane board;
     public AnimationTimer timer;
     public Text scoreText;
-    public ConcurrentHashMap<Hero, Text> hp_texts = new ConcurrentHashMap<>();
+    AnchorPane root;
+
     public final int dWeapon = 10;
     public int modifier = 150, villainCounter = modifier - 1, score = 0, livesMax = 10;
     public boolean isBoss = false;
     public boolean pause = false, stop = false;
-    public int time = 0; //upgrade = 0;
-    public int round;
+    public int time = 0;
+    public int round, counter = 0;
     public Double mode;
-    AnchorPane root;
     public Boss boss = null;
     public static Game game;
-    static Random randomize = new Random();
+
     public VillainFactory villainFactory;
-    public int counter = 0;
+
+    public LinkedList<Client> clients = new LinkedList<>();
     boolean clientResponse = false;
+    public static boolean isServerRunning = false;
     boolean gameOver=false;
 
     public GameState gameState = new GameState();
@@ -212,7 +213,7 @@ public class Game {
                         h.dy *= h.speed;
                     }
 
-                    if (counter < 2 || round==0) {
+                    if (counter < 7 || round==0) {
                         villainCounter++;
                         Villain.newVillain(round==0);
                     } else if (villains.size() == 0) {
@@ -305,15 +306,8 @@ public class Game {
                                                 }
                                             }
                                             case 3 -> {
-                                                //if(heroes.get(1).counter==1) {
                                                     newWeapon = new Shuriken(client.in.readDouble(), client.in.readDouble());
                                                     heroes.get(1).counter=0;
-                                                /*}
-                                                else
-                                                    {
-                                                        heroes.get(1).counter++;
-                                                        continue;
-                                                    }*/
                                             }
                                             default -> newWeapon=new Hammer(client.in.readDouble(),client.in.readDouble());
                                         }
@@ -381,14 +375,13 @@ public class Game {
                 Game.game.board.getChildren().remove(hp_texts.get(hero));
                 hero.deleted=true;
                 i++;
-                //Game.game.heroes.remove(hero);
             }
         }
         if(i==2)
         {
             try {
                 gameOver = true;
-                game.clients.get(0).out.writeBoolean(gameOver);
+                game.clients.get(0).out.writeBoolean(true);
             }
             catch (IOException e)
             {

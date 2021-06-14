@@ -108,6 +108,8 @@ class TNT extends SpecialObject {
             {
                 boom.setImage(new Image("resources/Images/SpecialObjects/ExplosionBig.png"));
                 boom.relocate(boom.getLayoutX()-10, boom.getLayoutY()-6);
+                Sounds sound=new Sounds();
+                sound.playExplosion();
             }
 
             else if(duration==150)

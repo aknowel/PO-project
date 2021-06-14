@@ -92,9 +92,9 @@ public class AchievementController {
         }
         else
         {
-            for (int i = 0; i < list.size(); i++) {
-                String text = list.get(i).getText();
-                list.get(i).setText(text.replace(".","0"));
+            for (Label label : list) {
+                String text = label.getText();
+                label.setText(text.replace(".", "0"));
             }
         }
     }
@@ -134,7 +134,7 @@ public class AchievementController {
         alert.setX(750);
         alert.setY(350);
         Optional<ButtonType> result=alert.showAndWait();
-        if(result.orElse(null).equals(ButtonType.YES))
+        if(ButtonType.YES.equals(result.orElse(null)))
         {
             reset(event);
         }
@@ -142,7 +142,9 @@ public class AchievementController {
     private void reset(ActionEvent event) throws IOException {
         file=new File("src/resources/other/achievement.txt");
         if(file.exists()) {
+            //noinspection ResultOfMethodCallIgnored
             file.delete();
+            //noinspection ResultOfMethodCallIgnored
             file.createNewFile();
             writer = new PrintWriter(file);
             for (int i = 0; i < 9; i++) {

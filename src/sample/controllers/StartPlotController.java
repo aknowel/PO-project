@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sample.Game;
-import sample.Hero;
+
 
 public class StartPlotController {
     Stage stage;

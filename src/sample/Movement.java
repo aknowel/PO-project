@@ -107,7 +107,7 @@ public abstract class Movement {
                 currentVillain.hpBar.relocate(x + currentVillain.getBoundsInLocal().getWidth()/2-currentVillain.hpBar.getBoundsInLocal().getWidth()/2, y - currentVillain.hpBar.getBoundsInLocal().getHeight()-3);
         }
     }
-    static void throwWeapon(double d) throws InstantiationException, IllegalAccessException {
+    static void throwWeapon(@SuppressWarnings("SameParameterValue") double d) throws InstantiationException, IllegalAccessException {
         Iterator<Weapon> z=Game.game.weaponsHero.iterator();
         while(z.hasNext()){
             Weapon x=z.next();

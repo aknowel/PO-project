@@ -38,7 +38,7 @@ public class GameEndController {
         }
         stage.show();
     }
-    public void continues(ActionEvent event)
+    public void continues()
     {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/resources/fxml/plotWindow.fxml"));

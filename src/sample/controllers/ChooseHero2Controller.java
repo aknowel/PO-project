@@ -14,8 +14,6 @@ import sample.*;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ChooseHero2Controller {
@@ -34,11 +32,6 @@ public class ChooseHero2Controller {
     private final String style="-fx-effect: dropshadow(gaussian, rgba(229, 3, 0, 1), 25, 0.5, 0.0, 0.0);";
     public static double mode=0D;
     private static int chosenHero=2;
-    public static Thread serverThread;
-    static int getHeroId()
-    {
-        return chosenHero;
-    }
     public void chooseWarrior()
     {
         resetAll();
@@ -109,15 +102,7 @@ public class ChooseHero2Controller {
         resetStyle(hero2);
         resetStyle(hero3);
     }
-    private void gamesCounter()
-    {
-        switch (chosenHero)
-        {
-            case 1 -> Counter.warriorGames();
-            case 2 -> Counter.thorGames();
-            case 3 -> Counter.assassinGames();
-        }
-    }
+
     private void resetStyle(Node node)
     {
         node.setStyle("");
